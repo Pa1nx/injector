@@ -1,5 +1,5 @@
-local NumberValue = 10
-local TrueSubFalsePlus = false
+local NumberValue = 20
+local TrueSubFalsePlus = true
 
 -- Teleports From Lobby To Advanced Digsite
 
