@@ -669,6 +669,7 @@ for i = 1, 3 do
     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 end
 end
+
 while true do
     wait(0.01)
 
@@ -728,60 +729,65 @@ while true do
 
                     local testinghere = Vector3.new(newX, newY, newZ)
 
-                    for i = 1, 5 do
-                        local args = {
-                            [1] = "AdvancedDigsite",
-                            [2] = "DigBlock",
-                            [3] = testinghere
-                        }
+                    local startTime = tick()
+                    while tick() - startTime < 5 do
+                        wait(0.02)
+                        for i = 1, 3 do
+                            local args = {
+                                [1] = "AdvancedDigsite",
+                                [2] = "DigBlock",
+                                [3] = testinghere
+                            }
 
-                        game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+                            game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+                        end
                     end
 
-                    foundPart = true
-                    break -- Exit the loop after processing one part
+                    if part.Parent == hierarchyPath then
+                        part:Destroy()
+                    else
+                        break -- Exit the loop after processing one part
+                    end
                 end
             end
         end
     end
-if not foundOne or not foundPart then
-    local Http = game:GetService("HttpService")
-    local TPS = game:GetService("TeleportService")
-    local Api = "https://games.roblox.com/v1/games/"
-    local _place, _id = game.PlaceId, game.JobId
-    local _servers = Api .. _place .. "/servers/Public?sortOrder=Asc&limit=10"
 
-    function ListServers(cursor)
-        local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-        return Http:JSONDecode(Raw)
-    end
+    if not foundOne or not foundPart then
+        local Http = game:GetService("HttpService")
+        local TPS = game:GetService("TeleportService")
+        local Api = "https://games.roblox.com/v1/games/"
+        local _place, _id = game.PlaceId, game.JobId
+        local _servers = Api .. _place .. "/servers/Public?sortOrder=Asc&limit=10"
 
-    local time_to_wait = 1 -- seconds
-    local attempts = 5
-    local total_attempts = 0
+        function ListServers(cursor)
+            local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+            return Http:JSONDecode(Raw)
+        end
 
-    while true do
-        for i = 1, attempts do
-            if player and player.Character then
-                player.Character.HumanoidRootPart.Anchored = true
+        local time_to_wait = 1 -- seconds
+        local attempts = 5
+        local total_attempts = 0
+
+        while true do
+            for i = 1, attempts do
+                if player and player.Character then
+                    player.Character.HumanoidRootPart.Anchored = true
+                end
+
+                local Servers = ListServers()
+                local Server = Servers.data[math.random(1, #Servers.data)]
+                TPS:TeleportToPlaceInstance(_place, Server.id, player)
+                wait(20)
             end
 
-            local Servers = ListServers()
-            local Server = Servers.data[math.random(1, #Servers.data)]
-            TPS:TeleportToPlaceInstance(_place, Server.id, player)
-            wait(20)
-        end
-
-        total_attempts = total_attempts + attempts
-        if total_attempts >= 5 then
-            wait(0.1)
-            game.Players.LocalPlayer:Kick("Failed Rejoin, please rejoin")
-            break
+            total_attempts = total_attempts + attempts
+            if total_attempts >= 5 then
+                wait(0.1)
+                game.Players.LocalPlayer:Kick("Failed Rejoin, please rejoin")
+                break
+            end
         end
     end
 end
-
-   
-end
-
 
