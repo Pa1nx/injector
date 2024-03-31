@@ -776,37 +776,188 @@ local args = {
 end
                 
                 wait(0.02)
-local function fireDigBlock(args)
-    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-end
-
-local function waitFor(duration)
-    local startTime = tick()
-    while tick() - startTime < duration do
-        wait(0.02)
-    end
-end
-
-local function fireBlockWithYOffset(yOffset)
-    local args = {
+-- Start from 2 and go up to 8, incrementing Y-coordinate by 1 each time
+wait(0.02)
+local startTime2 = tick() 
+while tick() - startTime2 < 1 do 
+    wait(0.02)
+    local args2 = {
         [1] = "AdvancedDigsite",
         [2] = "DigBlock",
-        [3] = testinghere + Vector3.new(0, yOffset, 0)
+        [3] = testinghere + Vector3.new(0, 2, 0)
     }
-    fireDigBlock(args)
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args2))
 end
 
-
-for i = 2, 8 do
+wait(0.02)
+local startTime3 = tick() 
+while tick() - startTime3 < 1 do 
     wait(0.02)
-    local startTime = tick()
-    while tick() - startTime < 1 do
-        wait(0.02)
-        fireBlockWithYOffset(i)  -- Positive adjustment
-        wait(0.02)
-        fireBlockWithYOffset(-i)  -- Negative adjustment
-    end
+    local args3 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 3, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args3))
 end
+
+wait(0.02)
+local startTime4 = tick() 
+while tick() - startTime4 < 1 do 
+    wait(0.02)
+    local args4 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 4, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args4))
+end
+
+wait(0.02)
+local startTime5 = tick() 
+while tick() - startTime5 < 1 do 
+    wait(0.02)
+    local args5 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 5, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args5))
+end
+
+wait(0.02)
+local startTime6 = tick() 
+while tick() - startTime6 < 1 do 
+    wait(0.02)
+    local args6 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 6, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args6))
+end
+
+wait(0.02)
+local startTime7 = tick() 
+while tick() - startTime7 < 1 do 
+    wait(0.02)
+    local args7 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 7, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args7))
+end
+
+wait(0.02)
+local startTime8 = tick() 
+while tick() - startTime8 < 1 do 
+    wait(0.02)
+    local args8 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 8, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args8))
+end
+
+
+
+
+
+
+
+
+
+                wait(0.02)
+-- Start from 2 and go up to 8, incrementing Y-coordinate by 1 each time
+wait(0.02)
+local startTime2 = tick() 
+while tick() - startTime2 < 1 do 
+    wait(0.02)
+    local args2 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 2, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args2))
+end
+
+wait(0.02)
+local startTime3 = tick() 
+while tick() - startTime3 < 1 do 
+    wait(0.02)
+    local args3 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 3, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args3))
+end
+
+wait(0.02)
+local startTime4 = tick() 
+while tick() - startTime4 < 1 do 
+    wait(0.02)
+    local args4 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 4, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args4))
+end
+
+wait(0.02)
+local startTime5 = tick() 
+while tick() - startTime5 < 1 do 
+    wait(0.02)
+    local args5 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 5, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args5))
+end
+
+wait(0.02)
+local startTime6 = tick() 
+while tick() - startTime6 < 1 do 
+    wait(0.02)
+    local args6 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 6, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args6))
+end
+
+wait(0.02)
+local startTime7 = tick() 
+while tick() - startTime7 < 1 do 
+    wait(0.02)
+    local args7 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 7, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args7))
+end
+
+wait(0.02)
+local startTime8 = tick() 
+while tick() - startTime8 < 1 do 
+    wait(0.02)
+    local args8 = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 8, 0)
+    }
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args8))
+end
+
+
+
+
 
 
 
