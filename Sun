@@ -915,3 +915,4 @@ if #hierarchyPathChests:GetChildren() == 0 then
         end
     end
 end
+end
