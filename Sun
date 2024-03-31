@@ -746,7 +746,7 @@ local args = {
 end
 
 local startTime = tick() 
-while tick() - startTime < 0.5 do 
+while tick() - startTime < 1.5 do 
 wait(0.02)
 local args = {
         [1] = "AdvancedDigsite",
@@ -757,7 +757,7 @@ local args = {
     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 end
 local startTime = tick() 
-while tick() - startTime < 0.5 do 
+while tick() - startTime < 1.5 do 
 wait(0.02)
 local args = {
         [1] = "AdvancedDigsite",
@@ -768,7 +768,7 @@ local args = {
     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 end
 local startTime = tick() 
-while tick() - startTime < 0.5 do 
+while tick() - startTime < 1.5 do 
 wait(0.02)
 local args = {
         [1] = "AdvancedDigsite",
@@ -779,7 +779,7 @@ local args = {
     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 end
 local startTime = tick() 
-while tick() - startTime < 0.5 do 
+while tick() - startTime < 1.5 do 
 wait(0.02)
 local args = {
         [1] = "AdvancedDigsite",
@@ -790,7 +790,7 @@ local args = {
     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 end
 local startTime = tick() 
-while tick() - startTime < 0.5 do 
+while tick() - startTime < 1.5 do 
 wait(0.02)
 local args = {
         [1] = "AdvancedDigsite",
@@ -801,7 +801,7 @@ local args = {
     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 end
 local startTime = tick() 
-while tick() - startTime < 0.5 do 
+while tick() - startTime < 1.5 do 
 wait(0.02)
 local args = {
         [1] = "AdvancedDigsite",
@@ -823,7 +823,7 @@ local args = {
     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 end
 local startTime = tick() 
-while tick() - startTime < 0.5 do 
+while tick() - startTime < 1.5 do 
 wait(0.02)
 local args = {
         [1] = "AdvancedDigsite",
