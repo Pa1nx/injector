@@ -828,7 +828,7 @@ end
             end
         end
     end
-end
+
 
 if humanoidRootPart then
         local position = targetPosition
