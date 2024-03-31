@@ -9,6 +9,9 @@
 local NumberValue = 20
 local TrueSubFalsePlus = true
 
+
+
+
 -- Teleports From Lobby To Advanced Digsite
 
 print("Developer : Leanguttzz")
@@ -676,6 +679,17 @@ for i = 1, 3 do
 end
 end
 
+
+
+
+
+
+
+
+
+local NumberValue = 20
+local TrueSubFalsePlus = true
+
 while true do
     wait(0.01)
     local player = game.Players.LocalPlayer
@@ -689,13 +703,12 @@ while true do
     if hierarchyPath then
         local found = false
         local targetPosition = nil
-local correctedPosition
+        local correctedPosition
 
         for _, part in ipairs(hierarchyPath:GetChildren()) do
             if part:IsA("BasePart") and part.Color == targetColor then
                 targetPosition = part.Position
-correctedPosition = Vector3.new(math.floor(targetPosition.X + 0.5), math.floor(targetPosition.Y + 0.5), math.floor(targetPosition.Z + 0.5))
-
+                correctedPosition = Vector3.new(math.floor(targetPosition.X + 0.5), math.floor(targetPosition.Y + 0.5), math.floor(targetPosition.Z + 0.5))
                 
                 found = true
                 break  -- Break out of this loop when a part with the target color is found
@@ -710,11 +723,12 @@ correctedPosition = Vector3.new(math.floor(targetPosition.X + 0.5), math.floor(t
             local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
             local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
 
-if TrueSubFalsePlus == true then
-    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
-else
-    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y + NumberValue, targetPosition.Z)
-end
+            if TrueSubFalsePlus == true then
+                targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
+            else
+                targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y + NumberValue, targetPosition.Z)
+            end
+
             -- Create and play the tween
             local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
             tween:Play()
@@ -748,7 +762,7 @@ end
                 local testinghere = Vector3.new(newX, newY, newZ)
 
                 for i = 1, 3 do
-wait(0.02)
+                    wait(0.02)
                     local args = {
                         [1] = "AdvancedDigsite",
                         [2] = "DigBlock",
@@ -759,15 +773,13 @@ wait(0.02)
                 end
             end
         else
-wait(0.01)
-          
+            print("No parts with the target color found in ActiveBlocks.")
+        end
+    else
+        print("ActiveBlocks folder not found.")
+    end
+
     wait(0.01)
-
-
-    local player = game.Players.LocalPlayer
-    local character = player.Character
-    local TweenService = game:GetService("TweenService")
-    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
 
     local ActiveChestsFolder = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveChests
 
@@ -780,7 +792,7 @@ wait(0.01)
             if part:IsA("Model") and part:FindFirstChild("Top") then
                 targetPosition = part.Top.Position
                 correctedPosition = Vector3.new(math.floor(targetPosition.X + 0.5), math.floor(targetPosition.Y + 0.5), math.floor(targetPosition.Z + 0.5))
-part.Name = "CurrentChest"
+                part.Name = "CurrentChest"
                 found = true
                 print("Found Chest at position:", correctedPosition)
 
@@ -807,7 +819,7 @@ part.Name = "CurrentChest"
             local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
             tween:Play()
             tween.Completed:Wait()
-
+wait(0.01)
             if humanoidRootPart then
                 local position = correctedPosition
                 local roundedPosition = Vector3.new(
@@ -837,7 +849,7 @@ part.Name = "CurrentChest"
 
                 wait(0.01)
                 for i = 1, 40 do
-wait(0.01)
+                    wait(0.01)
                     local args = {
                         [1] = "AdvancedDigsite",
                         [2] = "DigBlock",
@@ -854,7 +866,6 @@ wait(0.01)
 
                     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 
-                    
                     local args = {
                         [1] = "AdvancedDigsite",
                         [2] = "DigBlock",
@@ -862,8 +873,8 @@ wait(0.01)
                     }
 
                     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-                
-local args = {
+
+                    local args = {
                         [1] = "AdvancedDigsite",
                         [2] = "DigBlock",
                         [3] = testinghere - Vector3.new(0, 2, 0)
@@ -871,7 +882,6 @@ local args = {
 
                     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 
-                    
                     local args = {
                         [1] = "AdvancedDigsite",
                         [2] = "DigBlock",
@@ -879,41 +889,39 @@ local args = {
                     }
 
                     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-                                wait(0.1)
-end
-if workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveChests:FindFirstChild("CurrentChest") then
-                workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveChests.CurrentChest:Destroy()
-            end
+
+                    wait(0.1)
+                end
+                if workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveChests:FindFirstChild("CurrentChest") then
+                    workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveChests.CurrentChest:Destroy()
+                end
             end
         else
-            task.wait(1)
-task.wait(1)
-          local Http = game:GetService("HttpService")
-local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
-
-local _place = game.PlaceId
-local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-function ListServers(cursor)
-   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-   return Http:JSONDecode(Raw)
-end
-
-local Server, Next; repeat
-   local Servers = ListServers(Next)
-   Server = Servers.data[1]
-   Next = Servers.nextPageCursor
-until Server
-
-TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
-task.wait(10)
-end
-else
-  print("ActiveChests folder not found.")
-end
-
+            print("No chests found in ActiveChests.")
+        end
     else
-        print("ActiveBlocks folder not found.")
+        print("ActiveChests folder not found.")
     end
-end
 
+    wait(0.01)
+
+    local Http = game:GetService("HttpService")
+    local TPS = game:GetService("TeleportService")
+    local Api = "https://games.roblox.com/v1/games/"
+
+    local _place = game.PlaceId
+    local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+    function ListServers(cursor)
+        local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+        return Http:JSONDecode(Raw)
+    end
+
+    local Server, Next; repeat
+        local Servers = ListServers(Next)
+        Server = Servers.data[1]
+        Next = Servers.nextPageCursor
+    until Server
+
+    TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
+    task.wait(10)
+end
