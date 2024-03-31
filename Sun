@@ -657,82 +657,81 @@ while true do
     end
 
     if not foundPart then
-        wait(0.01)
-while true do
-    wait(0.02)
- local PartDeleted = nil 
-            local ChestFound = false
-            local player = game.Players.LocalPlayer
-            local character = player.Character
-            local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+    wait(0.01)
+    while true do
+        wait(0.02)
+        local PartDeleted = nil 
+        local ChestFound = false
+        local player = game.Players.LocalPlayer
+        local character = player.Character
+        local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
 
-            local TweenService = game:GetService("TweenService")
-            local Character = game.Players.LocalPlayer.Character
-            local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+        local TweenService = game:GetService("TweenService")
+        local Character = game.Players.LocalPlayer.Character
+        local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
-            local targetColor = Color3.fromRGB(98, 37, 209)
-            local hierarchyPathChests = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveChests
+        local targetColor = Color3.fromRGB(98, 37, 209)
+        local hierarchyPathChests = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveChests
 
-            local targetPosition = "found it"
-            local partFound = false
+        local targetPosition = "found it"
+        local partFound = false
 
-            if hierarchyPathChests then
-                local closestChest = nil
-                local closestDistance = math.huge
-                for _, chestModel in ipairs(hierarchyPathChests:GetChildren()) do
-                    if chestModel:IsA("Model") and chestModel:FindFirstChild("Top") then
-                        local topPosition = chestModel.Top.Position
-                        chestModel.Name = "FoundChest"
-                        PartDeleted = chestModel
-                        local distance = (HumanoidRootPart.Position - topPosition).Magnitude
-                        if distance < closestDistance then
-                            closestChest = chestModel
-                            closestDistance = distance
-                        end
+        if hierarchyPathChests then
+            local closestChest = nil
+            local closestDistance = math.huge
+            for _, chestModel in ipairs(hierarchyPathChests:GetChildren()) do
+                if chestModel:IsA("Model") and chestModel:FindFirstChild("Top") then
+                    local topPosition = chestModel.Top.Position
+                    chestModel.Name = "FoundChest"
+                    PartDeleted = chestModel
+                    local distance = (HumanoidRootPart.Position - topPosition).Magnitude
+                    if distance < closestDistance then
+                        closestChest = chestModel
+                        closestDistance = distance
                     end
                 end
-                
-                if closestChest then
-                    ChestFound = true
-                    targetPosition = closestChest.Top.Position
-                    local duration = closestDistance / 9999999999
-                    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-                    local targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - 20, targetPosition.Z)
-
-                    local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-                    tween:Play()
-                    tween.Completed:Wait()
-                end
             end
+            
+            if closestChest then
+                ChestFound = true
+                targetPosition = closestChest.Top.Position
+                local duration = closestDistance / 9999999999
+                local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+                local targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - 20, targetPosition.Z)
 
-            local position = targetPosition
-            local roundedPosition = Vector3.new(
-                math.floor(position.X),
-                math.floor(position.Y),
-                math.floor(position.Z)
-            )
+                local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+                tween:Play()
+                tween.Completed:Wait()
+            end
+        end
 
-            local originalPosition = Vector3.new(587, 50, -2757)
-            local orientationNumbers = Vector3.new(1, 1, 1) 
+        local position = targetPosition
+        local roundedPosition = Vector3.new(
+            math.floor(position.X),
+            math.floor(position.Y),
+            math.floor(position.Z)
+        )
 
-            local xOffset = position.X - originalPosition.X
-            local yOffset = position.Y - originalPosition.Y
-            local zOffset = position.Z - originalPosition.Z
+        local originalPosition = Vector3.new(587, 50, -2757)
+        local orientationNumbers = Vector3.new(1, 1, 1) 
 
-            local equivalentPosition = Vector3.new(
-                orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
-                orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, 
-                orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
-            )
+        local xOffset = position.X - originalPosition.X
+        local yOffset = position.Y - originalPosition.Y
+        local zOffset = position.Z - originalPosition.Z
 
-            local newX = math.floor(equivalentPosition.X)
-            local newY = math.floor(equivalentPosition.Y)
-            local newZ = math.floor(equivalentPosition.Z)
+        local equivalentPosition = Vector3.new(
+            orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+            orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, 
+            orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+        )
 
-            local testinghere = Vector3.new(newX, newY, newZ)
+        local newX = math.floor(equivalentPosition.X)
+        local newY = math.floor(equivalentPosition.Y)
+        local newZ = math.floor(equivalentPosition.Z)
 
- 
-                wait(0.02)
+        local testinghere = Vector3.new(newX, newY, newZ)
+
+       wait(0.02)
 local startTime = tick() 
 while tick() - startTime < 0.5 do 
 wait(0.02)
@@ -834,90 +833,85 @@ local args = {
 
     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 end
-     if closestChest then
-chestModel:Destroy()
-end
 
-
-end
-end
-
-            if #hierarchyPathChests:GetChildren() == 0 then
-                wait(1)
-                local Http = game:GetService("HttpService")
-                local TPS = game:GetService("TeleportService")
-                local Api = "https://games.roblox.com/v1/games/"
-                local _place, _id = game.PlaceId, game.JobId
-                local _servers = Api .. _place .. "/servers/Public?sortOrder=Asc&limit=10"
-
-                function ListServers(cursor)
-                    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-                    return Http:JSONDecode(Raw)
-                end
-
-                local time_to_wait = 30 -- seconds
-                local attempts = 5
-                local total_attempts = 0
-
-                while true do
-                    for i = 1, attempts do
-                        if player and player.Character then
-                            player.Character.HumanoidRootPart.Anchored = true
-                        end
-
-                        local Servers = ListServers()
-                        local Server = Servers.data[math.random(1, #Servers.data)]
-                        TPS:TeleportToPlaceInstance(_place, Server.id, player)
-                        wait(20)
-                    end
-                    
-                    total_attempts = total_attempts + attempts
-                    if total_attempts >= 5 then
-                        wait(0.1)
-                        game.Players.LocalPlayer:Kick("Failed Rejoin, please rejoin")
-                        break
-                    end
-                end
-            end
+        if closestChest then
+            chestModel:Destroy()
         end
     end
-
+end
 
 if humanoidRootPart then
-        local position = targetPosition
-        local roundedPosition = Vector3.new(
-            math.floor(position.X),
-            math.floor(position.Y),
-            math.floor(position.Z)
-        )
+    local position = targetPosition
+    local roundedPosition = Vector3.new(
+        math.floor(position.X),
+        math.floor(position.Y),
+        math.floor(position.Z)
+    )
 
-        local originalPosition = Vector3.new(587, 50, -2757)
-        local orientationNumbers = Vector3.new(1, 1, 1) 
+    local originalPosition = Vector3.new(587, 50, -2757)
+    local orientationNumbers = Vector3.new(1, 1, 1) 
 
-        local xOffset = position.X - originalPosition.X
-        local yOffset = position.Y - originalPosition.Y
-        local zOffset = position.Z - originalPosition.Z
+    local xOffset = position.X - originalPosition.X
+    local yOffset = position.Y - originalPosition.Y
+    local zOffset = position.Z - originalPosition.Z
 
-        local equivalentPosition = Vector3.new(
-            orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
-            orientationNumbers.Y + math.floor(-yOffset + 0.5) / 8, 
-            orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
-        )
+    local equivalentPosition = Vector3.new(
+        orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+        orientationNumbers.Y + math.floor(-yOffset + 0.5) / 8, 
+        orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+    )
 
-        local newX = math.floor(equivalentPosition.X)
-        local newY = math.floor(equivalentPosition.Y)
-        local newZ = math.floor(equivalentPosition.Z)
+    local newX = math.floor(equivalentPosition.X)
+    local newY = math.floor(equivalentPosition.Y)
+    local newZ = math.floor(equivalentPosition.Z)
 
-        local testinghere = Vector3.new(newX, newY, newZ)
+    local testinghere = Vector3.new(newX, newY, newZ)
 
-        for i = 1, 5 do
-            local args = {
-                [1] = "AdvancedDigsite",
-                [2] = "DigBlock",
-                [3] = testinghere
-            }
+    for i = 1, 5 do
+        local args = {
+            [1] = "AdvancedDigsite",
+            [2] = "DigBlock",
+            [3] = testinghere
+        }
 
-            game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-        end
+        game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+    end
+end
+
+if #hierarchyPathChests:GetChildren() == 0 then
+    wait(1)
+    local Http = game:GetService("HttpService")
+    local TPS = game:GetService("TeleportService")
+    local Api = "https://games.roblox.com/v1/games/"
+    local _place, _id = game.PlaceId, game.JobId
+    local _servers = Api .. _place .. "/servers/Public?sortOrder=Asc&limit=10"
+
+    function ListServers(cursor)
+        local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+        return Http:JSONDecode(Raw)
     end
 
+    local time_to_wait = 30 -- seconds
+    local attempts = 5
+    local total_attempts = 0
+
+    while true do
+        for i = 1, attempts do
+            if player and player.Character then
+                player.Character.HumanoidRootPart.Anchored = true
+            end
+
+            local Servers = ListServers()
+            local Server = Servers.data[math.random(1, #Servers.data)]
+            TPS:TeleportToPlaceInstance(_place, Server.id, player)
+            wait(20)
+        end
+        
+        total_attempts = total_attempts + attempts
+        if total_attempts >= 5 then
+            wait(0.1)
+            game.Players.LocalPlayer:Kick("Failed Rejoin, please rejoin")
+            break
+        end
+    end
+end
