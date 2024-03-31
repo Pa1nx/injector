@@ -146,22 +146,6 @@ print("Information : Activating Farm…")
 print("Information : Farming Top Corners ")
 print("Information : 1 / 4 ")
 wait(10)
-
-local BV = Instance.new('BodyVelocity', game.Workspace)
-BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-BV.velocity = Vector3.new(0, 0.1, 0)
-BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
-
-
-local startTime = tick() 
-while tick() - startTime < 20 do 
-wait(0.02)
-local TweenService = game:GetService("TweenService")
-
-local player = game.Players.LocalPlayer
-local character = player.Character
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-
 local hierarchyPath
 
 if workspace:FindFirstChild("__THINGS") and workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER") then
@@ -210,6 +194,20 @@ if workspace:FindFirstChild("__THINGS") and workspace:FindFirstChild("__THINGS")
 else
     print("Information: Loading...")
 end
+local BV = Instance.new('BodyVelocity', game.Workspace)
+BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+BV.velocity = Vector3.new(0, 0.1, 0)
+BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+
+
+local startTime = tick() 
+while tick() - startTime < 20 do 
+wait(0.02)
+local TweenService = game:GetService("TweenService")
+
+local player = game.Players.LocalPlayer
+local character = player.Character
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
 local ActiveBlocksFolder = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
 
