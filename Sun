@@ -755,7 +755,7 @@ while true do
             if not chestStillExists then
                 break
             end
-        }
+        
 
         local runningChest = hierarchyPathChests:FindFirstChild("RunningChest")
         if runningChest then
