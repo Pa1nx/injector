@@ -728,23 +728,19 @@ while true do
                     local testinghere = Vector3.new(newX, newY, newZ)
 
                  
-                        wait(0.02)
-                        for i = 1, 3 do
-                            local args = {
-                                [1] = "AdvancedDigsite",
-                                [2] = "DigBlock",
-                                [3] = testinghere
-                            }
+                    wait(0.02)
+                    for i = 1, 3 do
+                        local args = {
+                            [1] = "AdvancedDigsite",
+                            [2] = "DigBlock",
+                            [3] = testinghere
+                        }
 
-                            game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-                        end
-end
-                
-
-                  
-                        break -- Exit the loop after processing one part
-                    
+                        game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+                    end
                 end
+
+                break -- Exit the loop after processing one part
             end
         end
     end
@@ -770,4 +766,3 @@ end
         TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
     end
 end
-
