@@ -658,7 +658,7 @@ while true do
 
     if not foundPart then
         wait(0.01)
-  while true do
+while true do
     wait(0.02)
 
     local PartDeleted = nil 
@@ -755,7 +755,7 @@ while true do
             if not chestStillExists then
                 break
             end
-        
+        end
 
         local runningChest = hierarchyPathChests:FindFirstChild("RunningChest")
         if runningChest then
@@ -789,6 +789,7 @@ while true do
         break
     end
 end
+
 
 end
 
