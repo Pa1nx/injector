@@ -199,9 +199,9 @@ BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 BV.velocity = Vector3.new(0, 0.1, 0)
 BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
-
+task.wait(0.1)
 local startTime = tick() 
-while tick() - startTime < 20 do 
+while tick() - startTime < 30 do 
 wait(0.02)
 local TweenService = game:GetService("TweenService")
 
