@@ -907,7 +907,7 @@ until Server
 
 TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
 task.wait(10)
-
+end
 else
   print("ActiveChests folder not found.")
 end
