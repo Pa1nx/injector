@@ -5,7 +5,7 @@ local TrueSubFalsePlus = true
 
 print("Developer : Leanguttzz")
 print("Information : Activating Script…")
-
+print("Information : update")
 wait(2)
 workspace.Map:Destroy()
 workspace:FindFirstChild("__THINGS").Pets:Destroy()
