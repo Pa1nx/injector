@@ -695,10 +695,10 @@ while true do
                 
                 if closestChest then
                     ChestFound = true
-                    targetPosition = closestChest.Top.Position
+                    targetPosition = topPosition
                     local duration = closestDistance / 9999999999
                     local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-                    local targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - 0, targetPosition.Z)
+                    local targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - 20, targetPosition.Z)
 
                     local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
                     tween:Play()
