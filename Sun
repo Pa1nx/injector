@@ -657,8 +657,8 @@ while true do
     end
 
     if not foundPart then
-        wait(1)
-      while true do
+        wait(0.01)
+  while true do
     wait(0.02)
 
     local PartDeleted = nil 
@@ -706,7 +706,6 @@ while true do
         end
     end
 
-    -- Check if the chest model is still present before proceeding to the next remote
     if ChestFound then
         local position = targetPosition
         local roundedPosition = Vector3.new(
@@ -734,16 +733,15 @@ while true do
 
         local testinghere = Vector3.new(newX, newY, newZ)
 
-        -- Remote commands 1 to 8
         for i = 2, 8 do
             wait(0.02)
             local startTime = tick() 
-            local chestStillExists = true  -- Assume the chest still exists initially
+            local chestStillExists = true
             while tick() - startTime < 0.5 do 
                 wait(0.02)
                 if not hierarchyPathChests:FindFirstChild("FoundChest") then
                     chestStillExists = false
-                    break  -- Exit the loop if the chest is no longer found
+                    break
                 end
 
                 local args = {
@@ -755,39 +753,44 @@ while true do
             end
 
             if not chestStillExists then
-                break  -- Exit the loop if the chest is no longer found
+                break
             end
-        end
+        }
 
-        -- Remote commands 9 to 16
-        for i = 2, 8 do
-            wait(0.02)
-            local startTime = tick() 
-            local chestStillExists = true  -- Assume the chest still exists initially
-            while tick() - startTime < 0.5 do 
+        local runningChest = hierarchyPathChests:FindFirstChild("RunningChest")
+        if runningChest then
+            for i = 2, 8 do
                 wait(0.02)
-                if not hierarchyPathChests:FindFirstChild("FoundChest") then
-                    chestStillExists = false
-                    break  -- Exit the loop if the chest is no longer found
+                local startTime = tick() 
+                local chestStillExists = true
+                while tick() - startTime < 0.5 do 
+                    wait(0.02)
+                    if not hierarchyPathChests:FindFirstChild("FoundChest") then
+                        chestStillExists = false
+                        break
+                    end
+
+                    local args = {
+                        [1] = "AdvancedDigsite",
+                        [2] = "DigBlock",
+                        [3] = testinghere - Vector3.new(0, i, 0)
+                    }
+                    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
                 end
 
-                local args = {
-                    [1] = "AdvancedDigsite",
-                    [2] = "DigBlock",
-                    [3] = testinghere - Vector3.new(0, i, 0)
-                }
-                game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+                if not chestStillExists then
+                    break
+                end
             end
-
-            if not chestStillExists then
-                break  -- Exit the loop if the chest is no longer found
-            end
+        else
+            break
         end
     else
-        break  -- Exit the loop if the chest is no longer found
+        break
     end
 end
 
+end
 
             if #hierarchyPathChests:GetChildren() == 0 then
                 wait(1)
