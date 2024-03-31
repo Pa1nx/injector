@@ -55,34 +55,34 @@ local hierarchyPath
 if workspace:FindFirstChild("__THINGS") and workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER") then
     repeat
         hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER")
-        wait(1)
+        wait(0.1)
     until hierarchyPath
 
     if hierarchyPath:FindFirstChild("Active") then
         repeat
             hierarchyPath = hierarchyPath:FindFirstChild("Active")
-            wait(1)
+            wait(0.1)
         until hierarchyPath
 
         if hierarchyPath:FindFirstChild("AdvancedDigsite") then
             repeat
                 hierarchyPath = hierarchyPath:FindFirstChild("AdvancedDigsite")
-                wait(1)
+                wait(0.1)
             until hierarchyPath
 
             if hierarchyPath:FindFirstChild("Important") then
                 repeat
                     hierarchyPath = hierarchyPath:FindFirstChild("Important")
-                    wait(1)
+                    wait(0.1)
                 until hierarchyPath
 
                 if hierarchyPath:FindFirstChild("ActiveBlocks") then
                     repeat
                         hierarchyPath = hierarchyPath:FindFirstChild("ActiveBlocks")
-                        wait(1)
+                        wait(0.1)
                     until hierarchyPath
 
-                    wait(1)
+                    wait(0.1)
                 else
                     print("Information: Loading...")
                 end
@@ -136,16 +136,19 @@ spawn(LootbagCollect)
 print("__THINGS")
 
 
-local BV = Instance.new('BodyVelocity', game.Workspace)
-BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-BV.velocity = Vector3.new(0, 0.1, 0)
-BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
 -- Script Farming Top Left
 
 print("Information : Activating Farm…")
 print("Information : Farming Top Corners ")
 print("Information : 1 / 4 ")
+wait(10)
+
+local BV = Instance.new('BodyVelocity', game.Workspace)
+BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+BV.velocity = Vector3.new(0, 0.1, 0)
+BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+
 
 local startTime = tick() 
 while tick() - startTime < 20 do 
@@ -161,34 +164,34 @@ local hierarchyPath
 if workspace:FindFirstChild("__THINGS") and workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER") then
     repeat
         hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER")
-        wait(1)
+        wait(0.1)
     until hierarchyPath
 
     if hierarchyPath:FindFirstChild("Active") then
         repeat
             hierarchyPath = hierarchyPath:FindFirstChild("Active")
-            wait(1)
+            wait(0.1)
         until hierarchyPath
 
         if hierarchyPath:FindFirstChild("AdvancedDigsite") then
             repeat
                 hierarchyPath = hierarchyPath:FindFirstChild("AdvancedDigsite")
-                wait(1)
+                wait(0.1)
             until hierarchyPath
 
             if hierarchyPath:FindFirstChild("Important") then
                 repeat
                     hierarchyPath = hierarchyPath:FindFirstChild("Important")
-                    wait(1)
+                    wait(0.1)
                 until hierarchyPath
 
                 if hierarchyPath:FindFirstChild("ActiveBlocks") then
                     repeat
                         hierarchyPath = hierarchyPath:FindFirstChild("ActiveBlocks")
-                        wait(1)
+                        wait(0.1)
                     until hierarchyPath
 
-                    wait(1)
+                    wait(0.1)
                 else
                     print("Information: Loading...")
                 end
@@ -204,7 +207,7 @@ if workspace:FindFirstChild("__THINGS") and workspace:FindFirstChild("__THINGS")
 else
     print("Information: Loading...")
 end
-wait(10)
+
 local ActiveBlocksFolder = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
 
 local closestPart = nil
