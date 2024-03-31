@@ -660,137 +660,186 @@ while true do
         wait(0.01)
 while true do
     wait(0.02)
+ local PartDeleted = nil 
+            local ChestFound = false
+            local player = game.Players.LocalPlayer
+            local character = player.Character
+            local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
 
-    local PartDeleted = nil 
-    local ChestFound = false
-    local player = game.Players.LocalPlayer
-    local character = player.Character
-    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+            local TweenService = game:GetService("TweenService")
+            local Character = game.Players.LocalPlayer.Character
+            local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
 
-    local TweenService = game:GetService("TweenService")
-    local Character = game.Players.LocalPlayer.Character
-    local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+            local targetColor = Color3.fromRGB(98, 37, 209)
+            local hierarchyPathChests = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveChests
 
-    local targetColor = Color3.fromRGB(98, 37, 209)
-    local hierarchyPathChests = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveChests
+            local targetPosition = "found it"
+            local partFound = false
 
-    local targetPosition = "found it"
-    local partFound = false
+            if hierarchyPathChests then
+                local closestChest = nil
+                local closestDistance = math.huge
+                for _, chestModel in ipairs(hierarchyPathChests:GetChildren()) do
+                    if chestModel:IsA("Model") and chestModel:FindFirstChild("Top") then
+                        local topPosition = chestModel.Top.Position
+                        chestModel.Name = "FoundChest"
+                        PartDeleted = chestModel
+                        local distance = (HumanoidRootPart.Position - topPosition).Magnitude
+                        if distance < closestDistance then
+                            closestChest = chestModel
+                            closestDistance = distance
+                        end
+                    end
+                end
+                
+                if closestChest then
+                    ChestFound = true
+                    targetPosition = closestChest.Top.Position
+                    local duration = closestDistance / 9999999999
+                    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+                    local targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - 20, targetPosition.Z)
 
-    if hierarchyPathChests then
-        local closestChest = nil
-        local closestDistance = math.huge
-        for _, chestModel in ipairs(hierarchyPathChests:GetChildren()) do
-            if chestModel:IsA("Model") and chestModel:FindFirstChild("Top") then
-                local topPosition = chestModel.Top.Position
-                chestModel.Name = "FoundChest"
-                PartDeleted = chestModel
-                local distance = (HumanoidRootPart.Position - topPosition).Magnitude
-                if distance < closestDistance then
-                    closestChest = chestModel
-                    closestDistance = distance
+                    local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+                    tween:Play()
+                    tween.Completed:Wait()
                 end
             end
-        end
-        
-        if closestChest then
-            ChestFound = true
-            targetPosition = closestChest.Top.Position
-            local duration = closestDistance / 9999999999
-            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-            local targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - 20, targetPosition.Z)
 
-            local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-            tween:Play()
-            tween.Completed:Wait()
-        end
-    end
+            local position = targetPosition
+            local roundedPosition = Vector3.new(
+                math.floor(position.X),
+                math.floor(position.Y),
+                math.floor(position.Z)
+            )
 
-    if ChestFound then
-        local position = targetPosition
-        local roundedPosition = Vector3.new(
-            math.floor(position.X),
-            math.floor(position.Y),
-            math.floor(position.Z)
-        )
+            local originalPosition = Vector3.new(587, 50, -2757)
+            local orientationNumbers = Vector3.new(1, 1, 1) 
 
-        local originalPosition = Vector3.new(587, 50, -2757)
-        local orientationNumbers = Vector3.new(1, 1, 1) 
+            local xOffset = position.X - originalPosition.X
+            local yOffset = position.Y - originalPosition.Y
+            local zOffset = position.Z - originalPosition.Z
 
-        local xOffset = position.X - originalPosition.X
-        local yOffset = position.Y - originalPosition.Y
-        local zOffset = position.Z - originalPosition.Z
+            local equivalentPosition = Vector3.new(
+                orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+                orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, 
+                orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+            )
 
-        local equivalentPosition = Vector3.new(
-            orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
-            orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, 
-            orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
-        )
+            local newX = math.floor(equivalentPosition.X)
+            local newY = math.floor(equivalentPosition.Y)
+            local newZ = math.floor(equivalentPosition.Z)
 
-        local newX = math.floor(equivalentPosition.X)
-        local newY = math.floor(equivalentPosition.Y)
-        local newZ = math.floor(equivalentPosition.Z)
+            local testinghere = Vector3.new(newX, newY, newZ)
 
-        local testinghere = Vector3.new(newX, newY, newZ)
-
-        for i = 2, 8 do
-            wait(0.02)
-            local startTime = tick() 
-            local chestStillExists = true
-            while tick() - startTime < 0.5 do 
+ 
                 wait(0.02)
-                if not hierarchyPathChests:FindFirstChild("FoundChest") then
-                    chestStillExists = false
-                    break
-                end
-
-                local args = {
+local startTime = tick() 
+while tick() - startTime < 0.5 do 
+wait(0.02)
+local args = {
                     [1] = "AdvancedDigsite",
                     [2] = "DigBlock",
-                    [3] = testinghere + Vector3.new(0, i, 0)
+                    [3] = testinghere
                 }
+
                 game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-            end
 
-            if not chestStillExists then
-                break
-            end
-        end
+end
 
-        local runningChest = hierarchyPathChests:FindFirstChild("RunningChest")
-        if runningChest then
-            for i = 2, 8 do
-                wait(0.02)
-                local startTime = tick() 
-                local chestStillExists = true
-                while tick() - startTime < 0.5 do 
-                    wait(0.02)
-                    if not hierarchyPathChests:FindFirstChild("FoundChest") then
-                        chestStillExists = false
-                        break
-                    end
+local startTime = tick() 
+while tick() - startTime < 0.5 do 
+wait(0.02)
+local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 1, 0)
+    }
 
-                    local args = {
-                        [1] = "AdvancedDigsite",
-                        [2] = "DigBlock",
-                        [3] = testinghere - Vector3.new(0, i, 0)
-                    }
-                    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-                end
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+local startTime = tick() 
+while tick() - startTime < 0.5 do 
+wait(0.02)
+local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 1, 0)
+    }
 
-                if not chestStillExists then
-                    break
-                end
-            end
-        else
-            break
-        end
-    else
-        break
-    end
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+local startTime = tick() 
+while tick() - startTime < 0.5 do 
+wait(0.02)
+local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 2, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+local startTime = tick() 
+while tick() - startTime < 0.5 do 
+wait(0.02)
+local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 2, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+local startTime = tick() 
+while tick() - startTime < 0.5 do 
+wait(0.02)
+local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 3, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+local startTime = tick() 
+while tick() - startTime < 0.5 do 
+wait(0.02)
+local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 3, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+local startTime = tick() 
+while tick() - startTime < 0.5 do 
+wait(0.02)
+local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 4, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+local startTime = tick() 
+while tick() - startTime < 0.5 do 
+wait(0.02)
+local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 4, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+     if closestChest then
+chestModel:Destroy()
 end
 
 
+end
 end
 
             if #hierarchyPathChests:GetChildren() == 0 then
