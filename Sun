@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 local NumberValue = 20
 local TrueSubFalsePlus = true
 
@@ -5,7 +12,7 @@ local TrueSubFalsePlus = true
 
 print("Developer : Leanguttzz")
 print("Information : Activating Script…")
-print("Information : update")
+print("Information : Best Functioning")
 wait(2)
 workspace.Map:Destroy()
 workspace:FindFirstChild("__THINGS").Pets:Destroy()
@@ -670,7 +677,6 @@ end
 
 while true do
     wait(0.01)
-
     local player = game.Players.LocalPlayer
     local character = player.Character
     local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
@@ -679,68 +685,102 @@ while true do
     local targetColor = Color3.fromRGB(98, 37, 209)
     local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
 
-    local targetPosition = "found it"
-    local foundPart = false
-
     if hierarchyPath then
+        local found = false
+        local targetPosition = nil
+local correctedPosition
+
         for _, part in ipairs(hierarchyPath:GetChildren()) do
-            if part:IsA("Part") and part.Color == targetColor then
+            if part:IsA("BasePart") and part.Color == targetColor then
                 targetPosition = part.Position
-                local duration = (humanoidRootPart.Position - targetPosition).Magnitude / 999
-                local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+correctedPosition = Vector3.new(math.floor(targetPosition.X + 0.5), math.floor(targetPosition.Y + 0.5), math.floor(targetPosition.Z + 0.5))
 
-                local targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - 20, targetPosition.Z)
+                
+                found = true
+                break  -- Break out of this loop when a part with the target color is found
+            end
+        end
 
-                if player and player.Character then
-                    local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
-                    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+        if found then
+            -- Calculate target position offset (10 feet above the part's position)
+            local targetPositionOffset = targetPosition
 
-                    local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-                    tween:Play()
-                    tween.Completed:Wait()
-                    foundPart = true
-                    break
+            -- Create tween information
+            local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+if TrueSubFalsePlus == true then
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
+else
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y + NumberValue, targetPosition.Z)
+end
+            -- Create and play the tween
+            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+            tween:Play()
+            tween.Completed:Wait()
+
+            if humanoidRootPart then
+                local position = correctedPosition
+                local roundedPosition = Vector3.new(
+                    math.floor(position.X),
+                    math.floor(position.Y),
+                    math.floor(position.Z)
+                )
+
+                local originalPosition = Vector3.new(587, 50, -2757)
+                local orientationNumbers = Vector3.new(1, 1, 1) 
+
+                local xOffset = position.X - originalPosition.X
+                local yOffset = position.Y - originalPosition.Y
+                local zOffset = position.Z - originalPosition.Z
+
+                local equivalentPosition = Vector3.new(
+                    orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+                    orientationNumbers.Y + math.floor(-yOffset + 0.5) / 8, 
+                    orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+                )
+
+                local newX = math.floor(equivalentPosition.X)
+                local newY = math.floor(equivalentPosition.Y)
+                local newZ = math.floor(equivalentPosition.Z)
+
+                local testinghere = Vector3.new(newX, newY, newZ)
+
+                for i = 1, 3 do
+wait(0.02)
+                    local args = {
+                        [1] = "AdvancedDigsite",
+                        [2] = "DigBlock",
+                        [3] = testinghere
+                    }
+
+                    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
                 end
             end
+        else
+task.wait(1)
+          local Http = game:GetService("HttpService")
+local TPS = game:GetService("TeleportService")
+local Api = "https://games.roblox.com/v1/games/"
+
+local _place = game.PlaceId
+local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+function ListServers(cursor)
+   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+   return Http:JSONDecode(Raw)
+end
+
+local Server, Next; repeat
+   local Servers = ListServers(Next)
+   Server = Servers.data[1]
+   Next = Servers.nextPageCursor
+until Server
+
+TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
+task.wait(10)
         end
-    end
-
-    if not foundPart then
-        wait(1)
-
-        -- Check if there are no more parts with the target color
-        local noMoreParts = true
-        if hierarchyPath then
-            for _, part in ipairs(hierarchyPath:GetChildren()) do
-                if part:IsA("Part") and part.Color == targetColor then
-                    noMoreParts = false
-                    break
-                end
-            end
-        end
-
-        if noMoreParts then
-            local Http = game:GetService("HttpService")
-            local TPS = game:GetService("TeleportService")
-            local Api = "https://games.roblox.com/v1/games/"
-
-            local _place = game.PlaceId
-            local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-
-            function ListServers(cursor)
-                local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-                return Http:JSONDecode(Raw)
-            end
-
-            local Server, Next
-            repeat
-                local Servers = ListServers(Next)
-                Server = Servers.data[1]
-                Next = Servers.nextPageCursor
-            until Server
-
-            TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
-            wait(5)  -- Wait for 5 seconds before continuing
-        end
+    else
+        print("ActiveBlocks folder not found.")
     end
 end
+
