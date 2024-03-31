@@ -8,10 +8,7 @@ print("Information : Activating Script…")
 print("Information : Update 1")
 wait(2)
 workspace.Map:Destroy()
-workspace:FindFirstChild("__THINGS").Pets:Destroy()
-workspace:FindFirstChild("__THINGS").Breakables:Destroy()
-workspace:FindFirstChild("__THINGS").Eggs:Destroy()
-workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
+
 wait(10)
 
 local player = game.Players.LocalPlayer
