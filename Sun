@@ -749,7 +749,7 @@ while true do
             return Http:JSONDecode(Raw)
         end
 
-        local time_to_wait = 30 -- seconds
+        local time_to_wait = 1 -- seconds
         local attempts = 5
         local total_attempts = 0
 
