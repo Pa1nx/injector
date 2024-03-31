@@ -784,7 +784,7 @@ while true do
 
                 local args = {
                     [1] = "AdvancedDigsite",
-                    [2] = "DigChest",
+                    [2] = "DigBlock",
                     [3] = testinghere
                 }
 
@@ -794,7 +794,7 @@ while true do
 
                 local args = {
                     [1] = "AdvancedDigsite",
-                    [2] = "DigChest",
+                    [2] = "DigBlock",
                     [3] = testinghere + Vector3.new(0, 1, 0)
                 }
 
@@ -804,7 +804,7 @@ while true do
 
                 local args = {
                     [1] = "AdvancedDigsite",
-                    [2] = "DigChest",
+                    [2] = "DigBlock",
                     [3] = testinghere - Vector3.new(0, 1, 0)
                 }
 
@@ -814,7 +814,7 @@ while true do
 
                 local args = {
                     [1] = "AdvancedDigsite",
-                    [2] = "DigChest",
+                    [2] = "DigBlock",
                     [3] = testinghere - Vector3.new(0, 2, 0)
                 }
 
