@@ -1,13 +1,5 @@
 
 
-
-
-
-
-
-
-
-
 local NumberValue = 20
 local TrueSubFalsePlus = true
 
@@ -723,7 +715,7 @@ while true do
             tween:Play()
             tween.Completed:Wait()
 
-            if humanoidRootPart then
+       
                 local position = correctedPosition
                 local roundedPosition = Vector3.new(
                     math.floor(position.X),
@@ -762,3 +754,4 @@ while true do
                 end
 end
             end
+end
