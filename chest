@@ -1,4 +1,29 @@
-task.wait(120)
+
+
+
+task.wait(10)
+while true do
+wait(0.01)
+
+local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+
+
+if currentActivePart then
+    print("Currently Farming.")
+else
+
+
+local currentActivePart = workspace:FindFirstChild("FarmingChest")
+
+
+if currentActivePart then
+    print("Currently Farming Chest.")
+
+else
+
+    local newPart = Instance.new("Part")
+    newPart.Name = "FarmingChest"
+    newPart.Parent = workspace
 local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
 
 if hierarchyPath then
@@ -114,3 +139,13 @@ end
 -- Enable Auto Farming
 _G.AutoFarmChestOnOff = true
 AutoFarmChestOnOff()
+    
+end
+
+
+
+
+end
+end
+
+
