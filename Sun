@@ -706,7 +706,7 @@ while true do
 
         if found then
             -- Calculate target position offset (10 feet above the part's position)
-            local targetPositionOffset = correctedPosition + Vector3.new(0, 10, 0)
+            local targetPositionOffset = correctedPosition - Vector3.new(0, 20, 0)
 
             -- Create tween information
             local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
@@ -734,7 +734,7 @@ while true do
 
                 local equivalentPosition = Vector3.new(
                     orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
-                    orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, 
+                    orientationNumbers.Y + math.floor(-yOffset + 0.5) / 8, 
                     orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
                 )
 
