@@ -1,4 +1,22 @@
-wait(15)
+task.wait(120)
+local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+if hierarchyPath then
+    local found = false
+
+    for _, part in ipairs(hierarchyPath:GetChildren()) do
+        if part:IsA("BasePart") and part.Color == targetColor then
+            found = true
+            while part.Parent do
+                print("Waiting for Magic to disappear")
+                wait(1)
+            end
+            print("Completed")
+            break  -- Exit the loop once the part is no longer there
+        end
+    end
+end
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local WorkSpace = game:GetService("Workspace")
 local Players = game:GetService("Players")
@@ -10,7 +28,7 @@ local HumanoidRootPart = LocalPlayer.Character.HumanoidRootPart
 local Container = WorkSpace.__THINGS.__INSTANCE_CONTAINER
 local DigZoneType = "AdvancedDigsite" -- Digsite or AdvancedDigsite
 
---TeleportTo Function
+-- TeleportTo Function
 function TeleportTo(TeleportPosition)
     local Character = LocalPlayer.Character
     local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
@@ -22,7 +40,7 @@ function TeleportTo(TeleportPosition)
     HumanoidRootPart.CFrame = CFrame.new(TeleportPosition)
 end
 
---Auto Farm Chest
+-- Auto Farm Chest
 _G.AutoFarmChestOnOff = true
 _G.AutoFarmChestDistance = 999
 _G.FarmingChest = false
@@ -52,10 +70,10 @@ function AutoFarmChest()
             if not foundChest then
                 print("no chest") -- Print if there are no active chests with name "Animated"
             end
-            TeleportTo(PlayerOldPosition)
+
         else
-            tsk.wait(1)
-local Http = game:GetService("HttpService")
+            task.wait(1)
+            local Http = game:GetService("HttpService")
             local TPS = game:GetService("TeleportService")
             local Api = "https://games.roblox.com/v1/games/"
 
@@ -76,10 +94,9 @@ local Http = game:GetService("HttpService")
             TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
             task.wait(10)
         end
-  task.wait(10)
-        end
-        _G.FarmingChest = false
+        task.wait(10)
     end
+    _G.FarmingChest = false
 end
 
 function AutoFarmChestOnOff()
@@ -94,6 +111,6 @@ function AutoFarmChestOnOff()
     end
 end
 
---Enable Auto Farming
+-- Enable Auto Farming
 _G.AutoFarmChestOnOff = true
 AutoFarmChestOnOff()
