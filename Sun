@@ -759,7 +759,7 @@ while true do
 task.wait(1)
             loadstring(game:HttpGet("https://raw.githubusercontent.com/Pa1nx/injector/master/chest"))()
             task.wait(50)
-        end
+        
     else
         print("ActiveBlocks folder not found.")
     end
