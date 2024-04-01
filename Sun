@@ -679,8 +679,6 @@ for i = 1, 3 do
 end
 end
 
-
-
 while true do
     wait(0.01)
     local player = game.Players.LocalPlayer
@@ -694,10 +692,12 @@ while true do
     if hierarchyPath then
         local found = false
         local targetPosition = nil
+        local correctedPosition = nil
 
         for _, part in ipairs(hierarchyPath:GetChildren()) do
             if part:IsA("BasePart") and part.Color == targetColor then
                 targetPosition = part.Position
+                correctedPosition = Vector3.new(math.floor(targetPosition.X + 0.5), math.floor(targetPosition.Y + 0.5), math.floor(targetPosition.Z + 0.5))
 
                 found = true
                 break  -- Break out of this loop when a part with the target color is found
@@ -717,68 +717,69 @@ while true do
             tween:Play()
             tween.Completed:Wait()
 
-if humanoidRootPart then
-        local position = targetPosition
-        local roundedPosition = Vector3.new(
-            math.floor(position.X),
-            math.floor(position.Y),
-            math.floor(position.Z)
-        )
+            if humanoidRootPart then
+                local position = correctedPosition
+                local roundedPosition = Vector3.new(
+                    math.floor(position.X),
+                    math.floor(position.Y),
+                    math.floor(position.Z)
+                )
 
-        local originalPosition = Vector3.new(587, 50, -2757)
-        local orientationNumbers = Vector3.new(1, 1, 1) 
+                local originalPosition = Vector3.new(587, 50, -2757)
+                local orientationNumbers = Vector3.new(1, 1, 1) 
 
-        local xOffset = position.X - originalPosition.X
-        local yOffset = position.Y - originalPosition.Y
-        local zOffset = position.Z - originalPosition.Z
+                local xOffset = position.X - originalPosition.X
+                local yOffset = position.Y - originalPosition.Y
+                local zOffset = position.Z - originalPosition.Z
 
-        local equivalentPosition = Vector3.new(
-            orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
-            orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, 
-            orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
-        )
+                local equivalentPosition = Vector3.new(
+                    orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+                    orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, 
+                    orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+                )
 
-        local newX = math.floor(equivalentPosition.X)
-        local newY = math.floor(equivalentPosition.Y)
-        local newZ = math.floor(equivalentPosition.Z)
+                local newX = math.floor(equivalentPosition.X)
+                local newY = math.floor(equivalentPosition.Y)
+                local newZ = math.floor(equivalentPosition.Z)
 
-        local testinghere = Vector3.new(newX, newY, newZ)
+                local testinghere = Vector3.new(newX, newY, newZ)
 
-        for i = 1, 5 do
-            local args = {
-                [1] = "AdvancedDigsite",
-                [2] = "DigBlock",
-                [3] = testinghere
-            }
+                for i = 1, 3 do
+                    local args = {
+                        [1] = "AdvancedDigsite",
+                        [2] = "DigBlock",
+                        [3] = testinghere
+                    }
 
-            game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-        end
-    end
+                    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+                end
+            end
 
         else
+            local Http = game:GetService("HttpService")
+            local TPS = game:GetService("TeleportService")
+            local Api = "https://games.roblox.com/v1/games/"
 
-          local Http = game:GetService("HttpService")
-local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
+            local _place = game.PlaceId
+            local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+            function ListServers(cursor)
+                local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+                return Http:JSONDecode(Raw)
+            end
 
-local _place = game.PlaceId
-local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-function ListServers(cursor)
-   local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-   return Http:JSONDecode(Raw)
-end
+            local Server, Next
+            repeat
+                local Servers = ListServers(Next)
+                Server = Servers.data[1]
+                Next = Servers.nextPageCursor
+            until Server
 
-local Server, Next; repeat
-   local Servers = ListServers(Next)
-   Server = Servers.data[1]
-   Next = Servers.nextPageCursor
-until Server
-
-TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
-task.wait(10)
-
+            TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+            task.wait(10)
         end
     else
         print("ActiveBlocks folder not found.")
     end
 end
+
+
