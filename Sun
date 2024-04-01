@@ -224,7 +224,7 @@ for _, part in ipairs(ActiveBlocksFolder:GetChildren()) do
         local position = part.Position
         correctedPosition = Vector3.new(math.floor(position.X + 0.5), math.floor(position.Y + 0.5), math.floor(position.Z + 0.5))
 
-        if correctedPosition.X == 691 and correctedPosition.Z == -2741 then
+        if correctedPosition.X == 691 and correctedPosition.Z == -2653 then
             local distance = (humanoidRootPart.Position - position).Magnitude
             if distance < closestDistance then
                 closestPart = part
