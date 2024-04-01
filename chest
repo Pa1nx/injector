@@ -1,4 +1,4 @@
-
+wait(15)
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local WorkSpace = game:GetService("Workspace")
 local Players = game:GetService("Players")
