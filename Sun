@@ -868,6 +868,7 @@ until Server
 TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
 task.wait(10)
         end
+end
     else
         print("ActiveBlocks folder not found.")
     end
