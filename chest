@@ -17,6 +17,8 @@ function TeleportTo(TeleportPosition)
     if not HumanoidRootPart then
         return
     end
+ 
+    TeleportPosition = TeleportPosition - Vector3.new(0, 20, 0)
     HumanoidRootPart.CFrame = CFrame.new(TeleportPosition)
 end
 
@@ -39,7 +41,7 @@ function AutoFarmChest()
                 if Chest.Name == "Animated" then
                     foundChest = true
                     TeleportTo(Chest.Bottom.Position)
-                    wait(0.2)-- Shorten the wait time before proceeding to the next chest
+                    wait(0.15)-- Shorten the wait time before proceeding to the next chest
                     repeat
                         local A = Network:WaitForChild("Instancing_FireCustomFromClient"):FireServer(DigZoneType, "DigChest", Chest:GetAttribute("Coord"))
                         wait()
