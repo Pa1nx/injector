@@ -742,7 +742,7 @@ while true do
 
                 local testinghere = Vector3.new(newX, newY, newZ)
 
-                for i = 1, 3 do
+                for i = 1, 5 do
                     wait(0.02)
                     local args = {
                         [1] = "AdvancedDigsite",
