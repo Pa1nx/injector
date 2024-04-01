@@ -1,4 +1,16 @@
 
+local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+
+
+if currentActivePart then
+    print("Currently Farming.")
+else
+
+    local newPart = Instance.new("Part")
+    newPart.Name = "CurrentlyActive"
+    newPart.Parent = workspace
+end
+
 
 local NumberValue = 20
 local TrueSubFalsePlus = true
@@ -321,6 +333,17 @@ end
 end
 
 print("Information : 2 / 4 ")
+local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+
+
+if currentActivePart then
+    print("Currently Farming.")
+else
+
+    local newPart = Instance.new("Part")
+    newPart.Name = "CurrentlyActive"
+    newPart.Parent = workspace
+end
 
 local startTime = tick() 
 while tick() - startTime < 20 do 
