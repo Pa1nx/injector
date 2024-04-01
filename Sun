@@ -6,6 +6,8 @@
 
 
 
+
+
 local NumberValue = 20
 local TrueSubFalsePlus = true
 
@@ -679,7 +681,9 @@ for i = 1, 3 do
 end
 end
 
+_G.FarmingChest = false
 while true do
+    spawn(function()
     wait(0.01)
     local player = game.Players.LocalPlayer
     local character = player.Character
@@ -757,12 +761,119 @@ while true do
 
         else
 task.wait(1)
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/Pa1nx/injector/master/chest"))()
-            task.wait(50)
-        
+        _G.FarmingChest = true
+end
     else
         print("ActiveBlocks folder not found.")
     end
+
+        wait(0.01)
+    end)
+
+    spawn(function()
+       if _G.FarmingChest == true then
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local WorkSpace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+local Network = ReplicatedStorage:WaitForChild("Network")
+local LocalPlayer = Players.LocalPlayer
+local HumanoidRootPart = LocalPlayer.Character.HumanoidRootPart
+
+local Container = WorkSpace.__THINGS.__INSTANCE_CONTAINER
+local DigZoneType = "AdvancedDigsite" -- Digsite or AdvancedDigsite
+
+--TeleportTo Function
+function TeleportTo(TeleportPosition)
+    local Character = LocalPlayer.Character
+    local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+    if not HumanoidRootPart then
+        return
+    end
+ 
+    TeleportPosition = TeleportPosition - Vector3.new(0, 20, 0)
+    HumanoidRootPart.CFrame = CFrame.new(TeleportPosition)
 end
 
+--Auto Farm Chest
+_G.AutoFarmChestOnOff = true
+_G.AutoFarmChestDistance = 999
+_G.FarmingChest = false
 
+function AutoFarmChest()
+    if _G.AutoFarmChestOnOff == true then
+        _G.FarmingChest = true
+        local ActiveChests = Container.Active[DigZoneType].Important.ActiveChests:GetChildren()
+        if ActiveChests ~= nil and #ActiveChests > 0 then -- Check if there are active chests
+            local PlayerOldPosition = HumanoidRootPart.Position
+            local foundChest = false -- Flag to track if a chest with name "Animated" was found
+            for i, Chest in pairs(ActiveChests) do
+                if _G.FarmingChest == false or _G.AutoFarmChestOnOff == false then
+                    break
+                end
+                if Chest.Name == "Animated" then
+                    foundChest = true
+                    TeleportTo(Chest.Bottom.Position)
+                    wait(0.15)-- Shorten the wait time before proceeding to the next chest
+                    repeat
+                        local A = Network:WaitForChild("Instancing_FireCustomFromClient"):FireServer(DigZoneType, "DigChest", Chest:GetAttribute("Coord"))
+                        wait()
+                    until A == true or not Chest or not Chest.Parent or (HumanoidRootPart.Position - Chest.Bottom.Position).magnitude > _G.AutoFarmChestDistance or _G.FarmingChest == false or _G.AutoFarmChestOnOff == false
+                    wait(0.01)
+                end
+            end
+            if not foundChest then
+                print("no chest") -- Print if there are no active chests with name "Animated"
+            end
+            TeleportTo(PlayerOldPosition)
+        else
+            tsk.wait(1)
+local Http = game:GetService("HttpService")
+            local TPS = game:GetService("TeleportService")
+            local Api = "https://games.roblox.com/v1/games/"
+
+            local _place = game.PlaceId
+            local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+            function ListServers(cursor)
+                local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+                return Http:JSONDecode(Raw)
+            end
+
+            local Server, Next
+            repeat
+                local Servers = ListServers(Next)
+                Server = Servers.data[1]
+                Next = Servers.nextPageCursor
+            until Server
+
+            TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+            task.wait(10)
+        end
+  task.wait(10)
+        end
+        _G.FarmingChest = false
+    end
+end
+
+function AutoFarmChestOnOff()
+    while _G.AutoFarmChestOnOff do
+        if _G.FarmingChest == false then
+            task.spawn(AutoFarmChest)
+        end
+        wait(1)
+    end
+    if _G.AutoFarmChestOnOff == false then
+        _G.FarmingChest = false
+    end
+end
+
+--Enable Auto Farming
+_G.AutoFarmChestOnOff = true
+AutoFarmChestOnOff()
+wait(0.01)
+end
+wait(0.1)
+    end)
+
+    wait(0.1)
+end
