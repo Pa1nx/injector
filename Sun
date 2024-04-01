@@ -700,7 +700,7 @@ while true do
             if part:IsA("BasePart") and part.Color == targetColor then
                 local closestPart = part.Position
 
-                local targetPosition = closestPart.Position
+                local targetPosition = closestPart
                 local targetPositionOffset
                 if TrueSubFalsePlus == true then
                     targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
