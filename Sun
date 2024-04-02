@@ -1,17 +1,4 @@
-local webhookURL = "https://discord.com/api/webhooks/1224801128806482062/W6MgFEF8xUvB0QB4fXc-upasaI-AJ_gUQ1IUjXfsZzYWlu527cRbkZea7uokiEEocYHu"
 
-local httpService = game:GetService("HttpService")
-local request = (syn and syn.request) or request or (http and http.request) or http_request
-request({
-    Url = webhookURL,
-    Method = "POST",
-    Headers = {
-        ["Content-Type"] = "application/json",
-    },
-    Body = httpService:JSONEncode({
-        content = game.Players.LocalPlayer.Name, -- Sends the user's username
-    }),
-})
 
 local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
 
