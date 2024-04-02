@@ -29,7 +29,7 @@ workspace.Map:Destroy()
 workspace:FindFirstChild("__THINGS").Breakables:Destroy()
 workspace:FindFirstChild("__THINGS").Eggs:Destroy()
 workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
-wait(5)
+wait(15)
 
 local player = game.Players.LocalPlayer
 local character = player.Character
