@@ -1,4 +1,4 @@
-local myBoolean = false  -- Change this variable to test different conditions
+local myBoolean = true  -- Change this variable to test different conditions
 for i = 1, 3 do
 if myBoolean == true then
 --Services/Variables
@@ -28,7 +28,7 @@ local args = {
     [2] = "ok",
     [3] = "Misc",
     [4] = MadeTable,
-    [5] = 100
+    [5] = 1000
 }
 
 game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
