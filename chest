@@ -1,151 +1,145 @@
-
-
-
-task.wait(10)
+task.wait(50)
 while true do
-wait(0.01)
+    wait(0.01)
 
-local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+    local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
 
+    if currentActivePart then
+        print("Currently Farming.")
+    else
+        local currentActivePart = workspace:FindFirstChild("FarmingChest")
 
-if currentActivePart then
-    print("Currently Farming.")
-else
-
-
-local currentActivePart = workspace:FindFirstChild("FarmingChest")
-
-
-if currentActivePart then
-    print("Currently Farming Chest.")
-
-else
-
-    local newPart = Instance.new("Part")
-    newPart.Name = "FarmingChest"
-    newPart.Parent = workspace
-local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
-
-if hierarchyPath then
-    local found = false
-
-    for _, part in ipairs(hierarchyPath:GetChildren()) do
-        if part:IsA("BasePart") and part.Color == targetColor then
-            found = true
-            while part.Parent do
-                print("Waiting for Magic to disappear")
-                wait(1)
-            end
-            print("Completed")
-            break  -- Exit the loop once the part is no longer there
-        end
-    end
-end
-
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local WorkSpace = game:GetService("Workspace")
-local Players = game:GetService("Players")
-
-local Network = ReplicatedStorage:WaitForChild("Network")
-local LocalPlayer = Players.LocalPlayer
-local HumanoidRootPart = LocalPlayer.Character.HumanoidRootPart
-
-local Container = WorkSpace.__THINGS.__INSTANCE_CONTAINER
-local DigZoneType = "AdvancedDigsite" -- Digsite or AdvancedDigsite
-
--- TeleportTo Function
-function TeleportTo(TeleportPosition)
-    local Character = LocalPlayer.Character
-    local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
-    if not HumanoidRootPart then
-        return
-    end
- 
-    TeleportPosition = TeleportPosition - Vector3.new(0, 20, 0)
-    HumanoidRootPart.CFrame = CFrame.new(TeleportPosition)
-end
-
--- Auto Farm Chest
-_G.AutoFarmChestOnOff = true
-_G.AutoFarmChestDistance = 999
-_G.FarmingChest = false
-
-function AutoFarmChest()
-    if _G.AutoFarmChestOnOff == true then
-        _G.FarmingChest = true
-        local ActiveChests = Container.Active[DigZoneType].Important.ActiveChests:GetChildren()
-        if ActiveChests ~= nil and #ActiveChests > 0 then -- Check if there are active chests
-            local PlayerOldPosition = HumanoidRootPart.Position
-            local foundChest = false -- Flag to track if a chest with name "Animated" was found
-            for i, Chest in pairs(ActiveChests) do
-                if _G.FarmingChest == false or _G.AutoFarmChestOnOff == false then
-                    break
-                end
-                if Chest.Name == "Animated" then
-                    foundChest = true
-                    TeleportTo(Chest.Bottom.Position)
-                    wait(0.15)-- Shorten the wait time before proceeding to the next chest
-                    repeat
-                        local A = Network:WaitForChild("Instancing_FireCustomFromClient"):FireServer(DigZoneType, "DigChest", Chest:GetAttribute("Coord"))
-                        wait()
-                    until A == true or not Chest or not Chest.Parent or (HumanoidRootPart.Position - Chest.Bottom.Position).magnitude > _G.AutoFarmChestDistance or _G.FarmingChest == false or _G.AutoFarmChestOnOff == false
-                    wait(0.01)
-                end
-            end
-            if not foundChest then
-                print("no chest") -- Print if there are no active chests with name "Animated"
-            end
-
+        if currentActivePart then
+            print("Currently Farming Chest.")
         else
-            task.wait(1)
-            local Http = game:GetService("HttpService")
-            local TPS = game:GetService("TeleportService")
-            local Api = "https://games.roblox.com/v1/games/"
+            local newPart = Instance.new("Part")
+            newPart.Name = "FarmingChest"
+            newPart.Parent = workspace
 
-            local _place = game.PlaceId
-            local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-            function ListServers(cursor)
-                local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-                return Http:JSONDecode(Raw)
+            local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+            if hierarchyPath then
+                local found = false
+
+                for _, part in ipairs(hierarchyPath:GetChildren()) do
+                    if part:IsA("BasePart") and part.Color == targetColor then
+                        found = true
+                        while part.Parent do
+                            print("Waiting for Magic to disappear")
+                            wait(1)
+                        end
+                        print("Completed")
+                        break  -- Exit the loop once the part is no longer there
+                    end
+                end
             end
 
-            local Server, Next
-            repeat
-                local Servers = ListServers(Next)
-                Server = Servers.data[1]
-                Next = Servers.nextPageCursor
-            until Server
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local WorkSpace = game:GetService("Workspace")
+            local Players = game:GetService("Players")
 
-            TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
-            task.wait(10)
+            local Network = ReplicatedStorage:WaitForChild("Network")
+            local LocalPlayer = Players.LocalPlayer
+            local HumanoidRootPart = LocalPlayer.Character.HumanoidRootPart
+
+            local Container = WorkSpace.__THINGS.__INSTANCE_CONTAINER
+            local DigZoneType = "AdvancedDigsite" -- Digsite or AdvancedDigsite
+
+            -- TeleportTo Function
+            function TeleportTo(TeleportPosition)
+                local Character = LocalPlayer.Character
+                local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+                if not HumanoidRootPart then
+                    return
+                end
+
+                TeleportPosition = TeleportPosition - Vector3.new(0, 20, 0)
+                HumanoidRootPart.CFrame = CFrame.new(TeleportPosition)
+            end
+
+            -- Auto Farm Chest
+            _G.AutoFarmChestOnOff = true
+            _G.AutoFarmChestDistance = 999
+            _G.FarmingChest = false
+
+            function AutoFarmChest()
+                if _G.AutoFarmChestOnOff == true then
+                    _G.FarmingChest = true
+                    local ActiveChests = Container.Active[DigZoneType].Important.ActiveChests:GetChildren()
+                    if ActiveChests ~= nil and #ActiveChests > 0 then -- Check if there are active chests
+                        local PlayerOldPosition = HumanoidRootPart.Position
+                        local foundChest = false -- Flag to track if a chest with name "Animated" was found
+                        for i, Chest in pairs(ActiveChests) do
+                            if _G.FarmingChest == false or _G.AutoFarmChestOnOff == false then
+                                break
+                            end
+                            if Chest.Name == "Animated" then
+                                if Chest:FindFirstChild("Bottom") then  -- Check if the chest has a "Bottom" part
+                                    foundChest = true
+                                    TeleportTo(Chest.Bottom.Position)
+                                    wait(0.15)-- Shorten the wait time before proceeding to the next chest
+                                    repeat
+                                        local A = Network:WaitForChild("Instancing_FireCustomFromClient"):FireServer(DigZoneType, "DigChest", Chest:GetAttribute("Coord"))
+                                        wait()
+                                    until A == true or not Chest or not Chest.Parent or (HumanoidRootPart.Position - Chest.Bottom.Position).magnitude > _G.AutoFarmChestDistance or _G.FarmingChest == false or _G.AutoFarmChestOnOff == false
+                                    wait(0.01)
+                                else
+                                    print("Chest has no bottom, destroying...")  -- Print a message if the chest has no "Bottom" part
+                                    wait(2)  -- Wait for 2 seconds before destroying the chest
+                                    if Chest and Chest.Parent then
+                                        Chest:Destroy()
+                                    end
+                                    wait(0.01)
+                                end
+                            end
+                        end
+                        if not foundChest then
+                            print("no chest") -- Print if there are no active chests with name "Animated"
+                        end
+
+                    else
+                        task.wait(1)
+                        local Http = game:GetService("HttpService")
+                        local TPS = game:GetService("TeleportService")
+                        local Api = "https://games.roblox.com/v1/games/"
+
+                        local _place = game.PlaceId
+                        local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+                        function ListServers(cursor)
+                            local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+                            return Http:JSONDecode(Raw)
+                        end
+
+                        local Server, Next
+                        repeat
+                            local Servers = ListServers(Next)
+                            Server = Servers.data[1]
+                            Next = Servers.nextPageCursor
+                        until Server
+
+                        TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+                        task.wait(10)
+                    end
+                    task.wait(10)
+                end
+                _G.FarmingChest = false
+            end
+
+            function AutoFarmChestOnOff()
+                while _G.AutoFarmChestOnOff do
+                    if _G.FarmingChest == false then
+                        task.spawn(AutoFarmChest)
+                    end
+                    wait(1)
+                end
+                if _G.AutoFarmChestOnOff == false then
+                    _G.FarmingChest = false
+                end
+            end
+
+            -- Enable Auto Farming
+            _G.AutoFarmChestOnOff = true
+            AutoFarmChestOnOff()
         end
-        task.wait(10)
-    end
-    _G.FarmingChest = false
-end
-
-function AutoFarmChestOnOff()
-    while _G.AutoFarmChestOnOff do
-        if _G.FarmingChest == false then
-            task.spawn(AutoFarmChest)
-        end
-        wait(1)
-    end
-    if _G.AutoFarmChestOnOff == false then
-        _G.FarmingChest = false
     end
 end
-
--- Enable Auto Farming
-_G.AutoFarmChestOnOff = true
-AutoFarmChestOnOff()
-    
-end
-
-
-
-
-end
-end
-
-
