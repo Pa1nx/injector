@@ -1,4 +1,4 @@
-local myBoolean = true  -- Change this variable to test different conditions
+local myBoolean = false  -- Change this variable to test different conditions
 
 if myBoolean == true then
 --Services/Variables
