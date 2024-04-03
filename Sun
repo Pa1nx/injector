@@ -1,3 +1,6 @@
+local myBoolean = false  -- Change this variable to test different conditions
+
+if myBoolean == true then
 --Services/Variables
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Client = require(ReplicatedStorage:WaitForChild("Library"))
@@ -29,12 +32,18 @@ local args = {
 }
 
 game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
-
-    end
-end
-
 --How To Use That
 GrabId()
+    end
+end
+else
+    print("no")
+end
+
+
+
+
+
 
 local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
 
