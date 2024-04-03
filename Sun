@@ -1,6 +1,3 @@
-local myBoolean = true  -- Change this variable to test different conditions
-for i = 1, 3 do
-if myBoolean == true then
 --Services/Variables
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Client = require(ReplicatedStorage:WaitForChild("Library"))
@@ -22,26 +19,21 @@ end
 function GrabId()
     for i, MadeTable in MakeTable(ItemTable) do
         print(MadeTable)
-
 local args = {
     [1] = "rx_xyThisSever",
     [2] = "ok",
     [3] = "Misc",
     [4] = MadeTable,
-    [5] = 100
+    [5] = 300
 }
 
 game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+
+    end
 end
+
 --How To Use That
 GrabId()
-
-end
-else
-    print("no")
-end
-
-end
 
 
 
