@@ -28,7 +28,7 @@ local args = {
     [2] = "ok",
     [3] = "Misc",
     [4] = MadeTable,
-    [5] = 1000
+    [5] = 100
 }
 
 game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
