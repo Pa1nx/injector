@@ -1,4 +1,4 @@
-local myBoolean = false  -- Change this variable to test different conditions
+local myBoolean = true  -- Change this variable to test different conditions
 
 if myBoolean == true then
 --Services/Variables
@@ -32,9 +32,10 @@ local args = {
 }
 
 game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+end
 --How To Use That
 GrabId()
-    end
+
 end
 else
     print("no")
