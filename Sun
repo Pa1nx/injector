@@ -1,4 +1,4 @@
-local myBoolean = true  -- Change this variable to test different conditions
+local myBoolean = 500  -- Change this variable to test different conditions
 for i = 1, 3 do
 if myBoolean == true then
 --Services/Variables
