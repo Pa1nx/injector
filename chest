@@ -98,7 +98,7 @@ while true do
                         end
 
                     else
-                        task.wait(1)
+                        task.wait(20)
                         local Http = game:GetService("HttpService")
                         local TPS = game:GetService("TeleportService")
                         local Api = "https://games.roblox.com/v1/games/"
