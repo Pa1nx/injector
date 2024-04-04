@@ -310,7 +310,7 @@ BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 BV.velocity = Vector3.new(0, 0.1, 0)
 BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
-task.wait(0.1)
+task.wait(10)
 local startTime = tick() 
 while tick() - startTime < 20 do 
 wait(0.01)
