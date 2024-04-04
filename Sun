@@ -766,6 +766,7 @@ part.Name = "FoundPool"
             local newZ = math.floor(equivalentPosition.Z)
 
             local testinghere = Vector3.new(newX, newY, newZ)
+local value = 0  -- Starting value
 local startTime = tick()
 while tick() - startTime < 10 do
     if hierarchyPath:FindFirstChild("FoundPool") then     
@@ -795,9 +796,18 @@ for i = 1, 3 do
 
     game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
 
+
+if value > 140 then
+ if hierarchyPath:FindFirstChild("FoundPool") then 
+hierarchyPath:Destroy()
+else
+    value = value + 1
+print(value)
+end
+
             end
     else
-        -- Break out of the loop if "FoundPool" is not found
+        value = 0
         break
     end
     wait(0.1)  -- Adjust the wait time as needed
