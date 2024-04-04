@@ -800,6 +800,7 @@ for i = 1, 3 do
 if value > 140 then
  if hierarchyPath:FindFirstChild("FoundPool") then 
 hierarchyPath:Destroy()
+end
 else
     value = value + 1
 print(value)
