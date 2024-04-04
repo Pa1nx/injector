@@ -1,4 +1,15 @@
 
+local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+
+
+if currentActivePart then
+    print("Currently Farming.")
+else
+
+    local newPart = Instance.new("Part")
+    newPart.Name = "CurrentlyActive"
+    newPart.Parent = workspace
+end
 
 
 local NumberValue = 20
