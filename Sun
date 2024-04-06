@@ -36,23 +36,20 @@ if gui then
         if giftsFrame then
             local itemsFrame = giftsFrame.ItemsFrame
             if itemsFrame then
-                local children = itemsFrame:GetChildren()
-                if #children > 0 then
-                    for _, child in ipairs(children) do
-                        if child:IsA("Frame") then
-                            local args = {
-                                [1] = {
-                                    [1] = child.Name
-                                }
-                            }
-                            game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Claim"):InvokeServer(unpack(args))
-                        end
-                    end
+                local frameChild = itemsFrame:FindFirstChildWhichIsA("Frame")
+                if frameChild then
+                    local args = {
+                        [1] = {
+                            [1] = frameChild.Name
+                        }
+                    }
+                    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Claim"):InvokeServer(unpack(args))
                 end
             end
         end
     end
 end
+
 wait(3)
 -- Services/Variables
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
