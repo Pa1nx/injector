@@ -84,9 +84,8 @@ while true do
                                     until A == true or not Chest or not Chest.Parent or (HumanoidRootPart.Position - Chest.Bottom.Position).magnitude > _G.AutoFarmChestDistance or _G.FarmingChest == false or _G.AutoFarmChestOnOff == false
                                     wait(0.01)
                                 else
-                                    print("Chest has no bottom, destroying...")  -- Print a message if the chest has no "Bottom" part
-                                    wait(2)  -- Wait for 2 seconds before destroying the chest
-                                    if Chest and Chest.Parent then
+                                    print("Chest has no bottom, destroying...")  -- Print a message if the chest has no "Bottom" 
+                                    if Chest then
                                         Chest:Destroy()
                                     end
                                     wait(0.01)
@@ -94,7 +93,28 @@ while true do
                             end
                         end
                         if not foundChest then
-                            print("no chest") -- Print if there are no active chests with name "Animated"
+                           task.wait(20)
+                        local Http = game:GetService("HttpService")
+                        local TPS = game:GetService("TeleportService")
+                        local Api = "https://games.roblox.com/v1/games/"
+
+                        local _place = game.PlaceId
+                        local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+                        function ListServers(cursor)
+                            local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+                            return Http:JSONDecode(Raw)
+                        end
+
+                        local Server, Next
+                        repeat
+                            local Servers = ListServers(Next)
+                            Server = Servers.data[1]
+                            Next = Servers.nextPageCursor
+                        until Server
+
+                        TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+                        task.wait(10)
+                    end
                         end
 
                     else
