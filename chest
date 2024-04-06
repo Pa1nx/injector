@@ -85,8 +85,8 @@ while true do
                                     wait(0.01)
                                 else
                                     print("Chest has no bottom, destroying...")  -- Print a message if the chest has no "Bottom" part
-                                    wait(2)  -- Wait for 2 seconds before destroying the chest
-                                    if Chest and Chest.Parent then
+                                    
+                                    if Chest then
                                         Chest:Destroy()
                                     end
                                     wait(0.01)
