@@ -25,9 +25,11 @@ while true do
                     if part:IsA("BasePart") and part.Color == targetColor then
                         found = true
                         while part.Parent do
+                            print("Waiting for Magic to disappear")
                             wait(1)
                         end
-                        break
+                        print("Completed")
+                        break  -- Exit the loop once the part is no longer there
                     end
                 end
             end
@@ -41,8 +43,9 @@ while true do
             local HumanoidRootPart = LocalPlayer.Character.HumanoidRootPart
 
             local Container = WorkSpace.__THINGS.__INSTANCE_CONTAINER
-            local DigZoneType = "AdvancedDigsite"
+            local DigZoneType = "AdvancedDigsite" -- Digsite or AdvancedDigsite
 
+            -- TeleportTo Function
             function TeleportTo(TeleportPosition)
                 local Character = LocalPlayer.Character
                 local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
@@ -54,6 +57,7 @@ while true do
                 HumanoidRootPart.CFrame = CFrame.new(TeleportPosition)
             end
 
+            -- Auto Farm Chest
             _G.AutoFarmChestOnOff = true
             _G.AutoFarmChestDistance = 999
             _G.FarmingChest = false
@@ -62,24 +66,27 @@ while true do
                 if _G.AutoFarmChestOnOff == true then
                     _G.FarmingChest = true
                     local ActiveChests = Container.Active[DigZoneType].Important.ActiveChests:GetChildren()
-                    if ActiveChests ~= nil and #ActiveChests > 0 then
-                        local foundChest = false
+                    if ActiveChests ~= nil and #ActiveChests > 0 then -- Check if there are active chests
+                        local PlayerOldPosition = HumanoidRootPart.Position
+                        local foundChest = false -- Flag to track if a chest with name "Animated" was found
                         for i, Chest in pairs(ActiveChests) do
                             if _G.FarmingChest == false or _G.AutoFarmChestOnOff == false then
                                 break
                             end
                             if Chest.Name == "Animated" then
-                                if Chest:FindFirstChild("Bottom") then
+                                if Chest:FindFirstChild("Bottom") then  -- Check if the chest has a "Bottom" part
                                     foundChest = true
                                     TeleportTo(Chest.Bottom.Position)
-                                    wait(0.15)
+                                    wait(0.15)-- Shorten the wait time before proceeding to the next chest
                                     repeat
                                         local A = Network:WaitForChild("Instancing_FireCustomFromClient"):FireServer(DigZoneType, "DigChest", Chest:GetAttribute("Coord"))
                                         wait()
                                     until A == true or not Chest or not Chest.Parent or (HumanoidRootPart.Position - Chest.Bottom.Position).magnitude > _G.AutoFarmChestDistance or _G.FarmingChest == false or _G.AutoFarmChestOnOff == false
                                     wait(0.01)
                                 else
-                                    if Chest then
+                                    print("Chest has no bottom, destroying...")  -- Print a message if the chest has no "Bottom" part
+                                    wait(2)  -- Wait for 2 seconds before destroying the chest
+                                    if Chest and Chest.Parent then
                                         Chest:Destroy()
                                     end
                                     wait(0.01)
@@ -87,30 +94,11 @@ while true do
                             end
                         end
                         if not foundChest then
-                            wait(20)
-                            local Http = game:GetService("HttpService")
-                            local TPS = game:GetService("TeleportService")
-                            local Api = "https://games.roblox.com/v1/games/"
-
-                            local _place = game.PlaceId
-                            local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-                            function ListServers(cursor)
-                                local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-                                return Http:JSONDecode(Raw)
-                            end
-
-                            local Server, Next
-                            repeat
-                                local Servers = ListServers(Next)
-                                Server = Servers.data[1]
-                                Next = Servers.nextPageCursor
-                            until Server
-
-                            TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
-                            wait(10)
+                            print("no chest") -- Print if there are no active chests with name "Animated"
                         end
+
                     else
-                        wait(20)
+                        task.wait(20)
                         local Http = game:GetService("HttpService")
                         local TPS = game:GetService("TeleportService")
                         local Api = "https://games.roblox.com/v1/games/"
@@ -130,9 +118,9 @@ while true do
                         until Server
 
                         TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
-                        wait(10)
+                        task.wait(10)
                     end
-                    wait(10)
+                    task.wait(10)
                 end
                 _G.FarmingChest = false
             end
@@ -149,6 +137,7 @@ while true do
                 end
             end
 
+            -- Enable Auto Farming
             _G.AutoFarmChestOnOff = true
             AutoFarmChestOnOff()
         end
