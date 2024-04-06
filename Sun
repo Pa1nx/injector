@@ -113,7 +113,7 @@ function GrabId()
         print("Amount:", BucketAmount)
         print("ID:", BucketId)
 
-        if MagicAmount > 300 then
+        if MagicAmount > 1000 then
             local args = {
                 [1] = "rx_xyThisSever",
                 [2] = "'" .. (BucketAmount or "") .. "'",
