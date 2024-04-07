@@ -834,7 +834,31 @@ function GrabId()
     end
 
     if not foundBucket then
-        print("Bucket is missing")
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+    local targetColor = Color3.fromRGB(98, 37, 209)
+    local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+    if hierarchyPath then
+        local found = false
+        local targetPosition = nil
+        local correctedPosition
+
+        for _, part in ipairs(hierarchyPath:GetChildren()) do
+            if part:IsA("BasePart") and part.Color == targetColor then
+                part:Destroy()
+            end
+        end
+    else
+        print("Hierarchy path not found.")
+    end
+
+    local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+    if currentActivePart then
+        currentActivePart:Destroy()
+    end
+        end
     elseif BucketAmount then
         if BucketAmount > 1 then
             print("Bucket's functionable")
