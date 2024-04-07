@@ -64,6 +64,7 @@ local MagicId
 local BucketName
 local BucketAmount
 local BucketId
+local BucketMissing = false -- Added variable to track if the bucket is missing
 
 function MakeTable(Table)
     local Temp = {}
@@ -103,7 +104,8 @@ function GrabId()
     end
 
     if not foundBucket then
-        print("Bucket not found. Running remote with Bucket amount as 'Cannot determine'.")
+        print("Bucket not found. Setting BucketMissing to true.")
+        BucketMissing = true
         BucketAmount = "Cannot determine"
     end
 
@@ -124,10 +126,14 @@ function GrabId()
     else
         print("Unable to function. Missing required data.")
     end
+
+  
+    if BucketMissing then
+        print("Bucket is missing. Setting value to true, skipping over Magic as there's no Bucket.")
+    end
 end
 
 GrabId()
-
 
 
 workspace:FindFirstChild("__THINGS").Breakables:Destroy()
@@ -802,6 +808,14 @@ end
 end
 
 task.wait(5)
+if BucketMissing == true then
+local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+
+
+if currentActivePart then
+    currentActivePart:Destroy()
+else
+
 
 while true do
     wait(0.01)
@@ -927,4 +941,6 @@ if currentActivePart then
 end
         end
     end
+end
+    print("Ok")
 end
