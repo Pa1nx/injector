@@ -806,7 +806,7 @@ end
 end
 
 task.wait(5)
-    if foundBucket then
+ 
      
 while true do
     wait(0.01)
@@ -934,11 +934,4 @@ end
     end
 end
 
-    else
-                  local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
-
-
-if currentActivePart then
-    currentActivePart:Destroy()
-end
-    end
+    
