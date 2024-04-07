@@ -810,8 +810,38 @@ end
 end
 
 task.wait(5)
-    if foundBucket then
-     
+   if foundBucket == true then
+    -- Code to execute if foundBucket is true
+elseif foundBucket == false then
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+    local targetColor = Color3.fromRGB(98, 37, 209)
+    local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+    if hierarchyPath then
+        local found = false
+        local targetPosition = nil
+        local correctedPosition
+
+        for _, part in ipairs(hierarchyPath:GetChildren()) do
+            if part:IsA("BasePart") and part.Color == targetColor then
+                part:Destroy()
+            end
+        end
+    else
+        print("Hierarchy path not found.")
+    end
+
+    local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+    if currentActivePart then
+        currentActivePart:Destroy()
+    end
+end
+
+
+
+
 while true do
     wait(0.01)
     local player = game.Players.LocalPlayer
@@ -937,12 +967,3 @@ end
         end
     end
 end
-
-    else
-                  local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
-
-
-if currentActivePart then
-    currentActivePart:Destroy()
-end
-    end
