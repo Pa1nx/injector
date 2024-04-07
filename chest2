@@ -313,7 +313,487 @@ BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 BV.velocity = Vector3.new(0, 0.1, 0)
 BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 wait(1)
+local startTime = tick() 
+while tick() - startTime < 20 do 
+wait(0.01)
+local TweenService = game:GetService("TweenService")
 
+local player = game.Players.LocalPlayer
+local character = player.Character
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local ActiveBlocksFolder = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+local closestPart = nil
+local closestDistance = math.huge
+local correctedPosition = nil
+for _, part in ipairs(ActiveBlocksFolder:GetChildren()) do
+    if part:IsA("BasePart") then
+        local position = part.Position
+        correctedPosition = Vector3.new(math.floor(position.X + 0.5), math.floor(position.Y + 0.5), math.floor(position.Z + 0.5))
+
+        if correctedPosition.X == 691 and correctedPosition.Z == -2653 then
+            local distance = (humanoidRootPart.Position - position).Magnitude
+            if distance < closestDistance then
+                closestPart = part
+                closestDistance = distance
+            end
+        end
+    end
+end
+
+local targetPosition = closestPart.Position
+
+
+local targetPositionOffset
+if TrueSubFalsePlus == true then
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
+else
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y + NumberValue, targetPosition.Z)
+end
+
+local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+tween:Play()
+tween.Completed:Wait()
+
+ local position = targetPosition
+            local roundedPosition = Vector3.new(
+                math.floor(position.X),
+                math.floor(position.Y),
+                math.floor(position.Z)
+            )
+
+            local originalPosition = Vector3.new(587, 50, -2757)
+            local orientationNumbers = Vector3.new(1, 1, 1) 
+
+            local xOffset = position.X - originalPosition.X
+            local yOffset = position.Y - originalPosition.Y
+            local zOffset = position.Z - originalPosition.Z
+
+            local equivalentPosition = Vector3.new(
+                orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+                orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, -- Adjust Y-offset calculation
+                orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+            )
+
+            local newX = math.floor(equivalentPosition.X)
+            local newY = math.floor(equivalentPosition.Y)
+            local newZ = math.floor(equivalentPosition.Z)
+
+            local testinghere = Vector3.new(newX, newY, newZ)
+
+for i = 1, 3 do
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 2, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+end
+
+print("Information : 2 / 4 ")
+local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+
+
+if currentActivePart then
+    print("Currently Farming.")
+else
+
+    local newPart = Instance.new("Part")
+    newPart.Name = "CurrentlyActive"
+    newPart.Parent = workspace
+end
+
+local startTime = tick() 
+while tick() - startTime < 20 do 
+wait(0.01)
+local TweenService = game:GetService("TweenService")
+
+local player = game.Players.LocalPlayer
+local character = player.Character
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local ActiveBlocksFolder = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+local closestPart = nil
+local closestDistance = math.huge
+local correctedPosition = nil
+for _, part in ipairs(ActiveBlocksFolder:GetChildren()) do
+    if part:IsA("BasePart") then
+        local position = part.Position
+        correctedPosition = Vector3.new(math.floor(position.X + 0.5), math.floor(position.Y + 0.5), math.floor(position.Z + 0.5))
+
+        if correctedPosition.X == 691 and correctedPosition.Z == -2741 then
+            local distance = (humanoidRootPart.Position - position).Magnitude
+            if distance < closestDistance then
+                closestPart = part
+                closestDistance = distance
+            end
+        end
+    end
+end
+
+local targetPosition = closestPart.Position
+
+if TrueSubFalsePlus == true then
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
+else
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y + NumberValue, targetPosition.Z)
+end
+
+local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+tween:Play()
+tween.Completed:Wait()
+
+ local position = targetPosition
+            local roundedPosition = Vector3.new(
+                math.floor(position.X),
+                math.floor(position.Y),
+                math.floor(position.Z)
+            )
+
+            local originalPosition = Vector3.new(587, 50, -2757)
+            local orientationNumbers = Vector3.new(1, 1, 1) 
+
+            local xOffset = position.X - originalPosition.X
+            local yOffset = position.Y - originalPosition.Y
+            local zOffset = position.Z - originalPosition.Z
+
+            local equivalentPosition = Vector3.new(
+                orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+                orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, -- Adjust Y-offset calculation
+                orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+            )
+
+            local newX = math.floor(equivalentPosition.X)
+            local newY = math.floor(equivalentPosition.Y)
+            local newZ = math.floor(equivalentPosition.Z)
+
+            local testinghere = Vector3.new(newX, newY, newZ)
+
+for i = 1, 3 do
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 2, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+end
+
+
+
+print("Information : 3 / 4 ")
+
+
+
+local startTime = tick() 
+while tick() - startTime < 20 do 
+wait(0.01)
+local TweenService = game:GetService("TweenService")
+
+local player = game.Players.LocalPlayer
+local character = player.Character
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local ActiveBlocksFolder = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+local closestPart = nil
+local closestDistance = math.huge
+local correctedPosition = nil
+for _, part in ipairs(ActiveBlocksFolder:GetChildren()) do
+    if part:IsA("BasePart") then
+        local position = part.Position
+        correctedPosition = Vector3.new(math.floor(position.X + 0.5), math.floor(position.Y + 0.5), math.floor(position.Z + 0.5))
+
+        if correctedPosition.X == 603 and correctedPosition.Z == -2653 then
+            local distance = (humanoidRootPart.Position - position).Magnitude
+            if distance < closestDistance then
+                closestPart = part
+                closestDistance = distance
+            end
+        end
+    end
+end
+
+local targetPosition = closestPart.Position
+
+if TrueSubFalsePlus == true then
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
+else
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y + NumberValue, targetPosition.Z)
+end
+
+local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+tween:Play()
+tween.Completed:Wait()
+
+ local position = targetPosition
+            local roundedPosition = Vector3.new(
+                math.floor(position.X),
+                math.floor(position.Y),
+                math.floor(position.Z)
+            )
+
+            local originalPosition = Vector3.new(587, 50, -2757)
+            local orientationNumbers = Vector3.new(1, 1, 1) 
+
+            local xOffset = position.X - originalPosition.X
+            local yOffset = position.Y - originalPosition.Y
+            local zOffset = position.Z - originalPosition.Z
+
+            local equivalentPosition = Vector3.new(
+                orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+                orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, -- Adjust Y-offset calculation
+                orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+            )
+
+            local newX = math.floor(equivalentPosition.X)
+            local newY = math.floor(equivalentPosition.Y)
+            local newZ = math.floor(equivalentPosition.Z)
+
+            local testinghere = Vector3.new(newX, newY, newZ)
+
+for i = 1, 3 do
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 2, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+end
+
+
+
+print("Information : 4 / 4 ")
+
+
+
+local startTime = tick() 
+while tick() - startTime < 20 do 
+wait(0.01)
+local TweenService = game:GetService("TweenService")
+
+local player = game.Players.LocalPlayer
+local character = player.Character
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local ActiveBlocksFolder = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+local closestPart = nil
+local closestDistance = math.huge
+local correctedPosition = nil
+for _, part in ipairs(ActiveBlocksFolder:GetChildren()) do
+    if part:IsA("BasePart") then
+        local position = part.Position
+        correctedPosition = Vector3.new(math.floor(position.X + 0.5), math.floor(position.Y + 0.5), math.floor(position.Z + 0.5))
+
+        if correctedPosition.X == 603 and correctedPosition.Z == -2741 then
+            local distance = (humanoidRootPart.Position - position).Magnitude
+            if distance < closestDistance then
+                closestPart = part
+                closestDistance = distance
+            end
+        end
+    end
+end
+
+local targetPosition = closestPart.Position
+
+if TrueSubFalsePlus == true then
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
+else
+    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y + NumberValue, targetPosition.Z)
+end
+
+local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+tween:Play()
+tween.Completed:Wait()
+
+ local position = targetPosition
+            local roundedPosition = Vector3.new(
+                math.floor(position.X),
+                math.floor(position.Y),
+                math.floor(position.Z)
+            )
+
+            local originalPosition = Vector3.new(587, 50, -2757)
+            local orientationNumbers = Vector3.new(1, 1, 1) 
+
+            local xOffset = position.X - originalPosition.X
+            local yOffset = position.Y - originalPosition.Y
+            local zOffset = position.Z - originalPosition.Z
+
+            local equivalentPosition = Vector3.new(
+                orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+                orientationNumbers.Y + math.floor(-yOffset + 0.5) / 7.6, 
+                orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+            )
+
+            local newX = math.floor(equivalentPosition.X)
+            local newY = math.floor(equivalentPosition.Y)
+            local newZ = math.floor(equivalentPosition.Z)
+
+            local testinghere = Vector3.new(newX, newY, newZ)
+
+
+for i = 1, 3 do
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    wait(0.01)
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 2, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+end
+end
+
+task.wait(5)
 while true do
   wait(0.01)
 local currentActivePart = workspace:FindFirstChild("FarmingChest")
