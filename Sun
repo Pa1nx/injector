@@ -23,7 +23,7 @@ local TrueSubFalsePlus = true
 
 print("Developer : Leanguttzz")
 print("Information : Activating Script…")
-print("Information : Best Functiong updatw")
+print("Information : Best Functiong lol")
 wait(10)
 workspace.Map:Destroy()
 local player = game.Players.LocalPlayer
@@ -94,11 +94,9 @@ function GrabId()
             BucketAmount = Table.data._am
             BucketId = Table.uid
             if BucketAmount and (BucketAmount > 1) then
-    print("set to true")
                 foundBucket = true
             else
                 foundBucket = false
-    print("set to false")
             end
         end
     end
@@ -111,7 +109,6 @@ function GrabId()
     if not foundBucket then
         print("Bucket not found. Running remote with Bucket amount as 'Cannot determine'.")
         BucketAmount = "Cannot determine"
-foundBucket = false
     end
 
     if MagicName and MagicAmount and MagicId then
@@ -811,38 +808,8 @@ end
 end
 
 task.wait(5)
-   if foundBucket == true then
-   print("its true")
-elseif foundBucket == false then
-    local player = game.Players.LocalPlayer
-    local character = player.Character
-    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
-    local targetColor = Color3.fromRGB(98, 37, 209)
-    local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
-
-    if hierarchyPath then
-        local found = false
-        local targetPosition = nil
-        local correctedPosition
-
-        for _, part in ipairs(hierarchyPath:GetChildren()) do
-            if part:IsA("BasePart") and part.Color == targetColor then
-                part:Destroy()
-            end
-        end
-    else
-        print("Hierarchy path not found.")
-    end
-
-    local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
-    if currentActivePart then
-        currentActivePart:Destroy()
-    end
-end
-
-
-print("eunning magic now")
-
+    if foundBucket then
+     
 while true do
     wait(0.01)
     local player = game.Players.LocalPlayer
@@ -968,3 +935,12 @@ end
         end
     end
 end
+
+    else
+                  local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+
+
+if currentActivePart then
+    currentActivePart:Destroy()
+end
+    end
