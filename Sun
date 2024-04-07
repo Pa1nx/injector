@@ -23,7 +23,7 @@ local TrueSubFalsePlus = true
 
 print("Developer : Leanguttzz")
 print("Information : Activating Script…")
-print("Information : Best Functiong lol")
+print("Information : Best Functioning111")
 wait(10)
 workspace.Map:Destroy()
 local player = game.Players.LocalPlayer
@@ -93,11 +93,7 @@ function GrabId()
             BucketName = Table.data.id
             BucketAmount = Table.data._am
             BucketId = Table.uid
-            if BucketAmount and (BucketAmount > 1) then
-                foundBucket = true
-            else
-                foundBucket = false
-            end
+            foundBucket = true
         end
     end
 
@@ -128,8 +124,6 @@ function GrabId()
     else
         print("Unable to function. Missing required data.")
     end
-    
-
 end
 
 GrabId()
@@ -808,8 +802,76 @@ end
 end
 
 task.wait(5)
-    if foundBucket then
-     
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local Client = require(ReplicatedStorage:WaitForChild("Library"))
+
+local ItemTable = {"Bucket"}
+
+local BucketAmount
+
+function MakeTable(Table)
+    local Temp = {}
+    for i, v in next, Client.Items.All.Globals.All() do
+        if table.find(Table, v._data.id) then
+            table.insert(Temp, v)
+        end
+    end
+    return Temp
+end
+
+function GrabId()
+    local foundBucket = false
+    
+    for i, MadeTable in pairs(MakeTable(ItemTable)) do
+        local Table = HttpService:JSONDecode(tostring(MadeTable))
+ 
+        if Table.data.id == "Bucket" then
+            foundBucket = true
+            BucketAmount = Table.data._am
+            break
+        end
+    end
+
+    if not foundBucket then
+        print("Bucket is missing")
+    elseif BucketAmount then
+        if BucketAmount > 1 then
+            print("Bucket's functionable")
+        else
+              local player = game.Players.LocalPlayer
+    local character = player.Character
+    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+    local targetColor = Color3.fromRGB(98, 37, 209)
+    local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+    if hierarchyPath then
+        local found = false
+        local targetPosition = nil
+        local correctedPosition
+
+        for _, part in ipairs(hierarchyPath:GetChildren()) do
+            if part:IsA("BasePart") and part.Color == targetColor then
+                part:Destroy()
+            end
+        end
+    else
+        print("Hierarchy path not found.")
+    end
+
+    local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+    if currentActivePart then
+        currentActivePart:Destroy()
+    end
+        end
+    end
+end
+
+GrabId()
+
+
+
+
 while true do
     wait(0.01)
     local player = game.Players.LocalPlayer
@@ -936,11 +998,3 @@ end
     end
 end
 
-    else
-                  local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
-
-
-if currentActivePart then
-    currentActivePart:Destroy()
-end
-    end
