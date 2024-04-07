@@ -111,6 +111,7 @@ function GrabId()
     if not foundBucket then
         print("Bucket not found. Running remote with Bucket amount as 'Cannot determine'.")
         BucketAmount = "Cannot determine"
+foundBucket = false
     end
 
     if MagicName and MagicAmount and MagicId then
@@ -811,7 +812,7 @@ end
 
 task.wait(5)
    if foundBucket == true then
-    -- Code to execute if foundBucket is true
+   print("its true")
 elseif foundBucket == false then
     local player = game.Players.LocalPlayer
     local character = player.Character
@@ -840,7 +841,7 @@ elseif foundBucket == false then
 end
 
 
-
+print("eunning magic now")
 
 while true do
     wait(0.01)
