@@ -23,7 +23,7 @@ local TrueSubFalsePlus = true
 
 print("Developer : Leanguttzz")
 print("Information : Activating Script…")
-print("Information : Best dateeeee")
+print("Information : Best ok cool")
 wait(10)
 workspace.Map:Destroy()
 local player = game.Players.LocalPlayer
@@ -833,65 +833,41 @@ function GrabId()
         end
     end
 
-    if not foundBucket then
-    local player = game.Players.LocalPlayer
-    local character = player.Character
-    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
-    local targetColor = Color3.fromRGB(98, 37, 209)
-    local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
-
-    if hierarchyPath then
-        local found = false
-        local targetPosition = nil
-        local correctedPosition
-
-        for _, part in ipairs(hierarchyPath:GetChildren()) do
-            if part:IsA("BasePart") and part.Color == targetColor then
-                part:Destroy()
-            end
-        end
-    else
-        print("Hierarchy path not found.")
-    end
-
-    local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
-    if currentActivePart then
-        currentActivePart:Destroy()
-    end
-        end
+    if not foundBucket or (BucketAmount and BucketAmount < 1) then
+        DestroyBlocks()
     elseif BucketAmount then
         if BucketAmount > 1 then
-            print("Bucket's functionable")
+            print("Bucket is functional")
         else
-              local player = game.Players.LocalPlayer
-    local character = player.Character
-    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
-    local targetColor = Color3.fromRGB(98, 37, 209)
-    local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
-
-    if hierarchyPath then
-        local found = false
-        local targetPosition = nil
-        local correctedPosition
-
-        for _, part in ipairs(hierarchyPath:GetChildren()) do
-            if part:IsA("BasePart") and part.Color == targetColor then
-                part:Destroy()
-            end
-        end
-    else
-        print("Hierarchy path not found.")
-    end
-
-    local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
-    if currentActivePart then
-        currentActivePart:Destroy()
-    end
+            DestroyBlocks()
         end
     end
 end
 
+function DestroyBlocks()
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    local targetColor = Color3.fromRGB(98, 37, 209)
+    local hierarchyPath = workspace:FindFirstChild("__THINGS") and workspace.__THINGS:FindFirstChild("__INSTANCE_CONTAINER") and workspace.__THINGS.__INSTANCE_CONTAINER.Active.AdvancedDigsite.Important.ActiveBlocks
+
+    if hierarchyPath then
+        for _, part in ipairs(hierarchyPath:GetChildren()) do
+            if part:IsA("BasePart") and part.Color == targetColor then
+                part:Destroy()
+            end
+        end
+    else
+        print("Hierarchy path not found.")
+    end
+
+    local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+    if currentActivePart then
+        currentActivePart:Destroy()
+    end
+end
+
 GrabId()
+
 
 
 
