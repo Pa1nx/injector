@@ -1,15 +1,24 @@
   task.wait(550) 
   while true do
 wait(1)
--- Assuming this script is placed in a LocalScript
-local player = game.Players.LocalPlayer
+ local Http = game:GetService("HttpService")
+                        local TPS = game:GetService("TeleportService")
+                        local Api = "https://games.roblox.com/v1/games/"
 
--- Function to kick the player with a custom message
-local function kickPlayer(message)
-    game.Players:Kick(message)
-end
+                        local _place = game.PlaceId
+                        local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+                        function ListServers(cursor)
+                            local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+                            return Http:JSONDecode(Raw)
+                        end
 
--- Example usage
-kickPlayer("Error occurred.")
+                        local Server, Next
+                        repeat
+                            local Servers = ListServers(Next)
+                            Server = Servers.data[1]
+                            Next = Servers.nextPageCursor
+                        until Server
+
+                        TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
 
 end
