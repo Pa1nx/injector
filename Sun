@@ -23,7 +23,7 @@ local TrueSubFalsePlus = true
 
 print("Developer : Leanguttzz")
 print("Information : Activating Script…")
-print("Information : Best Functiong lol")
+print("Information : Best Functiong updatw")
 wait(10)
 workspace.Map:Destroy()
 local player = game.Players.LocalPlayer
