@@ -23,7 +23,7 @@ local TrueSubFalsePlus = true
 
 print("Developer : Leanguttzz")
 print("Information : Activating Script…")
-print("Information : Best Functioning111")
+print("Information : Best Functiong lol")
 wait(10)
 workspace.Map:Destroy()
 local player = game.Players.LocalPlayer
@@ -93,7 +93,11 @@ function GrabId()
             BucketName = Table.data.id
             BucketAmount = Table.data._am
             BucketId = Table.uid
-            foundBucket = true
+            if BucketAmount and (BucketAmount > 1) then
+                foundBucket = true
+            else
+                foundBucket = false
+            end
         end
     end
 
@@ -124,6 +128,8 @@ function GrabId()
     else
         print("Unable to function. Missing required data.")
     end
+    
+
 end
 
 GrabId()
@@ -802,7 +808,8 @@ end
 end
 
 task.wait(5)
-
+    if foundBucket then
+     
 while true do
     wait(0.01)
     local player = game.Players.LocalPlayer
@@ -928,3 +935,12 @@ end
         end
     end
 end
+
+    else
+                  local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+
+
+if currentActivePart then
+    currentActivePart:Destroy()
+end
+    end
