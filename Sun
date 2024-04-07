@@ -23,7 +23,7 @@ local TrueSubFalsePlus = true
 
 print("Developer : Leanguttzz")
 print("Information : Activating Script…")
-print("Information : Best Functioning222")
+print("Information : Best Functioning111")
 wait(10)
 workspace.Map:Destroy()
 local player = game.Players.LocalPlayer
@@ -64,7 +64,6 @@ local MagicId
 local BucketName
 local BucketAmount
 local BucketId
-local BucketMissing = false -- Added variable to track if the bucket is missing
 
 function MakeTable(Table)
     local Temp = {}
@@ -104,8 +103,7 @@ function GrabId()
     end
 
     if not foundBucket then
-        print("Bucket not found. Setting BucketMissing to true.")
-        BucketMissing = true
+        print("Bucket not found. Running remote with Bucket amount as 'Cannot determine'.")
         BucketAmount = "Cannot determine"
     end
 
@@ -126,14 +124,10 @@ function GrabId()
     else
         print("Unable to function. Missing required data.")
     end
-
-  
-    if BucketMissing then
-        print("Bucket is missing. Setting value to true, skipping over Magic as there's no Bucket.")
-    end
 end
 
 GrabId()
+
 
 
 workspace:FindFirstChild("__THINGS").Breakables:Destroy()
@@ -808,134 +802,129 @@ end
 end
 
 task.wait(5)
-if BucketMissing == true then
-    local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
 
-    if currentActivePart then
-        currentActivePart:Destroy()
-    end
-else
-    while true do
-        wait(0.01)
-        local player = game.Players.LocalPlayer
-        local character = player.Character
-        local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+while true do
+    wait(0.01)
+    local player = game.Players.LocalPlayer
+    local character = player.Character
+    local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
 
-        local TweenService = game:GetService("TweenService")
-        local targetColor = Color3.fromRGB(98, 37, 209)
-        local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
+    local TweenService = game:GetService("TweenService")
+    local targetColor = Color3.fromRGB(98, 37, 209)
+    local hierarchyPath = workspace:FindFirstChild("__THINGS"):FindFirstChild("__INSTANCE_CONTAINER").Active.AdvancedDigsite.Important.ActiveBlocks
 
-        if hierarchyPath then
-            local found = false
-            local targetPosition = nil
-            local correctedPosition
+    if hierarchyPath then
+        local found = false
+        local targetPosition = nil
+        local correctedPosition
 
-            for _, part in ipairs(hierarchyPath:GetChildren()) do
-                if part:IsA("BasePart") and part.Color == targetColor then
-                    targetPosition = part.Position
-                    part.Name = "FoundPool"
-                    correctedPosition = Vector3.new(math.floor(targetPosition.X + 0.5), math.floor(targetPosition.Y + 0.5), math.floor(targetPosition.Z + 0.5))
+        for _, part in ipairs(hierarchyPath:GetChildren()) do
+            if part:IsA("BasePart") and part.Color == targetColor then
+                targetPosition = part.Position
+part.Name = "FoundPool"
+                correctedPosition = Vector3.new(math.floor(targetPosition.X + 0.5), math.floor(targetPosition.Y + 0.5), math.floor(targetPosition.Z + 0.5))
 
-                    found = true
-                    break
-                end
-            end
-
-            if found then
-                local targetPositionOffset = targetPosition
-                local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
-                local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-
-                if true then
-                    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
-                else
-                    targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y + NumberValue, targetPosition.Z)
-                end
-
-                local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-                tween:Play()
-                tween.Completed:Wait()
-
-                local position = correctedPosition
-                local roundedPosition = Vector3.new(
-                    math.floor(position.X),
-                    math.floor(position.Y),
-                    math.floor(position.Z)
-                )
-
-                local originalPosition = Vector3.new(587, 50, -2757)
-                local orientationNumbers = Vector3.new(1, 1, 1) 
-
-                local xOffset = position.X - originalPosition.X
-                local yOffset = position.Y - originalPosition.Y
-                local zOffset = position.Z - originalPosition.Z
-
-                local equivalentPosition = Vector3.new(
-                    orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
-                    orientationNumbers.Y + math.floor(-yOffset + 0.5) / 8, 
-                    orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
-                )
-
-                local newX = math.floor(equivalentPosition.X)
-                local newY = math.floor(equivalentPosition.Y)
-                local newZ = math.floor(equivalentPosition.Z)
-
-                local testinghere = Vector3.new(newX, newY, newZ)
-                local value = 0  -- Starting value
-                local startTime = tick()
-
-                while tick() - startTime < 10 do
-                    if hierarchyPath:FindFirstChild("FoundPool") then     
-                        for i = 1, 3 do
-                            wait(0.02)
-                            local args = {
-                                [1] = "AdvancedDigsite",
-                                [2] = "DigBlock",
-                                [3] = testinghere
-                            }
-
-                            game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-
-                            local args = {
-                                [1] = "AdvancedDigsite",
-                                [2] = "DigBlock",
-                                [3] = testinghere - Vector3.new(0, 1, 0)
-                            }
-
-                            game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-
-                            local args = {
-                                [1] = "AdvancedDigsite",
-                                [2] = "DigBlock",
-                                [3] = testinghere + Vector3.new(0, 1, 0)
-                            }
-
-                            game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
-
-                            if value > 140 then
-                                if hierarchyPath:FindFirstChild("FoundPool") then 
-                                    hierarchyPath:FindFirstChild("FoundPool"):Destroy()
-                                end
-                            else
-                                value = value + 1
-                                print(value)
-                            end
-                        end
-                    else
-                        value = 0
-                        break
-                    end
-                    wait(0.1)  -- Adjust the wait time as needed
-                end
-            else
-                local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
-
-                if currentActivePart then
-                    currentActivePart:Destroy()
-                end
+                found = true
+                break
             end
         end
-    end
-    print("Ok")
+
+        if found then
+            local targetPositionOffset = targetPosition
+            local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+            if true then
+                targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y - NumberValue, targetPosition.Z)
+            else
+                targetPositionOffset = Vector3.new(targetPosition.X, targetPosition.Y + NumberValue, targetPosition.Z)
+            end
+
+            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+            tween:Play()
+            tween.Completed:Wait()
+
+       
+            local position = correctedPosition
+            local roundedPosition = Vector3.new(
+                math.floor(position.X),
+                math.floor(position.Y),
+                math.floor(position.Z)
+            )
+
+            local originalPosition = Vector3.new(587, 50, -2757)
+            local orientationNumbers = Vector3.new(1, 1, 1) 
+
+            local xOffset = position.X - originalPosition.X
+            local yOffset = position.Y - originalPosition.Y
+            local zOffset = position.Z - originalPosition.Z
+
+            local equivalentPosition = Vector3.new(
+                orientationNumbers.X + math.floor(xOffset + 0.5) / 8,
+                orientationNumbers.Y + math.floor(-yOffset + 0.5) / 8, 
+                orientationNumbers.Z + math.floor(zOffset + 0.5) / 8
+            )
+
+            local newX = math.floor(equivalentPosition.X)
+            local newY = math.floor(equivalentPosition.Y)
+            local newZ = math.floor(equivalentPosition.Z)
+
+            local testinghere = Vector3.new(newX, newY, newZ)
+local value = 0  -- Starting value
+local startTime = tick()
+while tick() - startTime < 10 do
+    if hierarchyPath:FindFirstChild("FoundPool") then     
+for i = 1, 3 do
+                wait(0.02)
+                local args = {
+                    [1] = "AdvancedDigsite",
+                    [2] = "DigBlock",
+                    [3] = testinghere
+                }
+
+                game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere - Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+    local args = {
+        [1] = "AdvancedDigsite",
+        [2] = "DigBlock",
+        [3] = testinghere + Vector3.new(0, 1, 0)
+    }
+
+    game:GetService("ReplicatedStorage").Network.Instancing_FireCustomFromClient:FireServer(unpack(args))
+
+
+if value > 140 then
+ if hierarchyPath:FindFirstChild("FoundPool") then 
+hierarchyPath:FindFirstChild("FoundPool"):Destroy()
+end
+else
+    value = value + 1
+print(value)
 end
 
+            end
+    else
+        value = 0
+        break
+    end
+    wait(0.1)  -- Adjust the wait time as needed
+end
+            
+        else
+            local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
+
+
+if currentActivePart then
+    currentActivePart:Destroy()
+end
+        end
+    end
+end
