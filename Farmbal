@@ -26,9 +26,41 @@ _G.Settings = {
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/CasperFlyModz/discord.gg-rips/main/FPSBooster.lua"))()
 
+local function mainLoop()
+    while true do
+        wait(0.01)
+        local workspace = game:GetService("Workspace")
+        local thingsFolder = workspace:FindFirstChild("__THINGS")
+
+        if thingsFolder then
+            local breakablesFolder = thingsFolder:FindFirstChild("Breakables")
+
+            if breakablesFolder then
+                for _, child in ipairs(breakablesFolder:GetChildren()) do
+                    if child:IsA("Model") then
+                        local meshPart = child:FindFirstChildWhichIsA("MeshPart")
+                        if meshPart then
+                            meshPart.Transparency = 1 -- Set transparency to 1 (fully transparent)
+                        end
+                    end
+                end
+            else
+                print("Breakables folder not found or not a folder.")
+            end
+        else
+            print("__THINGS folder not found.")
+        end
+    end
+end
+
+spawn(mainLoop)  -- Start the loop in a new thread
+
+print("hello testing here")  -- Print outside the loop
+
 
 workspace:FindFirstChild("__THINGS").Eggs:Destroy()
 workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
+woekspace:FindFirstchild("ALWAYS_RENDERING"):Destroy()
 workspace.Map:Destroy()
 getgenv().AuthKey = "HUGE_5EN7Jo6KrCC4"
 getgenv().LoadSettings = {
