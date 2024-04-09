@@ -115,9 +115,13 @@ while tick() - startTime < 100 do
                         local TeleportPosition = MeshPart.Hitbox.Position
                         local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
                         if HumanoidRootPart then
-                        local TweenInfo = TweenInfo.new(0.0001, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0)
-local Tween = TweenService:Create(HumanoidRootPart, TweenInfo, {CFrame = CFrame.new(TeleportPosition)})
-Tween:Play()
+  local distance = (humanoidRootPart.Position - TeleportPosition).Magnitude
+local duration = distance / 9999999
+local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
+tween:Play()
+tween.Completed:Wait()
+
 
 
                             -- Services/Variables
