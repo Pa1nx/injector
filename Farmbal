@@ -58,30 +58,7 @@ print("hello testing here")  -- Print outside the loop
 
 workspace:FindFirstChild("__THINGS").Eggs:Destroy()
 workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
-
-local workspace = game:GetService("Workspace")
-
--- Function to check if an object can have its transparency changed
-local function canChangeTransparency(obj)
-    return obj:IsA("BasePart") or obj:IsA("Decal") or obj:IsA("Texture")
-end
-
--- Get descendants of workspace.Map and change transparency if possible
-local function changeTransparency()
-    local map = workspace:FindFirstChild("Map")
-    if map then
-        local descendants = map:GetDescendants()
-        for _, obj in ipairs(descendants) do
-            if canChangeTransparency(obj) then
-                obj.Transparency = 1
-            end
-        end
-    else
-        warn("Map not found in workspace.")
-    end
-end
-
-changeTransparency()  -- Call the function to execute the changes
+workspace.Map:Destroy()
 
 
 
