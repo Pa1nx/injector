@@ -1,3 +1,6 @@
+
+
+
 wait(10)
 -- Services/Variables
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -64,19 +67,15 @@ getgenv().LoadSettings = {
 }
 loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 wait(10)
--- Services/Variables
+local startTime = tick()
+while tick() - startTime < 100 do
+    if _G.AutoTeleportToGiftOnOff then
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
-
-_G.AutoTeleportToGiftOnOff = true
-
-local startTime = tick()
-while tick() - startTime < 100 do
-    if _G.AutoTeleportToGiftOnOff then
         local Breakables = Workspace:FindFirstChild("__THINGS").Breakables
         if Breakables then
             local foundGift = false
@@ -85,6 +84,7 @@ while tick() - startTime < 100 do
                     local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
                     if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
                         foundGift = true
+local CodeName = v.Name
                         local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
                         local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
 
@@ -95,18 +95,16 @@ while tick() - startTime < 100 do
                             local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
                             tween:Play()
                             tween.Completed:Wait()
-                        else
-                            print("MeshPart or HumanoidRootPart not found.")
-                        end
-
-                        -- Services/Variables
                         local ReplicatedStorage = game:GetService("ReplicatedStorage")
                         local Library = ReplicatedStorage.Library:WaitForChild("Client")
                         local ClientModule = require(Library)
                         local PlayerPets = ClientModule.PlayerPet.GetAll()
 
                         for _, Pet in pairs(PlayerPets) do
-                            ClientModule.PlayerPet.SetTarget(Pet, MeshPart.Parent.Name) -- In BreakableToBreak put the path of the Gift (the number)
+                            ClientModule.PlayerPet.SetTarget(Pet, CodeName) -- In BreakableToBreak put the path of the Gift (the number)
+                        end
+                        else
+                            print("MeshPart or HumanoidRootPart not found.")
                         end
                     end
                 end
@@ -131,7 +129,6 @@ local Api = "https://games.roblox.com/v1/games/"
 
 local _place = game.PlaceId
 local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-
 function ListServers(cursor)
     local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
     return Http:JSONDecode(Raw)
@@ -140,15 +137,15 @@ end
 local Server, Next
 repeat
     local Servers = ListServers(Next)
-    for i, serverData in ipairs(Servers.data) do
-        if serverData.playing >= 5 then -- Check if there are 5 or more players in the server
-            Server = serverData
-            Next = Servers.nextPageCursor
-            TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
-            return -- Exit the loop and stop searching for more servers
-        end
-    end
+    Server = Servers.data[1]
     Next = Servers.nextPageCursor
-until not Next or Server
+until Server and Server.playing >= 5  -- Ensure the server has at least 5 players
+
+if Server then
+    TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+else
+    print("No suitable server found.")
+end
+
 task.wait(20)
 end
