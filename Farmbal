@@ -103,7 +103,7 @@ local Character = LocalPlayer.Character
 _G.AutoTeleportToGiftOnOff = true
 
 local startTime = tick() 
-while tick() - startTime < 80 do 
+while tick() - startTime < 100 do 
     if _G.AutoTeleportToGiftOnOff then
         local Breakables = Workspace:FindFirstChild("__THINGS").Breakables
         if Breakables then
