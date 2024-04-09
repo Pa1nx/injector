@@ -120,12 +120,7 @@ local args = {
 
 game:GetService("ReplicatedStorage").Network.Breakables_JoinPet:FireServer(unpack(args))
 
-local args = {
-    [1] = Ray.new(TargetPosition, Vector3.new(0.9621329307556152, -0.2251472920179367, 0.1536518931388855)),
-    [2] = TargetPosition
-}
 
-game:GetService("ReplicatedStorage").Network.Click:FireServer(unpack(args))
 
             end
         end
