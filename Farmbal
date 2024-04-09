@@ -1,4 +1,28 @@
 wait(10)
+--Services/Variables
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+--Infinite Pet Speed Function
+_G.InfinitePetSpeedOnOff = false
+local Library = ReplicatedStorage.Library:WaitForChild("Client")
+local PlayerPetModule = require(Library).PlayerPet
+local originalCalculateSpeedMultiplier = PlayerPetModule.CalculateSpeedMultiplier
+
+function InfinitePetSpeedOnOff()
+    PlayerPetModule.CalculateSpeedMultiplier = function(...)
+        local DefaultPetSpeed = originalCalculateSpeedMultiplier(...)
+        if _G.InfinitePetSpeedOnOff == true then
+            return math.huge
+        elseif _G.InfinitePetSpeedOnOff == false then
+            return DefaultPetSpeed
+        end
+    end
+end
+
+--How To Use:
+_G.InfinitePetSpeedOnOff = true
+InfinitePetSpeedOnOff()
+
 loadstring(game:HttpGet("https://pastebin.com/raw/eHEfAR8z", true))()
 -- Made by RIP#6666
 _G.Settings = {
