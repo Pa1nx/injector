@@ -103,7 +103,7 @@ local Character = LocalPlayer.Character
 _G.AutoTeleportToGiftOnOff = true
 
 local startTime = tick() 
-while tick() - startTime < 140 do 
+while tick() - startTime < 80 do 
     if _G.AutoTeleportToGiftOnOff then
         local Breakables = Workspace:FindFirstChild("__THINGS").Breakables
         if Breakables then
@@ -116,9 +116,10 @@ while tick() - startTime < 140 do
                         local TeleportPosition = MeshPart.Hitbox.Position
                         local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
                         if HumanoidRootPart then
-                            local TweenInfo = TweenInfo.new(9999, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0)
-                            local Tween = TweenService:Create(HumanoidRootPart, TweenInfo, {CFrame = CFrame.new(TeleportPosition)})
-                            Tween:Play()
+                        local TweenInfo = TweenInfo.new(0.0001, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0)
+local Tween = TweenService:Create(HumanoidRootPart, TweenInfo, {CFrame = CFrame.new(TeleportPosition)})
+Tween:Play()
+
 
                             -- Services/Variables
                             local ReplicatedStorage = game:GetService("ReplicatedStorage")
