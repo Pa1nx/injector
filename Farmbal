@@ -92,11 +92,6 @@ getgenv().LoadSettings = {
     Example_Setting = Example_Value
 }
 loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
-wait(10)
-
-
-
-
 -- Services/Variables
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
