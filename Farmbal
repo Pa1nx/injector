@@ -151,23 +151,28 @@ end
 
 wait(5)
 local Http = game:GetService("HttpService")
-                        local TPS = game:GetService("TeleportService")
-                        local Api = "https://games.roblox.com/v1/games/"
+local TPS = game:GetService("TeleportService")
+local Api = "https://games.roblox.com/v1/games/"
 
-                        local _place = game.PlaceId
-                        local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-                        function ListServers(cursor)
-                            local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-                            return Http:JSONDecode(Raw)
-                        end
+local _place = game.PlaceId
+local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
 
-                        local Server, Next
-                        repeat
-                            local Servers = ListServers(Next)
-                            Server = Servers.data[1]
-                            Next = Servers.nextPageCursor
-                        until Server
+function ListServers(cursor)
+    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+    return Http:JSONDecode(Raw)
+end
 
-                        TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
-
+local Server, Next
+repeat
+    local Servers = ListServers(Next)
+    for i, serverData in ipairs(Servers.data) do
+        if serverData.playing >= 5 then -- Check if there are 5 or more players in the server
+            Server = serverData
+            Next = Servers.nextPageCursor
+            TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+            return -- Exit the loop and stop searching for more servers
+        end
+    end
+    Next = Servers.nextPageCursor
+until not Next or Server
 task.wait(20)
