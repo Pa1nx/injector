@@ -122,6 +122,8 @@ while tick() - startTime < 100 do
     wait(0.01)
 end
 
+
+while true do
 wait(5)
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
@@ -149,4 +151,4 @@ repeat
     Next = Servers.nextPageCursor
 until not Next or Server
 task.wait(20)
-
+end
