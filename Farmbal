@@ -118,8 +118,6 @@ while tick() - startTime < 140 do
                     local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
                     if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
                         foundGift = true
-                        
-                   
                         local TeleportPosition = MeshPart.Hitbox.Position
                         local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
                         if HumanoidRootPart then
@@ -127,33 +125,15 @@ while tick() - startTime < 140 do
                             local Tween = TweenService:Create(HumanoidRootPart, TweenInfo, {CFrame = CFrame.new(TeleportPosition)})
                             Tween:Play()
 
-local workspace = game:GetService("Workspace")
-local thingsFolder = workspace:FindFirstChild("__THINGS")
+                            -- Services/Variables
+                            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                            local Library = ReplicatedStorage.Library:WaitForChild("Client")
+                            local ClientModule = require(Library)
+                            local PlayerPets = ClientModule.PlayerPet.GetAll()
 
-if thingsFolder then
-    local petsFolder = thingsFolder:FindFirstChild("Pets")
-
-    if petsFolder then
-        for _, child in ipairs(petsFolder:GetChildren()) do
-            if child:IsA("Model") then
-              
-
-local args = {
-    [1] = MeshPart.Parent.Name,
-    [2] = child.Name
-}
-
-game:GetService("ReplicatedStorage").Network.Breakables_JoinPet:FireServer(unpack(args))
-
-
-
-            end
-        end
-
-    end
-end
-
-                            wait(0.1) 
+                            for _, Pet in pairs(PlayerPets) do
+                                ClientModule.PlayerPet.SetTarget(Pet, MeshPart.Parent.Name) --In BreakableToBreak put the path of the Gift (the number)
+                            end
                         end
                     end
                 end
@@ -168,6 +148,7 @@ end
     end
     wait(0.01)
 end
+
 wait(5)
 local Http = game:GetService("HttpService")
                         local TPS = game:GetService("TeleportService")
