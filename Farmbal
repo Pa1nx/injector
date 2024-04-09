@@ -69,7 +69,11 @@ loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
 wait(10)
 local startTime = tick()
 while tick() - startTime < 100 do
+
+_G.AutoTeleportToGiftOnOff = true
+
     if _G.AutoTeleportToGiftOnOff then
+
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -90,7 +94,7 @@ local CodeName = v.Name
 
                         if TeleportPosition and HumanoidRootPart then
                             local distance = (HumanoidRootPart.Position - TeleportPosition).Magnitude
-                            local duration = distance / 9999999
+                            local duration = distance / 9999999999999
                             local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
                             local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
                             tween:Play()
@@ -119,7 +123,6 @@ local CodeName = v.Name
     end
     wait(0.01)
 end
-
 
 while true do
 wait(5)
