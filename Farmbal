@@ -61,7 +61,8 @@ print("hello testing here")  -- Print outside the loop
 workspace:FindFirstChild("__THINGS").Eggs:Destroy()
 workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
 
-workspace.Map:Destroy()
+
+
 getgenv().AuthKey = "HUGE_5EN7Jo6KrCC4"
 getgenv().LoadSettings = {
     Example_Setting = Example_Value
