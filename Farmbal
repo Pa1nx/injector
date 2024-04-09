@@ -67,8 +67,87 @@ getgenv().LoadSettings = {
     Example_Setting = Example_Value
 }
 loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
-wait(150)
+wait(10)
 
+
+
+
+-- Services/Variables
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+
+_G.AutoTeleportToGiftOnOff = true
+
+local startTime = tick() 
+while tick() - startTime < 140 do 
+    if _G.AutoTeleportToGiftOnOff then
+        local Breakables = Workspace:FindFirstChild("__THINGS").Breakables
+        if Breakables then
+            local foundGift = false
+            for _, v in ipairs(Breakables:GetChildren()) do
+                if v:IsA("Model") then
+                    local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
+                    if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
+                        foundGift = true
+                        
+                   
+                        local TeleportPosition = MeshPart.Hitbox.Position
+                        local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+                        if HumanoidRootPart then
+                            local TweenInfo = TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0)
+                            local Tween = TweenService:Create(HumanoidRootPart, TweenInfo, {CFrame = CFrame.new(TeleportPosition)})
+                            Tween:Play()
+
+local workspace = game:GetService("Workspace")
+local thingsFolder = workspace:FindFirstChild("__THINGS")
+
+if thingsFolder then
+    local petsFolder = thingsFolder:FindFirstChild("Pets")
+
+    if petsFolder then
+        for _, child in ipairs(petsFolder:GetChildren()) do
+            if child:IsA("Model") then
+              
+
+local args = {
+    [1] = MeshPart.Parent.Name,
+    [2] = child.Name
+}
+
+game:GetService("ReplicatedStorage").Network.Breakables_JoinPet:FireServer(unpack(args))
+
+local args = {
+    [1] = Ray.new(TargetPosition, Vector3.new(0.9621329307556152, -0.2251472920179367, 0.1536518931388855)),
+    [2] = TargetPosition
+}
+
+game:GetService("ReplicatedStorage").Network.Click:FireServer(unpack(args))
+
+            end
+        end
+
+    end
+end
+
+                            wait(0.1) 
+                        end
+                    end
+                end
+                if foundGift then
+                    break 
+                end
+            end
+            if not foundGift then
+                print("There is no gift.")
+            end
+        end
+    end
+    wait(0.01)
+end
 wait(5)
 local Http = game:GetService("HttpService")
                         local TPS = game:GetService("TeleportService")
