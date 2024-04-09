@@ -112,15 +112,20 @@ while tick() - startTime < 100 do
                     local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
                     if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
                         foundGift = true
-                        local TeleportPosition = MeshPart.Hitbox.Position
-                        local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
-                        if HumanoidRootPart then
-  local distance = (humanoidRootPart.Position - TeleportPosition).Magnitude
-local duration = distance / 9999999
-local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
-tween:Play()
-tween.Completed:Wait()
+                        local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
+local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+
+if TeleportPosition and HumanoidRootPart then
+    local distance = (HumanoidRootPart.Position - TeleportPosition).Magnitude
+    local duration = distance / 9999999
+    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+    local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
+    tween:Play()
+    tween.Completed:Wait()
+else
+    print("MeshPart or HumanoidRootPart not found.")
+end
+
 
 
 
