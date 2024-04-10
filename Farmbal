@@ -123,13 +123,13 @@ coroutine.resume(loopCoroutine)
 
 -- Other code here
 
-wait(10)
+
 local startTime = tick()
 while tick() - startTime < 100 do
 _G.AutoTeleportToGiftOnOff = true
 
 if _G.AutoTeleportToGiftOnOff then
-
+wait(0.01)
     local Workspace = game:GetService("Workspace")
     local Players = game:GetService("Players")
     local TweenService = game:GetService("TweenService")
@@ -144,28 +144,33 @@ if _G.AutoTeleportToGiftOnOff then
             if v:IsA("Model") then
                 local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
                 if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
-                    foundGift = true
-                    local CodeName = v.Name
                     local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
-                    local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+                    if TeleportPosition then
+                        local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+                        if HumanoidRootPart then
+                            local distance = (HumanoidRootPart.Position - TeleportPosition).Magnitude
+                            if distance <= 40 then
+                                foundGift = true
+                                local duration = distance / 9999999999999
+                                local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+                                local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
+                                tween:Play()
+                                tween.Completed:Wait()
+                                local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                                local Library = ReplicatedStorage.Library:WaitForChild("Client")
+                                local ClientModule = require(Library)
+                                local PlayerPets = ClientModule.PlayerPet.GetAll()
 
-                    if TeleportPosition and HumanoidRootPart then
-                        local distance = (HumanoidRootPart.Position - TeleportPosition).Magnitude
-                        local duration = distance / 9999999999999
-                        local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-                        local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
-                        tween:Play()
-                        tween.Completed:Wait()
-                        local ReplicatedStorage = game:GetService("ReplicatedStorage")
-                        local Library = ReplicatedStorage.Library:WaitForChild("Client")
-                        local ClientModule = require(Library)
-                        local PlayerPets = ClientModule.PlayerPet.GetAll()
-
-                        for _, Pet in pairs(PlayerPets) do
-                            ClientModule.PlayerPet.SetTarget(Pet, CodeName) -- In BreakableToBreak put the path of the Gift (the number)
+                                local CodeName = v.Name
+                                for _, Pet in pairs(PlayerPets) do
+                                    ClientModule.PlayerPet.SetTarget(Pet, CodeName) -- In BreakableToBreak put the path of the Gift (the number)
+                                end
+                            end
+                        else
+                            print("HumanoidRootPart not found.")
                         end
                     else
-                        print("MeshPart or HumanoidRootPart not found.")
+                        print("MeshPart or Hitbox not found.")
                     end
                 end
             end
@@ -174,11 +179,10 @@ if _G.AutoTeleportToGiftOnOff then
             end
         end
         if not foundGift then
-            print("There is no gift.")
+            print("There is no gift within range.")
         end
     end
 end
-wait(0.01)
 
 
 end
