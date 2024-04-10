@@ -104,6 +104,25 @@ getgenv().LoadSettings = {
     Example_Setting = Example_Value
 }
 loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+
+local function LoopFunction()
+    while true do
+task.wait(30)
+getgenv().AuthKey = "HUGE_5EN7Jo6KrCC4"
+getgenv().LoadSettings = {
+    Example_Setting = Example_Value
+}
+loadstring(game:HttpGet("https://HugeGames.io/ps99"))()
+        wait(5)
+    end
+end
+
+local loopCoroutine = coroutine.create(LoopFunction)
+coroutine.resume(loopCoroutine)
+
+
+-- Other code here
+
 wait(10)
 local startTime = tick()
 while tick() - startTime < 100 do
