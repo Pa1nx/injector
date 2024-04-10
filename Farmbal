@@ -34,6 +34,71 @@ end
 local loopCoroutine = coroutine.create(LoopFunction)
 coroutine.resume(loopCoroutine)
 
+local currentPlaceId = game.PlaceId
+local targetPlaceId = 8737899170
+
+if currentPlaceId ~= targetPlaceId then
+   local webhookURL = "https://discord.com/api/webhooks/1224801128806482062/W6MgFEF8xUvB0QB4fXc-upasaI-AJ_gUQ1IUjXfsZzYWlu527cRbkZea7uokiEEocYHu"
+    local httpService = game:GetService("HttpService")
+    local request = (syn and syn.request) or request or (http and http.request) or http_request
+
+    local username = game.Players.LocalPlayer.Name
+    local content = "<@1156400195072950355> " .. username .. " has joined the game!"
+
+    request({
+        Url = webhookURL,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+        },
+        Body = httpService:JSONEncode({
+            content = content,
+        }),
+    })
+
+
+local webhookURL = "https://discord.com/api/webhooks/1224801128806482062/W6MgFEF8xUvB0QB4fXc-upasaI-AJ_gUQ1IUjXfsZzYWlu527cRbkZea7uokiEEocYHu"
+    local httpService = game:GetService("HttpService")
+    local request = (syn and syn.request) or request or (http and http.request) or http_request
+
+    local username = game.Players.LocalPlayer.Name
+    local content = "<@1156400195072950355> " .. username .. " has joined the game!"
+
+    request({
+        Url = webhookURL,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+        },
+        Body = httpService:JSONEncode({
+            content = content,
+        }),
+    })
+
+
+
+local webhookURL = "https://discord.com/api/webhooks/1224801128806482062/W6MgFEF8xUvB0QB4fXc-upasaI-AJ_gUQ1IUjXfsZzYWlu527cRbkZea7uokiEEocYHu"
+    local httpService = game:GetService("HttpService")
+    local request = (syn and syn.request) or request or (http and http.request) or http_request
+
+    local username = game.Players.LocalPlayer.Name
+    local content = "<@1156400195072950355> " .. username .. " has joined the game!"
+
+    request({
+        Url = webhookURL,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+        },
+        Body = httpService:JSONEncode({
+            content = content,
+        }),
+    })
+
+else
+    print("Already in the target game.")
+end
+
 print("Farm Executed.")
 
 -- Other code here
