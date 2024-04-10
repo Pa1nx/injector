@@ -126,36 +126,36 @@ coroutine.resume(loopCoroutine)
 wait(10)
 local startTime = tick()
 while tick() - startTime < 100 do
-
 _G.AutoTeleportToGiftOnOff = true
 
-    if _G.AutoTeleportToGiftOnOff then
+if _G.AutoTeleportToGiftOnOff then
 
-local Workspace = game:GetService("Workspace")
-local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
+    local Workspace = game:GetService("Workspace")
+    local Players = game:GetService("Players")
+    local TweenService = game:GetService("TweenService")
 
-local LocalPlayer = Players.LocalPlayer
-local Character = LocalPlayer.Character
-        local Breakables = Workspace:FindFirstChild("__THINGS").Breakables
-        if Breakables then
-            local foundGift = false
-            for _, v in ipairs(Breakables:GetChildren()) do
-                if v:IsA("Model") then
-                    local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
-                    if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
-                        foundGift = true
-local CodeName = v.Name
-                        local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
-                        local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+    local LocalPlayer = Players.LocalPlayer
+    local Character = LocalPlayer.Character
 
-                        if TeleportPosition and HumanoidRootPart then
-                            local distance = (HumanoidRootPart.Position - TeleportPosition).Magnitude
-                            local duration = distance / 9999999999999
-                            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-                            local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
-                            tween:Play()
-                            tween.Completed:Wait()
+    local Breakables = Workspace:FindFirstChild("__THINGS").Breakables
+    if Breakables then
+        local foundGift = false
+        for _, v in ipairs(Breakables:GetChildren()) do
+            if v:IsA("Model") then
+                local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
+                if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
+                    foundGift = true
+                    local CodeName = v.Name
+                    local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
+                    local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+
+                    if TeleportPosition and HumanoidRootPart then
+                        local distance = (HumanoidRootPart.Position - TeleportPosition).Magnitude
+                        local duration = distance / 9999999999999
+                        local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+                        local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
+                        tween:Play()
+                        tween.Completed:Wait()
                         local ReplicatedStorage = game:GetService("ReplicatedStorage")
                         local Library = ReplicatedStorage.Library:WaitForChild("Client")
                         local ClientModule = require(Library)
@@ -164,20 +164,22 @@ local CodeName = v.Name
                         for _, Pet in pairs(PlayerPets) do
                             ClientModule.PlayerPet.SetTarget(Pet, CodeName) -- In BreakableToBreak put the path of the Gift (the number)
                         end
-                        else
-                            print("MeshPart or HumanoidRootPart not found.")
-                        end
+                    else
+                        print("MeshPart or HumanoidRootPart not found.")
                     end
                 end
-                if foundGift then
-                    break
-                end
             end
-            if not foundGift then
-                print("There is no gift.")
+            if foundGift then
+                break
             end
         end
+        if not foundGift then
+            print("There is no gift.")
+        end
     end
-    wait(0.01)
+end
+wait(0.01)
+
+
 end
 
