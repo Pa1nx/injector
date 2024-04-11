@@ -236,6 +236,15 @@ while tick() - startTime < 100 do
     _G.AutoTeleportToGiftOnOff = true
 
     if _G.AutoTeleportToGiftOnOff then
+local player = game.Players.LocalPlayer
+
+if player and player.Character and player.Character:FindFirstChildOfClass("Tool") then
+    local tool = player.Character:FindFirstChildOfClass("Tool")
+    print("You are holding: " .. tool.Name)
+else
+    game:GetService("ReplicatedStorage").Network.Slingshot_Toggle:InvokeServer()
+end
+
         local Workspace = game:GetService("Workspace")
         local Players = game:GetService("Players")
         local TweenService = game:GetService("TweenService")
