@@ -102,6 +102,33 @@ end
 print("Farm Executed.")
 
 -- Other code here
+-- Function to check if the player is already in first person
+local function IsInFirstPerson(player)
+    return player.CameraMode == Enum.CameraMode.LockFirstPerson
+end
+
+-- Function to lock the player into first person
+local function LockFirstPerson(player)
+    player.CameraMode = Enum.CameraMode.LockFirstPerson
+end
+
+-- Function loop to continuously check and lock into first person
+local function FirstPersonLoop()
+    while true do
+        wait(1) -- Adjust the wait time as needed
+        
+        local player = game.Players.LocalPlayer
+        if not IsInFirstPerson(player) then
+            LockFirstPerson(player)
+        end
+    end
+end
+
+-- Start the loop in a new thread
+spawn(FirstPersonLoop)
+
+-- Optional: Stop the loop
+-- FirstPersonLoop()  -- Call this function to stop the loop
 
 
 wait(10)
@@ -176,35 +203,6 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local camera = workspace.CurrentCamera
 local TweenService = game:GetService("TweenService")
-local VirtualInputManager = game:GetService("VirtualInputManager")
-
--- Start the clicking loop in a separate thread
-local ScreenSize = game:GetService("GuiService"):GetScreenResolution()
-local ScreenMiddle = Vector2.new(ScreenSize.X / 2, ScreenSize.Y / 2)
-
--- Define a function for clicking
-local function ClickLoop()
-    while true do
-        VirtualInputManager:SendMouseButtonEvent(ScreenMiddle.X, ScreenMiddle.Y, 0, true, game, 1)
-        wait(0.5)
-        VirtualInputManager:SendMouseButtonEvent(ScreenMiddle.X, ScreenMiddle.Y, 0, false, game, 1)
-        wait(1)
-    end
-end
-
-coroutine.wrap(ClickLoop)()
-
-local BV = Instance.new('BodyVelocity', game.Workspace)
-BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-BV.velocity = Vector3.new(0, 0.1, 0)
-BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
-wait(5)
-
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-local camera = workspace.CurrentCamera
-local TweenService = game:GetService("TweenService")
 
 local FarmingDetermination = true
 
@@ -214,86 +212,76 @@ local function ProcessGifts()
         local thingsFolder = workspace:FindFirstChild("__THINGS")
         if thingsFolder then
             local Breakables = thingsFolder:FindFirstChild("Breakables")
+            local balloonGifts = thingsFolder:FindFirstChild("BalloonGifts")
+            local foundGift = false
+
             if Breakables then
-                local foundGift = false
                 for _, v in ipairs(Breakables:GetChildren()) do
-                    if v:IsA("Model") then
-                        local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
-                        if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
-                            local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
-                            if TeleportPosition then
-                                local distance = (humanoidRootPart.Position - TeleportPosition).Magnitude
-                                if distance <= 99999999 then
-                                    foundGift = true
-                                    FarmingDetermination = false
-                                    local duration = distance / 9999999999999
-                                    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-                                    local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
-                                    tween:Play()
-                                    tween.Completed:Wait()
-                                    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-                                    local Library = ReplicatedStorage.Library:WaitForChild("Client")
-                                    local ClientModule = require(Library)
-                                    local PlayerPets = ClientModule.PlayerPet.GetAll()
-                                    local CodeName = v.Name
-                                    for _, Pet in pairs(PlayerPets) do
-                                        ClientModule.PlayerPet.SetTarget(Pet, CodeName) -- In BreakableToBreak put the path of the Gift (the number)
-                                    end
-                                end
-                            else
-                                print("MeshPart or Hitbox not found.")
-                            end
+                    if v:IsA("Model") and v.PrimaryPart and v.PrimaryPart:IsA("MeshPart") and v.PrimaryPart.MeshId == "rbxassetid://15239110635" then
+                        foundGift = true
+                        FarmingDetermination = false
+
+                        local TeleportPosition = v.PrimaryPart.Position + Vector3.new(0, 10, 0) -- Teleport 10 feet above the meshpart
+                        local distance = (humanoidRootPart.Position - TeleportPosition).Magnitude
+                        local duration = distance / 9999999999999
+                        local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+                        local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
+                        tween:Play()
+                        tween.Completed:Wait()
+                        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                        local Library = ReplicatedStorage.Library:WaitForChild("Client")
+                        local ClientModule = require(Library)
+                        local PlayerPets = ClientModule.PlayerPet.GetAll()
+                        local CodeName = v.Name
+                        for _, Pet in pairs(PlayerPets) do
+                            ClientModule.PlayerPet.SetTarget(Pet, CodeName)
                         end
-                        if foundGift then
-                            break
-                        end
+                        break
                     end
                 end
-                if not foundGift then
-                    local balloonGifts = thingsFolder:FindFirstChild("BalloonGifts")
-                    if balloonGifts then
-                        local models = balloonGifts:GetChildren()
-                        for _, model in ipairs(models) do
-                            if model:IsA("Model") then
-                                local balloon = model:FindFirstChild("Balloon", true)
-                                if balloon and balloon:IsA("MeshPart") then
-                                    foundGift = true
-                                    balloon.Size = Vector3.new(100, 100, 100)
-                                    local balloonPosition = balloon.Position + Vector3.new(0, 0, 0) -- Adjust the vertical offset as needed
-                                    local targetPositionOffset = balloonPosition + Vector3.new(-60, -20, 0) -- 5 feet beside the balloon
-                                    camera.CFrame = CFrame.new(camera.CFrame.Position, balloon.Position)
-                                    local speed = 999999999 -- Adjust this value for desired movement speed
-                                    local distance = (humanoidRootPart.Position - targetPositionOffset).Magnitude
-                                    local duration = distance / speed
-                                    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-                                    local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-                                    tween:Play()
-                                    tween.Completed:Wait()
-                                    wait(0.05)
-                                    if player and player.Character and player.Character:FindFirstChildOfClass("Tool") then
-                                        local tool = player.Character:FindFirstChildOfClass("Tool")
-                                    else
-                                        game:GetService("ReplicatedStorage").Network.Slingshot_Toggle:InvokeServer()
-                                    end
-                                    wait(0.05)
-                                    camera.CFrame = CFrame.new(camera.CFrame.Position, balloon.Position)
-                                    local targetPositionOffset = balloonPosition + Vector3.new(60, -20, 0) -- 5 feet beside the balloon
-                                    local speed = 999999999 -- Adjust this value for desired movement speed
-                                    local distance = (humanoidRootPart.Position - targetPositionOffset).Magnitude
-                                    local duration = distance / speed
-                                    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-                                    local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-                                    tween:Play()
-                                    tween.Completed:Wait()
-                                    break -- Exit the loop once a gift is found and processed
-                                end
-                            end
+            end
+
+            if not foundGift and balloonGifts then
+                for _, model in ipairs(balloonGifts:GetChildren()) do
+                    if model:IsA("Model") and model:FindFirstChild("Balloon") then
+                        foundGift = true
+                        local balloon = model.Balloon
+                        balloon.Size = Vector3.new(100, 100, 100)
+                        local balloonPosition = balloon.Position
+                        local targetPositionOffset = balloonPosition + Vector3.new(-60, -20, 0)
+                        camera.CFrame = CFrame.new(camera.CFrame.Position, balloon.Position)
+                        local speed = 999999999
+                        local distance = (humanoidRootPart.Position - targetPositionOffset).Magnitude
+                        local duration = distance / speed
+                        local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+                        local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+                        tween:Play()
+                        tween.Completed:Wait()
+                        wait(0.05)
+                        if player and player.Character and player.Character:FindFirstChildOfClass("Tool") then
+                            local tool = player.Character:FindFirstChildOfClass("Tool")
+                        else
+                            game:GetService("ReplicatedStorage").Network.Slingshot_Toggle:InvokeServer()
                         end
+                        wait(0.05)
+                        -- Force character into first person
+                        game:GetService("StarterPlayer").CameraMode = Enum.CameraMode.LockFirstPerson
+                        -- Adjust camera to look at the balloon
+                        camera.CFrame = CFrame.new(camera.CFrame.Position, balloon.Position)
+                        local targetPositionOffset = balloonPosition + Vector3.new(60, -20, 0)
+                        local distance = (humanoidRootPart.Position - targetPositionOffset).Magnitude
+                        local duration = distance / speed
+                        local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+                        local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+                        tween:Play()
+                        tween.Completed:Wait()
+                        break
                     end
                 end
-                if not foundGift then
-                    print("No gift!")
-                end
+            end
+
+            if not foundGift then
+                print("No gift!")
             end
         else
             print("Breakables or BalloonGifts folder not found in __THINGS.")
@@ -303,4 +291,9 @@ local function ProcessGifts()
     end
 end
 
-ProcessGifts() -- Call the function once to start processing gifts
+local startTime = tick() 
+while tick() - startTime < 140 do 
+    wait(0.5)
+    ProcessGifts() -- Call the function once to start processing gifts
+end
+
