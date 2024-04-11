@@ -232,7 +232,7 @@ BV.velocity = Vector3.new(0, 0.1, 0)
 BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
 local startTime = tick()
-while tick() - startTime < 100 do
+while tick() - startTime < 140 do
     _G.AutoTeleportToGiftOnOff = true
 
     if _G.AutoTeleportToGiftOnOff then
