@@ -103,7 +103,8 @@ print("Farm Executed.")
 
 -- Other code here
 
-wait(5)
+
+wait(10)
 -- Services/Variables
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -164,12 +165,6 @@ workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
 workspace.Map:Destroy()
 
 
-
-
-local loopCoroutine = coroutine.create(LoopFunction)
-coroutine.resume(loopCoroutine)
-
-
 local BV = Instance.new('BodyVelocity', game.Workspace)
 BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 BV.velocity = Vector3.new(0, 0.1, 0)
@@ -199,67 +194,25 @@ end
 
 coroutine.wrap(ClickLoop)()
 
+local BV = Instance.new('BodyVelocity', game.Workspace)
+BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+BV.velocity = Vector3.new(0, 0.1, 0)
+BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+wait(5)
 
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local camera = workspace.CurrentCamera
+local TweenService = game:GetService("TweenService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
 
-
-local startTime = tick()
-while tick() - startTime < 130 do
-_G.AutoTeleportToGiftOnOff = true
-
-if _G.AutoTeleportToGiftOnOff then
-wait(0.01)
-    local Workspace = game:GetService("Workspace")
-    local Players = game:GetService("Players")
-    local TweenService = game:GetService("TweenService")
-
-    local LocalPlayer = Players.LocalPlayer
-    local Character = LocalPlayer.Character
-
-    local Breakables = Workspace:FindFirstChild("__THINGS").Breakables
-    if Breakables then
-        local foundGift = false
-        for _, v in ipairs(Breakables:GetChildren()) do
-            if v:IsA("Model") then
-                local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
-                if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
-                    local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
-                    if TeleportPosition then
-                        local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
-                        if HumanoidRootPart then
-                            local distance = (HumanoidRootPart.Position - TeleportPosition).Magnitude
-                            if distance <= 99999999 then
-TeleportPosition + Vector3.new(0, 5, 0)
- camera.CFrame = CFrame.new(camera.CFrame.Position, TeleportPosition)
-                                foundGift = true
-                                local duration = distance / 9999999999999
-                                local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-                                local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
-                                tween:Play()
-                                tween.Completed:Wait()
-                                local ReplicatedStorage = game:GetService("ReplicatedStorage")
-                                local Library = ReplicatedStorage.Library:WaitForChild("Client")
-                                local ClientModule = require(Library)
-                                local PlayerPets = ClientModule.PlayerPet.GetAll()
-
-                                local CodeName = v.Name
-                                for _, Pet in pairs(PlayerPets) do
-                                    ClientModule.PlayerPet.SetTarget(Pet, CodeName) -- In BreakableToBreak put the path of the Gift (the number)
-                                end
-                            end
-                        else
-                            print("HumanoidRootPart not found.")
-                        end
-                    else
-                        print("MeshPart or Hitbox not found.")
-                    end
-                end
-            end
-            if foundGift then
-                break
-            end
-        end
-        if not foundGift then
-            local thingsFolder = workspace:FindFirstChild("__THINGS")
+local FarmingDetermination = true 
+local function ProcessGifts()
+    wait(0.1)
+if FarmingDetermination == true then
+    
+    local thingsFolder = workspace:FindFirstChild("__THINGS")
     if thingsFolder and thingsFolder:FindFirstChild("BalloonGifts") then
         local balloonGifts = thingsFolder.BalloonGifts
         local models = balloonGifts:GetChildren()
@@ -314,10 +267,76 @@ TeleportPosition + Vector3.new(0, 5, 0)
     else
         print("BalloonGifts folder not found in __THINGS.")
     end
+elseif FarmingDetermination == false then
+    print("no")
+end
+end
+
+ProcessGifts() -- Call the function once to start processing gifts
+
+
+
+
+local startTime = tick()
+while tick() - startTime < 130 do
+_G.AutoTeleportToGiftOnOff = true
+
+if _G.AutoTeleportToGiftOnOff then
+wait(0.01)
+    local Workspace = game:GetService("Workspace")
+    local Players = game:GetService("Players")
+    local TweenService = game:GetService("TweenService")
+
+    local LocalPlayer = Players.LocalPlayer
+    local Character = LocalPlayer.Character
+
+    local Breakables = Workspace:FindFirstChild("__THINGS").Breakables
+    if Breakables then
+        local foundGift = false
+        for _, v in ipairs(Breakables:GetChildren()) do
+            if v:IsA("Model") then
+                local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
+                if MeshPart and MeshPart.MeshId == "rbxassetid://15239110635" then
+                    local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
+                    if TeleportPosition then
+                        local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+                        if HumanoidRootPart then
+                            local distance = (HumanoidRootPart.Position - TeleportPosition).Magnitude
+                            if distance <= 99999999 then
+                                foundGift = true
+FarmingDetermination = false
+                                local duration = distance / 9999999999999
+                                local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+                                local tween = TweenService:Create(HumanoidRootPart, tweenInfo, {CFrame = CFrame.new(TeleportPosition)})
+                                tween:Play()
+                                tween.Completed:Wait()
+                                local ReplicatedStorage = game:GetService("ReplicatedStorage")
+                                local Library = ReplicatedStorage.Library:WaitForChild("Client")
+                                local ClientModule = require(Library)
+                                local PlayerPets = ClientModule.PlayerPet.GetAll()
+
+                                local CodeName = v.Name
+                                for _, Pet in pairs(PlayerPets) do
+                                    ClientModule.PlayerPet.SetTarget(Pet, CodeName) -- In BreakableToBreak put the path of the Gift (the number)
+                                end
+                            end
+                        else
+                            print("HumanoidRootPart not found.")
+                        end
+                    else
+                        print("MeshPart or Hitbox not found.")
+                    end
+                end
+            end
+            if foundGift then
+                break
+            end
+        end
+        if not foundGift then
+            FarmingDetermination = true
         end
     end
 end
 
 
 end
-
