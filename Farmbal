@@ -267,7 +267,8 @@ end
                         local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
 
                         if TeleportPosition and HumanoidRootPart then
-                            local TeleportAbovePosition = TeleportPosition + Vector3.new(0, 10, 0)
+                            local TeleportAbovePosition = TeleportPosition
+MeshPart.Hitbox.Size = Vector3.new(20, 20, 20)
 
                             local distance = (HumanoidRootPart.Position - TeleportAbovePosition).Magnitude
                             local duration = distance / 9999999999999
