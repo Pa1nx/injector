@@ -231,6 +231,63 @@ BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 BV.velocity = Vector3.new(0, 0.1, 0)
 BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Library = ReplicatedStorage:WaitForChild("Library")
+local ClientModule = require(Library)
+
+local function mainLoop()
+    while true do
+        wait(0.01)
+        local BreakablesFolder = Workspace:FindFirstChild("__THINGS")
+
+        if BreakablesFolder then
+            local Breakables = BreakablesFolder:FindFirstChild("Breakables")
+
+            if Breakables then
+                local Character = game.Players.LocalPlayer.Character
+                local HumanoidRootPart = Character and Character:FindFirstChild("HumanoidRootPart")
+                local closestModel = nil
+                local closestDistance = math.huge -- Set initial distance to a large value
+
+                for _, v in ipairs(Breakables:GetChildren()) do
+                    if v:IsA("Model") then
+                        local MeshPart = v:FindFirstChildWhichIsA("MeshPart")
+                        if MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position then
+                            local distance = (MeshPart.Hitbox.Position - HumanoidRootPart.Position).Magnitude
+                            if distance < closestDistance then
+                                closestDistance = distance
+                                closestModel = v
+                            end
+                        end
+                    end
+                end
+
+                if closestModel then
+                    print("Closest Model Name:", closestModel.Name)
+
+                    -- Your additional code for handling PlayerPets
+                    local PlayerPets = ClientModule.PlayerPet.GetAll()
+
+                    for _, Pet in pairs(PlayerPets) do
+                        ClientModule.PlayerPet.SetTarget(Pet, closestModel) -- Assuming closestModel is the target
+                    end
+                else
+                    print("No valid models found in Breakables.")
+                end
+            else
+                print("Breakables folder is empty.")
+            end
+        else
+            print("Breakables folder not found.")
+        end
+    end
+end
+
+coroutine.wrap(mainLoop)()
+
+
+
 local startTime = tick()
 while tick() - startTime < 140 do
 
