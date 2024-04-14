@@ -326,7 +326,7 @@ local amountTextLabel = playergui.MainLeft.Left.Currency.Diamonds.Diamonds.Amoun
 -- Example usage:
 local abbreviatedText = amountTextLabel.Text
 local fullNumber = convertAbbreviatedNumber(abbreviatedText)
-if fullNumber > 50000000 then
+if fullNumber > 30000000 then
     print(fullNumber)  -- Output: Converted value of amountTextLabel.Text if it's over 50
 
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
