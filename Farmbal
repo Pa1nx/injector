@@ -432,10 +432,7 @@ while tick() - startTime < 1000 do
                             )
                             local tweent = TweenService:Create(HumanoidRootPart, NewTweenInfoTable, { CFrame = CFrame.new(NewPoint) })
                             tweent:Play()
-                        else
-                        end
-
-                        local lookVector = (TeleportPosition - HumanoidRootPart.Position).Unit
+   local lookVector = (TeleportPosition - HumanoidRootPart.Position).Unit
                         HumanoidRootPart.CFrame = CFrame.new(HumanoidRootPart.Position, HumanoidRootPart.Position + lookVector)
 
                         if LocalPlayer.CameraMode ~= Enum.CameraMode.LockFirstPerson then
@@ -443,6 +440,10 @@ while tick() - startTime < 1000 do
                         end
 
                         Camera.CFrame = CFrame.new(Camera.CFrame.Position, HumanoidRootPart.Position + lookVector)
+                        else
+                        end
+
+                        
                     end
                 end
                 if foundGift then
