@@ -227,12 +227,6 @@ coroutine.wrap(ClickLoop)()
 
 
 
-local BV = Instance.new('BodyVelocity', game.Workspace)
-BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-BV.velocity = Vector3.new(0, 0.1, 0)
-BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
-
-
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Library = ReplicatedStorage:WaitForChild("Library")
 local ClientModule = require(Library)
@@ -376,7 +370,7 @@ end
 local startTime = tick()
 while tick() - startTime < 1000 do
 
-   task.wait(0.3)
+   task.wait(0.01)
 
     _G.AutoTeleportToGiftOnOff = true
 
@@ -388,6 +382,11 @@ while tick() - startTime < 1000 do
         else
             game:GetService("ReplicatedStorage").Network.Slingshot_Toggle:InvokeServer()
         end
+
+local BV = Instance.new('BodyVelocity', game.Workspace)
+BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+BV.velocity = Vector3.new(0, 0.1, 0)
+BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
         local Workspace = game:GetService("Workspace")
         local Players = game:GetService("Players")
@@ -411,7 +410,7 @@ while tick() - startTime < 1000 do
                         local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
 
                         if TeleportPosition and HumanoidRootPart then
-                            local TeleportAbovePosition = TeleportPosition
+                            local TeleportAbovePosition = TeleportPosition + Vector3.new(0, 5, 0)
 
                             local Distance = (HumanoidRootPart.Position - TeleportAbovePosition).Magnitude
 
@@ -458,7 +457,7 @@ while tick() - startTime < 1000 do
                         local TeleportPosition = balloon.Balloon.Position
                         balloon.Balloon.Size = Vector3.new(100, 100, 100)
 
-                        local TeleportAbovePosition = TeleportPosition + Vector3.new(0, 60, 0)
+                        local TeleportAbovePosition = TeleportPosition + Vector3.new(0, 80, 0)
 
                         local Distance = (HumanoidRootPart.Position - TeleportAbovePosition).Magnitude
 
@@ -492,7 +491,9 @@ while tick() - startTime < 1000 do
 
                         Camera.CFrame = CFrame.new(Camera.CFrame.Position, HumanoidRootPart.Position + lookVector)
 
-                         task.wait(1)
+
+
+                         wait(0.01)
                         break
                     end
                 end
@@ -502,5 +503,5 @@ while tick() - startTime < 1000 do
             end
         end
     end
-    task.wait(1)
+    wait(0.01)
 end
