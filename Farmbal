@@ -492,7 +492,7 @@ while tick() - startTime < 1000 do
 
 
 
-                         task.wait(1)
+                         task.wait(2)
                         break
                     end
                 end
