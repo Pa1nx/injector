@@ -370,6 +370,65 @@ BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 BV.velocity = Vector3.new(0, 0.1, 0)
 BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
+
+--Services/Variables
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+local Players = game:GetService("Players")
+
+local LocalPlayer = Players.LocalPlayer
+local Network = ReplicatedStorage:WaitForChild("Network")
+
+--Auto Farm Function
+_G.AutoFarmOnOff = true  -- Changed to true to start auto-farming immediately
+_G.AutoFarmDistance = 75
+local BreakableRemote = Network:WaitForChild("Breakables_PlayerDealDamage")
+
+function AutoFarmBreakables()
+    while _G.AutoFarmOnOff do
+        local HumanoidRootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        local Breakables = Workspace:WaitForChild("__THINGS"):FindFirstChild("Breakables")
+
+        if Breakables then
+            local NearestBreakable = nil
+            local NearestHitbox = nil
+            local ActualBreakableDistance = _G.AutoFarmDistance
+
+            for _, Breakable in ipairs(Breakables:GetChildren()) do
+                local Hitbox = nil
+                for _, MeshPart in pairs(Breakable:GetChildren()) do
+                    if MeshPart:IsA("MeshPart") then
+                        Hitbox = MeshPart:FindFirstChild("Hitbox")
+                        if Hitbox then
+                            local Distance = (HumanoidRootPart.Position - Hitbox.Position).Magnitude
+                            if not NearestBreakable or Distance <= ActualBreakableDistance then
+                                NearestBreakable = Breakable
+                                NearestHitbox = Hitbox
+                                ActualBreakableDistance = Distance
+                            end
+                        end
+                    end
+                end
+            end
+
+            if NearestBreakable then
+                local Distance = (HumanoidRootPart.Position - NearestHitbox.Position).Magnitude
+                BreakableRemote:FireServer(NearestBreakable.Name)
+            end
+        end
+        wait()
+    end
+end
+
+function AutoFarmOnOff()
+    task.spawn(AutoFarmBreakables)
+    -- Add any code here that you want to run after starting auto-farming
+end
+
+--How to Enable That:
+AutoFarmOnOff()  -- Starts auto-farming immediately
+
+
 local startTime = tick()
 while tick() - startTime < 1000 do
 
