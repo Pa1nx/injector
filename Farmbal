@@ -410,7 +410,7 @@ BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
                         local TeleportPosition = MeshPart and MeshPart.Hitbox and MeshPart.Hitbox.Position
 
                         if TeleportPosition and HumanoidRootPart then
-                            local TeleportAbovePosition = TeleportPosition + Vector3.new(0, 5, 0)
+                            local TeleportAbovePosition = TeleportPosition
 
                             local Distance = (HumanoidRootPart.Position - TeleportAbovePosition).Magnitude
 
@@ -493,7 +493,7 @@ BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
 
 
-                         wait(0.01)
+                         task.wait(0.1)
                         break
                     end
                 end
@@ -503,5 +503,5 @@ BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
             end
         end
     end
-    wait(0.01)
+    task.wait(0.01)
 end
