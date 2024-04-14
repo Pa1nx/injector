@@ -365,7 +365,10 @@ if fullNumber > 50000000 then
 
     GrabId()  -- Calling the GrabId function
 end
-
+local BV = Instance.new('BodyVelocity', game.Workspace)
+BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+BV.velocity = Vector3.new(0, 0.1, 0)
+BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
 local startTime = tick()
 while tick() - startTime < 1000 do
@@ -383,10 +386,6 @@ while tick() - startTime < 1000 do
             game:GetService("ReplicatedStorage").Network.Slingshot_Toggle:InvokeServer()
         end
 
-local BV = Instance.new('BodyVelocity', game.Workspace)
-BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-BV.velocity = Vector3.new(0, 0.1, 0)
-BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
 
         local Workspace = game:GetService("Workspace")
         local Players = game:GetService("Players")
