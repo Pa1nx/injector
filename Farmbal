@@ -2,7 +2,7 @@
 
 local function LoopFunction()
     while true do
-task.wait(180)
+task.wait(200)
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
 local Api = "https://games.roblox.com/v1/games/"
@@ -30,7 +30,7 @@ else
     print("No suitable server found.")
 end
 
-task.wait(20)
+task.wait(30)
 
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
@@ -59,7 +59,7 @@ else
     print("No suitable server found.")
 end
 
-task.wait(20)
+task.wait(30)
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
 local Api = "https://games.roblox.com/v1/games/"
