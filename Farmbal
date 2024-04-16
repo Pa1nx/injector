@@ -2,7 +2,7 @@
 
 local function LoopFunction()
     while true do
-task.wait(200)
+task.wait(180)
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
 local Api = "https://games.roblox.com/v1/games/"
