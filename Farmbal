@@ -1,91 +1,31 @@
+local placeId = game.PlaceId
+
+if placeId == 8737899170 then
+    print("cool")
+else
+    game:GetService("ReplicatedStorage").Network:FindFirstChild("Travel to Main World"):InvokeServer()
+end
 
 
 local function LoopFunction()
     while true do
 task.wait(200)
-local Http = game:GetService("HttpService")
-local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
+local placeId = game.PlaceId
 
-local _place = game.PlaceId
-local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-
-function ListServers(cursor)
-    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-    return Http:JSONDecode(Raw)
-end
-
-local randomPlayers = math.random(7, 9)  -- Generate a random number between 1 and 8
-local Server, Next
-
-repeat
-    local Servers = ListServers(Next)
-    Server = Servers.data[1]
-    Next = Servers.nextPageCursor
-until Server and Server.playing >= randomPlayers  -- Ensure the server has more players than the random number
-
-if Server then
-    TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+if placeId == 8737899170 then
+    game:GetService("ReplicatedStorage").Network:FindFirstChild("Travel to Trading Plaza"):InvokeServer()
 else
-    print("No suitable server found.")
+    game:GetService("ReplicatedStorage").Network:FindFirstChild("Travel to Main World"):InvokeServer()
 end
+wait(10)
+local placeId = game.PlaceId
 
-task.wait(30)
-
-local Http = game:GetService("HttpService")
-local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
-
-local _place = game.PlaceId
-local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-
-function ListServers(cursor)
-    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-    return Http:JSONDecode(Raw)
-end
-
-local randomPlayers = math.random(7, 9)  -- Generate a random number between 1 and 8
-local Server, Next
-
-repeat
-    local Servers = ListServers(Next)
-    Server = Servers.data[1]
-    Next = Servers.nextPageCursor
-until Server and Server.playing >= randomPlayers  -- Ensure the server has more players than the random number
-
-if Server then
-    TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
+if placeId == 8737899170 then
+    game:GetService("ReplicatedStorage").Network:FindFirstChild("Travel to Trading Plaza"):InvokeServer()
 else
-    print("No suitable server found.")
+    game:GetService("ReplicatedStorage").Network:FindFirstChild("Travel to Main World"):InvokeServer()
 end
 
-task.wait(30)
-local Http = game:GetService("HttpService")
-local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
-
-local _place = game.PlaceId
-local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-
-function ListServers(cursor)
-    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-    return Http:JSONDecode(Raw)
-end
-
-local randomPlayers = math.random(7, 9)  -- Generate a random number between 1 and 8
-local Server, Next
-
-repeat
-    local Servers = ListServers(Next)
-    Server = Servers.data[1]
-    Next = Servers.nextPageCursor
-until Server and Server.playing >= randomPlayers  -- Ensure the server has more players than the random number
-
-if Server then
-    TPS:TeleportToPlaceInstance(_place, Server.id, game.Players.LocalPlayer)
-else
-    print("No suitable server found.")
-end
 task.wait(20)
     end
 end
