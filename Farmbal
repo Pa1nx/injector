@@ -160,8 +160,7 @@ spawn(OrbCollect)
 spawn(LootbagCollect)
 
 wait(10)
-game.Players.LocalPlayer:WaitForChild("PlayerGui").MainLeft:Destroy()
-game.Players.LocalPlayer:WaitForChild("PlayerGui").Main:Destroy()
+
 -- Services/Variables
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
