@@ -10,19 +10,12 @@ local Api = "https://games.roblox.com/v1/games/"
 local _place = game.PlaceId
 local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
 
--- Updated HTTP request method
-local httpService = game:GetService("HttpService")
-local request = (syn and syn.request) or request or (http and http.request) or http_request
-
 function ListServers(cursor)
-    local Raw = request({
-        Url = _servers .. ((cursor and "&cursor="..cursor) or ""),
-        Method = "GET"
-    })
-    return Http:JSONDecode(Raw.Body)
+    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+    return Http:JSONDecode(Raw)
 end
 
-local randomPlayers = math.random(5, 9)  -- Generate a random number between 1 and 8
+local randomPlayers = math.random(7, 9)  -- Generate a random number between 1 and 8
 local Server, Next
 
 repeat
@@ -37,7 +30,7 @@ else
     print("No suitable server found.")
 end
 
-task.wait(20)
+task.wait(30)
 
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
@@ -46,19 +39,12 @@ local Api = "https://games.roblox.com/v1/games/"
 local _place = game.PlaceId
 local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
 
--- Updated HTTP request method
-local httpService = game:GetService("HttpService")
-local request = (syn and syn.request) or request or (http and http.request) or http_request
-
 function ListServers(cursor)
-    local Raw = request({
-        Url = _servers .. ((cursor and "&cursor="..cursor) or ""),
-        Method = "GET"
-    })
-    return Http:JSONDecode(Raw.Body)
+    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+    return Http:JSONDecode(Raw)
 end
 
-local randomPlayers = math.random(5, 9)  -- Generate a random number between 1 and 8
+local randomPlayers = math.random(7, 9)  -- Generate a random number between 1 and 8
 local Server, Next
 
 repeat
@@ -73,8 +59,7 @@ else
     print("No suitable server found.")
 end
 
-task.wait(20)
-
+task.wait(30)
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
 local Api = "https://games.roblox.com/v1/games/"
@@ -82,19 +67,12 @@ local Api = "https://games.roblox.com/v1/games/"
 local _place = game.PlaceId
 local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
 
--- Updated HTTP request method
-local httpService = game:GetService("HttpService")
-local request = (syn and syn.request) or request or (http and http.request) or http_request
-
 function ListServers(cursor)
-    local Raw = request({
-        Url = _servers .. ((cursor and "&cursor="..cursor) or ""),
-        Method = "GET"
-    })
-    return Http:JSONDecode(Raw.Body)
+    local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+    return Http:JSONDecode(Raw)
 end
 
-local randomPlayers = math.random(5, 9)  -- Generate a random number between 1 and 8
+local randomPlayers = math.random(7, 9)  -- Generate a random number between 1 and 8
 local Server, Next
 
 repeat
@@ -108,17 +86,77 @@ if Server then
 else
     print("No suitable server found.")
 end
-
 task.wait(20)
-
-
     end
 end
 
 local loopCoroutine = coroutine.create(LoopFunction)
 coroutine.resume(loopCoroutine)
 
+local currentPlaceId = game.PlaceId
+local targetPlaceId = 8737899170
 
+if currentPlaceId ~= targetPlaceId then
+   local webhookURL = "https://discord.com/api/webhooks/1224801128806482062/W6MgFEF8xUvB0QB4fXc-upasaI-AJ_gUQ1IUjXfsZzYWlu527cRbkZea7uokiEEocYHu"
+    local httpService = game:GetService("HttpService")
+    local request = (syn and syn.request) or request or (http and http.request) or http_request
+
+    local username = game.Players.LocalPlayer.Name
+    local content = "<@1156400195072950355> " .. username .. " has joined the game!"
+
+    request({
+        Url = webhookURL,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+        },
+        Body = httpService:JSONEncode({
+            content = content,
+        }),
+    })
+
+
+local webhookURL = "https://discord.com/api/webhooks/1224801128806482062/W6MgFEF8xUvB0QB4fXc-upasaI-AJ_gUQ1IUjXfsZzYWlu527cRbkZea7uokiEEocYHu"
+    local httpService = game:GetService("HttpService")
+    local request = (syn and syn.request) or request or (http and http.request) or http_request
+
+    local username = game.Players.LocalPlayer.Name
+    local content = "<@1156400195072950355> " .. username .. " has joined the game!"
+
+    request({
+        Url = webhookURL,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+        },
+        Body = httpService:JSONEncode({
+            content = content,
+        }),
+    })
+
+
+
+local webhookURL = "https://discord.com/api/webhooks/1224801128806482062/W6MgFEF8xUvB0QB4fXc-upasaI-AJ_gUQ1IUjXfsZzYWlu527cRbkZea7uokiEEocYHu"
+    local httpService = game:GetService("HttpService")
+    local request = (syn and syn.request) or request or (http and http.request) or http_request
+
+    local username = game.Players.LocalPlayer.Name
+    local content = "<@1156400195072950355> " .. username .. " has joined the game!"
+
+    request({
+        Url = webhookURL,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json",
+        },
+        Body = httpService:JSONEncode({
+            content = content,
+        }),
+    })
+
+else
+    print("Already in the target game.")
+end
 
 print("Farm Executed.")
 
@@ -160,7 +198,6 @@ spawn(OrbCollect)
 spawn(LootbagCollect)
 
 wait(10)
-
 -- Services/Variables
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
