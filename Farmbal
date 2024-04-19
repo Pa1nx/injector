@@ -224,30 +224,7 @@ end
 -- Start both functions in parallel
 spawn(OrbCollect)
 spawn(LootbagCollect)
-local function mainLoop()
-    while true do
-wait(0.0001)
-local args = {
-    [1] = "Large Gift Bag"
-}
 
-game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack(args))
-local args = {
-    [1] = "Gift Bag"
-}
-
-game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack(args))
-local args = {
-    [1] = "Mini Chest"
-}
-
-game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack(args))
-
-
-end
-end
-
-coroutine.wrap(mainLoop)()
 wait(10)
 -- Services/Variables
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -412,7 +389,7 @@ local amountTextLabel = playergui.MainLeft.Left.Currency.Diamonds.Diamonds.Amoun
 -- Example usage:
 local abbreviatedText = amountTextLabel.Text
 local fullNumber = convertAbbreviatedNumber(abbreviatedText)
-if fullNumber > 100000000 then
+if fullNumber > 1000000 then
     print(fullNumber)  -- Output: Converted value of amountTextLabel.Text if it's over 50
 
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
