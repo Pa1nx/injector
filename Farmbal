@@ -285,7 +285,30 @@ workspace:FindFirstChild("__THINGS").Eggs:Destroy()
 workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
 workspace.Map:Destroy()
 
+local function mainLoop()
+    while true do
+wait(0.01)
+local args = {
+    [1] = "Large Gift Bag"
+}
 
+game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack(args))
+local args = {
+    [1] = "Gift Bag"
+}
+
+game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack(args))
+local args = {
+    [1] = "Mini Chest"
+}
+
+game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack(args))
+
+
+end
+end
+
+coroutine.wrap(mainLoop)()
 wait(5)
 
 local player = game.Players.LocalPlayer
