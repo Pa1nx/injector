@@ -1,32 +1,29 @@
 local UserNameHere = "Ronald09592DT"
 local function ClickLoop()
     while true do
- wait(0.01)
-local player = game.Players.LocalPlayer
-local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-local targetPlayer = game.Players:FindFirstChild(UserNameHere)
+        wait(0.1) -- Wait for a short period before checking again
+        local player = game.Players.LocalPlayer
+        local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
+        local targetPlayer = game.Players:WaitForChild(UserNameHere)
 
-if hrp and targetPlayer then
-    local targetHrp = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart")
-    if targetHrp then
-        hrp.CFrame = targetHrp.CFrame + Vector3.new(0, 10, 0)
-
-
-    else
-        warn("Target player's HumanoidRootPart not found.")
+        if hrp and targetPlayer then
+            local targetHrp = targetPlayer.Character and targetPlayer.Character:WaitForChild("HumanoidRootPart")
+            if targetHrp then
+                hrp.CFrame = targetHrp.CFrame + Vector3.new(0, 10, 0)
+                hrp.Anchored = true
+            else
+                warn("Target player's HumanoidRootPart not found.")
+            end
+        else
+            warn("Local player or target player not found.")
+        end
     end
-else
-    warn("Local player or target player not found.")
 end
-    end
-end
+
 
 coroutine.wrap(ClickLoop)()
 wait(2)
-local player = game.Players.LocalPlayer
-local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-local targetPlayer = game.Players:FindFirstChild(UserNameHere)
-hrp.Anchored = true
+
  
 local args = {
     [1] = "EnterPromoCode",
@@ -116,9 +113,9 @@ while true do
     wait(0.01)
 
 local player = game.Players.LocalPlayer
-local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-local targetPlayer = game.Players:FindFirstChild(UserNameHere)
-    if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
+local targetPlayer = game.Players:WaitForChild(UserNameHere)
+    if targetPlayer and targetPlayer.Character and targetPlayer.Character:WaitForChild("HumanoidRootPart") then
         local distance = (targetPlayer.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude
         if distance <= 20 then
             local args = {
