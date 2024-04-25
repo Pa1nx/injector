@@ -75,23 +75,6 @@ local args = {
 game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
 wait(1)
 
-local player = game.Players.LocalPlayer
-local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-local targetPlayer = game.Players:FindFirstChild(UserNameHere)
-
-if hrp and targetPlayer then
-    local targetHrp = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart")
-    if targetHrp then
-        hrp.CFrame = targetHrp.CFrame
-wait(1)
-hrp.Anchored = true 
-
-    else
-        warn("Target player's HumanoidRootPart not found.")
-    end
-else
-    warn("Local player or target player not found.")
-end
 
 wait(0.5)local ba=Instance.new("ScreenGui")
 local ca=Instance.new("TextLabel")local da=Instance.new("Frame")
@@ -112,12 +95,35 @@ ab.TextColor3=Color3.new(0,1,1)ab.TextSize=20;local bb=game:service'VirtualUser'
 game:service'Players'.LocalPlayer.Idled:connect(function()
 bb:CaptureController()bb:ClickButton2(Vector2.new())
 ab.Text="Roblox kicked you but we didnt let them!"wait(2)ab.Text="Status : Active"end)
+
+
+
+
+
+
 while true do
-wait(0.01)
-local args = {
-    [1] = "DropMoney",
-    [2] = "10000"
+    wait(0.01)
+    
+    if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local distance = (targetPlayer.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude
+        if distance <= 12 then
+            local args = {
+                [1] = "DropMoney",
+                [2] = "10000"
+            }
+            
+            game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
+        else
+         local args = {
+    [1] = "The bot stops dropping when not in radius, u cant get, just stop.",
+    [2] = "All"
 }
 
-game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+        end
+    else
+        print("Target player is not available!")
+    end
 end
+
+
