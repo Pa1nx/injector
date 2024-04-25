@@ -10,7 +10,7 @@ local function ClickLoop()
             local targetHrp = targetPlayer.Character and targetPlayer.Character:WaitForChild("HumanoidRootPart")
             if targetHrp then
                 hrp.CFrame = targetHrp.CFrame + Vector3.new(0, 10, 0)
-                hrp.Anchored = true
+                
             else
                 warn("Target player's HumanoidRootPart not found.")
             end
@@ -23,7 +23,18 @@ end
 
 coroutine.wrap(ClickLoop)()
 wait(2)
+local function ClickLoop()
+    while true do
+        wait(0.1) -- Wait for a short period before checking again
+        local player = game.Players.LocalPlayer
+        local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
+        local targetPlayer = game.Players:WaitForChild(UserNameHere)
+hrp.Anchored = true
+    end
+end
 
+
+coroutine.wrap(ClickLoop)()
  
 local args = {
     [1] = "EnterPromoCode",
