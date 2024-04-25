@@ -22,10 +22,8 @@ end
 end
 
 coroutine.wrap(ClickLoop)()
-local BV = Instance.new('BodyVelocity', game.Workspace)
-BV.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
-BV.velocity = Vector3.new(0, 0.1, 0)
-BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
+wait(2)
+hrp.Anchored = true
  
 local args = {
     [1] = "EnterPromoCode",
