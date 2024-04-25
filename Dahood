@@ -29,9 +29,25 @@ local function ClickLoop()
         local player = game.Players.LocalPlayer
         local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
         local targetPlayer = game.Players:WaitForChild(UserNameHere)
-hrp.Anchored = true
+
+        if hrp and targetPlayer then
+            local targetHrp = targetPlayer.Character and targetPlayer.Character:WaitForChild("HumanoidRootPart")
+            if targetHrp then
+                local distance = (hrp.Position - targetHrp.Position).Magnitude
+                if distance <= 20 then
+                    hrp.Anchored = true
+                else
+                    hrp.Anchored = false
+                end
+            else
+                warn("Target player's HumanoidRootPart not found.")
+            end
+        else
+            warn("Local player or target player not found.")
+        end
     end
 end
+
 
 
 coroutine.wrap(ClickLoop)()
