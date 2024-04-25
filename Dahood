@@ -1,14 +1,15 @@
 local UserNameHere = "Mark13645ZD"
-
- local player = game.Players.LocalPlayer
+local function ClickLoop()
+    while true do
+ wait(0.01)
+local player = game.Players.LocalPlayer
 local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
 local targetPlayer = game.Players:FindFirstChild(UserNameHere)
 
 if hrp and targetPlayer then
     local targetHrp = targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart")
     if targetHrp then
-        hrp.CFrame = targetHrp.CFrame
-wait(1)
+        hrp.CFrame = targetHrp.CFrame + Vector3.new(0, 10, 0)
 hrp.Anchored = true 
 
     else
@@ -17,6 +18,12 @@ hrp.Anchored = true
 else
     warn("Local player or target player not found.")
 end
+    end
+end
+
+coroutine.wrap(ClickLoop)()
+
+ 
 local args = {
     [1] = "EnterPromoCode",
     [2] = "APRIL2024"
