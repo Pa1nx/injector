@@ -25,7 +25,7 @@ coroutine.wrap(ClickLoop)()
 wait(2)
 local function ClickLoop()
     while true do
-        wait(0.1) -- Wait for a short period before checking again
+        wait(1) -- Wait for a short period before checking again
         local player = game.Players.LocalPlayer
         local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
         local targetPlayer = game.Players:WaitForChild(UserNameHere)
@@ -37,6 +37,7 @@ local function ClickLoop()
                 if distance <= 20 then
                     hrp.Anchored = true
                 else
+hrp.CFrame = targetHrp.CFrame + Vector3.new(0, 10, 0)
                     hrp.Anchored = false
                 end
             else
