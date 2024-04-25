@@ -23,6 +23,9 @@ end
 
 coroutine.wrap(ClickLoop)()
 wait(2)
+local player = game.Players.LocalPlayer
+local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+local targetPlayer = game.Players:FindFirstChild(UserNameHere)
 hrp.Anchored = true
  
 local args = {
