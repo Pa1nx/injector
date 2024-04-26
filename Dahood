@@ -140,11 +140,12 @@ ab.Text="Roblox kicked you but we didnt let them!"wait(2)ab.Text="Status : Activ
 while true do
     wait(0.01)
 
-local player = game.Players.LocalPlayer
-local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
-local targetPlayer = game.Players:WaitForChild(UserNameHere)
-    if targetPlayer and targetPlayer.Character and targetPlayer.Character:WaitForChild("HumanoidRootPart") then
-        local distance = (targetPlayer.Character.HumanoidRootPart.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).magnitude
+    local player = game.Players.LocalPlayer
+    local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
+    local targetPlayer = game.Players:FindFirstChild("UserNameHere") -- Replace "UserNameHere" with the actual username
+    
+    if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local distance = (targetPlayer.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).magnitude
         if distance <= 20 then
             local args = {
                 [1] = "DropMoney",
@@ -153,21 +154,19 @@ local targetPlayer = game.Players:WaitForChild(UserNameHere)
             
             game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
         else
-         local args = {
-    [1] = "The bot stops dropping when not in radius, u cant get, just stop.",
-    [2] = "All"
-}
+            local args = {
+                [1] = "The bot stops dropping when not in radius, you can't get it, just stop.",
+                [2] = "All"
+            }
 
-game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
         end
     else
         local args = {
-    [1] = "The bot stops dropping when not in radius, u cant get, just stop.",
-    [2] = "All"
-}
+            [1] = "The bot stops dropping when not in radius, you can't get it, just stop.",
+            [2] = "All"
+        }
 
-game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
+        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
     end
 end
-
-
