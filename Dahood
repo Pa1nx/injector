@@ -30,6 +30,7 @@ wait(2)
 
 local function ClickLoop()
     while true do
+wait(0.1)
         local radius = 20
         local player = game.Players:FindFirstChild(UserNameHere)
 
