@@ -131,6 +131,22 @@ local args = {
 game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
 wait(1)
 
+local function ClickLoop()
+while true do
+wait(5)
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local myPlayer = Players.LocalPlayer
+local targetPlayer = Players:FindFirstChild(UserNameHere)
+
+    local character = myPlayer.Character or myPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+ humanoidRootPart.Anchored = true
+
+end
+end
+coroutine.wrap(ClickLoop)()
 
 wait(0.5)local ba=Instance.new("ScreenGui")
 local ca=Instance.new("TextLabel")local da=Instance.new("Frame")
