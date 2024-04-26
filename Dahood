@@ -56,16 +56,28 @@ local args = {
         print("Target player's character not found!")
     end
 else
-    print("Target player not found!")
-    local newPosition = myPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 5, 0) -- 5 feet above
-    humanoidRootPart.Anchored = false
-    
-    local duration = (humanoidRootPart.Position - newPosition).Magnitude / 9999999
-    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+    local targetPositionOffset = targetHumanoidRootPart.Position + Vector3.new(0, 5, 0) -- 5 feet above
+humanoidRootPart.Anchored = false
+            local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
 
-    local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(newPosition)})
-    tween:Play()
-    tween.Completed:Wait()
+            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+            tween:Play()
+            tween.Completed:Wait(0.1)
+
+local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+            tween:Play()
+            tween.Completed:Wait(0.1)
+
+local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+            tween:Play()
+            tween.Completed:Wait(0.1)
 end
 end
 end
