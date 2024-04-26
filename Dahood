@@ -42,7 +42,7 @@ local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 
             tween:Play()
             tween.Completed:Wait(0.1)
             
-            humanoidRootPart.Anchored = true
+          
 local args = {
                         [1] = "DropMoney",
                         [2] = "10000"
