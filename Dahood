@@ -5,34 +5,35 @@ local function ClickLoop()
         wait(0.01)
         local player = game.Players.LocalPlayer
         local humanoid = player.Character.Humanoid
-        local otherPlayer = game.Players:GetPlayerFromCharacter(game.Workspace:FindFirstChild(UserNameHere).Character)
-
-        local distance = 20
-
-        wait(0.1)
+        local otherPlayer = game.Players:GetPlayerFromCharacterName(UserNameHere)
 
         if otherPlayer then
-            local otherHumanoidRootPart = otherPlayer.Character.HumanoidRootPart
-            local myHumanoidRootPart = player.Character.HumanoidRootPart
+            local otherHumanoidRootPart = otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+            local myHumanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
 
-            if (myHumanoidRootPart.Position - otherHumanoidRootPart.Position).magnitude <= distance then
-                myHumanoidRootPart.CFrame = otherHumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
-                humanoid.Anchored = true
-                local args = {
-                    [1] = "DropMoney",
-                    [2] = "10000"
-                }
+            if otherHumanoidRootPart and myHumanoidRootPart then
+                local distance = 20
 
-                game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
-            else
-                humanoid.Anchored = false
-                myHumanoidRootPart.CFrame = otherHumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
+                if (myHumanoidRootPart.Position - otherHumanoidRootPart.Position).magnitude <= distance then
+                    myHumanoidRootPart.CFrame = otherHumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
+                    humanoid.Parent.HumanoidRootPart.Anchored = true
+                    local args = {
+                        [1] = "DropMoney",
+                        [2] = "10000"
+                    }
+
+                    game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
+                else
+                    humanoid.Parent.HumanoidRootPart.Anchored = false
+                    humanoid.Parent:SetPrimaryPartCFrame(otherHumanoidRootPart.CFrame + Vector3.new(0, 5, 0))
+                end
             end
         end
     end
 end
 
 coroutine.wrap(ClickLoop)()
+
 
 
 
