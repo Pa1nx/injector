@@ -58,26 +58,17 @@ local args = {
 else
     local targetPositionOffset = targetHumanoidRootPart.Position + Vector3.new(0, 5, 0) -- 5 feet above
 humanoidRootPart.Anchored = false
-            local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
-            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
 
-            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-            tween:Play()
-            tween.Completed:Wait(0.1)
+local speed = 999999999 -- Adjust this value for desired movement speed
+local distance = (humanoidRootPart.Position - targetPositionOffset).Magnitude
+local duration = distance / speed
 
-local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
-            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
 
-            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-            tween:Play()
-            tween.Completed:Wait(0.1)
+local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+tween:Play()
+tween.Completed:Wait()
 
-local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
-            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-
-            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-            tween:Play()
-            tween.Completed:Wait(0.1)
 end
 end
 end
