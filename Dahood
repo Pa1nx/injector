@@ -24,19 +24,7 @@ end
 coroutine.wrap(ClickLoop)()
 wait(2)
 
-local function ClickLoop()
-    while true do
-        wait(0.1)
-        local radius = 20
-        local player = game.Players:FindFirstChild("UserNameHere") -- Replace "UserNameHere" with the actual player's username
-
-        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-            local playerPosition = player.Character.HumanoidRootPart.Position
-            local mines = game.Workspace:FindPartsInRegion3(Region3.new(playerPosition - Vector3.new(radius, radius, radius), playerPosition + Vector3.new(radius, radius, radius)), nil, math.huge)
-
-            local humanoidRootPart = player.Character.HumanoidRootPart
-            if #mines > 0 then
-               local player = game.Players.LocalPlayer
+local player = game.Players.LocalPlayer
 local character = player.Character
 
 if character then
@@ -50,15 +38,6 @@ if character then
 else
     warn("Character not found.")
 end
-            else
-                print("idk")
-            end
-        end
-    end
-end
-
-coroutine.wrap(ClickLoop)()
-
 
 
 
