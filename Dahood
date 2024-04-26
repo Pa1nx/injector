@@ -1,44 +1,8 @@
 local UserNameHere = "Kevin83589HZ"
 
-local function ClickLoop()
-    while true do
-        wait(0.01)
-        local player = game.Players.LocalPlayer
-        local humanoid = player.Character.Humanoid
-        local otherPlayer = game.Players:GetPlayerFromCharacterName(UserNameHere)
-
-        if otherPlayer then
-            local otherHumanoidRootPart = otherPlayer.Character and otherPlayer.Character:FindFirstChild("HumanoidRootPart")
-            local myHumanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-
-            if otherHumanoidRootPart and myHumanoidRootPart then
-                local distance = 20
-
-                if (myHumanoidRootPart.Position - otherHumanoidRootPart.Position).magnitude <= distance then
-                    myHumanoidRootPart.CFrame = otherHumanoidRootPart.CFrame + Vector3.new(0, 5, 0)
-                    humanoid.Parent.HumanoidRootPart.Anchored = true
-                    local args = {
-                        [1] = "DropMoney",
-                        [2] = "10000"
-                    }
-
-                    game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
-                else
-                    humanoid.Parent.HumanoidRootPart.Anchored = false
-                    humanoid.Parent:SetPrimaryPartCFrame(otherHumanoidRootPart.CFrame + Vector3.new(0, 5, 0))
-                end
-            end
-        end
-    end
-end
-
-coroutine.wrap(ClickLoop)()
 
 
 
-
-
- 
 local args = {
     [1] = "EnterPromoCode",
     [2] = "APRIL2024"
@@ -118,4 +82,55 @@ game:service'Players'.LocalPlayer.Idled:connect(function()
 bb:CaptureController()bb:ClickButton2(Vector2.new())
 ab.Text="Roblox kicked you but we didnt let them!"wait(2)ab.Text="Status : Active"end)
 
+while true do
+wait(0.01)
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local myPlayer = Players.LocalPlayer
+local targetPlayer = Players:FindFirstChild(UserNameHere)
+local teleportRadius = 20
 
+if targetPlayer then
+    local character = myPlayer.Character or myPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    
+    local targetCharacter = targetPlayer.Character
+    if targetCharacter then
+        local targetHumanoidRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
+        if targetHumanoidRootPart then
+            local targetPositionOffset = targetHumanoidRootPart.Position + Vector3.new(0, 5, 0) -- 5 feet above
+
+            local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
+            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+            tween:Play()
+            tween.Completed:Wait()
+            
+            humanoidRootPart.Anchored = true
+local args = {
+                        [1] = "DropMoney",
+                        [2] = "10000"
+                    }
+
+                    game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
+        else
+            print("Target player's HumanoidRootPart not found!")
+        end
+    else
+        print("Target player's character not found!")
+    end
+else
+    print("Target player not found!")
+    local newPosition = myPlayer.Character.HumanoidRootPart.Position + Vector3.new(0, 5, 0) -- 5 feet above
+    humanoidRootPart.Anchored = false
+    
+    local duration = (humanoidRootPart.Position - newPosition).Magnitude / 9999999
+    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+
+    local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(newPosition)})
+    tween:Play()
+    tween.Completed:Wait()
+end
+end
