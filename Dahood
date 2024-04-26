@@ -1,79 +1,64 @@
 local UserNameHere = "Kevin83589HZ"
+local TeleportRadius = 20
 
-
-local function ClickLoop()
-while true do
-wait(0.01)
-local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local myPlayer = Players.LocalPlayer
-local targetPlayer = Players:FindFirstChild(UserNameHere)
-local teleportRadius = 20
-
-if targetPlayer then
+local function TweenToTarget(targetHumanoidRootPart)
+    local TweenService = game:GetService("TweenService")
+    local myPlayer = game.Players.LocalPlayer
     local character = myPlayer.Character or myPlayer.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
     local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
     
-    local targetCharacter = targetPlayer.Character
-    if targetCharacter then
-        local targetHumanoidRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
-        if targetHumanoidRootPart then
-            local targetPositionOffset = targetHumanoidRootPart.Position + Vector3.new(0, 5, 0) -- 5 feet above
-
-            local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
-            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-
-            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-            tween:Play()
-            tween.Completed:Wait(0.1)
-
-local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
-            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-
-            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-            tween:Play()
-            tween.Completed:Wait(0.1)
-
-local duration = (humanoidRootPart.Position - targetPositionOffset).Magnitude / 9999999
-            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-
-            local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-            tween:Play()
-            tween.Completed:Wait(0.1)
-            
-          
-local args = {
-                        [1] = "DropMoney",
-                        [2] = "10000"
-                    }
-
-                    game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
-        else
-            print("Target player's HumanoidRootPart not found!")
-        end
-    else
-        print("Target player's character not found!")
-    end
-else
     local targetPositionOffset = targetHumanoidRootPart.Position + Vector3.new(0, 5, 0) -- 5 feet above
-humanoidRootPart.Anchored = false
-
-local speed = 999999999 -- Adjust this value for desired movement speed
-local distance = (humanoidRootPart.Position - targetPositionOffset).Magnitude
-local duration = distance / speed
-
-local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-
-local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
-tween:Play()
-tween.Completed:Wait()
-
+    
+    local speed = 999999999 -- Adjust this value for desired movement speed
+    local distance = (humanoidRootPart.Position - targetPositionOffset).Magnitude
+    local duration = distance / speed
+    
+    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+    
+    local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = CFrame.new(targetPositionOffset)})
+    tween:Play()
+    tween.Completed:Wait()
 end
-end
+
+local function ClickLoop()
+    while true do
+        wait(0.01)
+        local Players = game:GetService("Players")
+        local myPlayer = Players.LocalPlayer
+        local targetPlayer = Players:FindFirstChild(UserNameHere)
+        
+        if targetPlayer then
+            local targetCharacter = targetPlayer.Character
+            if targetCharacter then
+                local targetHumanoidRootPart = targetCharacter:FindFirstChild("HumanoidRootPart")
+                if targetHumanoidRootPart then
+                    local distance = (myPlayer.Character.HumanoidRootPart.Position - targetHumanoidRootPart.Position).Magnitude
+                    if distance <= TeleportRadius then
+                        TweenToTarget(targetHumanoidRootPart)
+                        
+                        local args = {
+                            [1] = "DropMoney",
+                            [2] = "10000"
+                        }
+                        game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
+                    else
+                        myPlayer.Character.HumanoidRootPart.Anchored = false -- Unanchor if out of range
+                        TweenToTarget(targetHumanoidRootPart)
+                    end
+                else
+                    print("Target player's HumanoidRootPart not found!")
+                end
+            else
+                print("Target player's character not found!")
+            end
+        else
+            print("Target player not found!")
+        end
+    end
 end
 
 coroutine.wrap(ClickLoop)()
+
 
 
 local args = {
