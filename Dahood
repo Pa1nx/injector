@@ -24,21 +24,30 @@ end
 coroutine.wrap(ClickLoop)()
 wait(2)
 
+local function ClickLoop()
+    while true do
+wait(0.01)
 local player = game.Players.LocalPlayer
-local character = player.Character
+local humanoid = player.Character.Humanoid
+local otherPlayer = game.Players:GetPlayerFromCharacter(game.Workspace.GamerPro123.Character)
 
-if character then
-    local humanoid = character:FindFirstChildOfClass("Humanoid")
-    if humanoid then
-        humanoid.RootPart.Anchored = true
-        print("Humanoid anchored successfully!")
+local distance = 20
+local height = 5
+
+
+    wait(0.1)
+    
+    if (player.Character.HumanoidRootPart.Position - otherPlayer.Character.HumanoidRootPart.Position).magnitude <= distance then
+        humanoid.Parent:SetPrimaryPartCFrame(otherPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, height, 0))
+        humanoid.Parent.HumanoidRootPart.Anchored = true
     else
-        warn("Failed to find humanoid in character:", character.Name)
+        humanoid.Parent.HumanoidRootPart.Anchored = false
+        humanoid.Parent:SetPrimaryPartCFrame(otherPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, height, 0))
     end
-else
-    warn("Character not found.")
+end
 end
 
+coroutine.wrap(ClickLoop)()
 
 
 
