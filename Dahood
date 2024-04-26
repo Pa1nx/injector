@@ -36,9 +36,20 @@ local function ClickLoop()
 
             local humanoidRootPart = player.Character.HumanoidRootPart
             if #mines > 0 then
-                humanoidRootPart.Anchored = true
+               local character = script.Parent
+
+-- Check if the character exists and has a HumanoidRootPart
+if character and character:FindFirstChild("HumanoidRootPart") then
+    local humanoidRootPart = character.HumanoidRootPart
+
+    -- Anchor the HumanoidRootPart
+    humanoidRootPart.Anchored = true
+else
+    print("Character or HumanoidRootPart not found.")
+end
+
             else
-                humanoidRootPart.Anchored = false
+                print("idk")
             end
         end
     end
