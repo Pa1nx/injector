@@ -9,7 +9,7 @@ local function ClickLoop()
         if hrp and targetPlayer then
             local targetHrp = targetPlayer.Character and targetPlayer.Character:WaitForChild("HumanoidRootPart")
             if targetHrp then
-                hrp.CFrame = targetHrp.CFrame + Vector3.new(0, 10, 0)
+                hrp.CFrame = targetHrp.CFrame + Vector3.new(0, 5, 0)
                 
             else
                 warn("Target player's HumanoidRootPart not found.")
@@ -23,35 +23,30 @@ end
 
 coroutine.wrap(ClickLoop)()
 wait(2)
+
+
+
+
+
 local function ClickLoop()
     while true do
-        wait(1) -- Wait for a short period before checking again
-        local player = game.Players.LocalPlayer
-        local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
-        local targetPlayer = game.Players:WaitForChild(UserNameHere)
+        local radius = 20
+        local player = game.Players:FindFirstChild(UserNameHere)
 
-        if hrp and targetPlayer then
-            local targetHrp = targetPlayer.Character and targetPlayer.Character:WaitForChild("HumanoidRootPart")
-            if targetHrp then
-                local distance = (hrp.Position - targetHrp.Position).Magnitude
-                if distance <= 20 then
-                    hrp.Anchored = true
-                else
-hrp.CFrame = targetHrp.CFrame + Vector3.new(0, 10, 0)
-                    hrp.Anchored = false
-                end
+        if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            local playerPosition = player.Character.HumanoidRootPart.Position
+            local mines = game.Workspace:FindPartsInRegion3(Region3.new(playerPosition - Vector3.new(radius, radius, radius), playerPosition + Vector3.new(radius, radius, radius)), nil, math.huge)
+            
+            if #mines > 0 then
+                player.Character:FindFirstChild("HumanoidRootPart").Anchored = true
             else
-                warn("Target player's HumanoidRootPart not found.")
+                player.Character:FindFirstChild("HumanoidRootPart").Anchored = false
             end
-        else
-            warn("Local player or target player not found.")
         end
     end
 end
-
-
-
 coroutine.wrap(ClickLoop)()
+
  
 local args = {
     [1] = "EnterPromoCode",
@@ -133,40 +128,30 @@ bb:CaptureController()bb:ClickButton2(Vector2.new())
 ab.Text="Roblox kicked you but we didnt let them!"wait(2)ab.Text="Status : Active"end)
 
 
-
-
-
-
 while true do
-    wait(0.01)
+wait(0.1)
+local radius = 20
+local player = game.Players:FindFirstChild(UserNameHere)
 
-    local player = game.Players.LocalPlayer
-    local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
-    local targetPlayer = game.Players:WaitForChild(UserNameHere) -- Replace "UserNameHere" with the actual username
+if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+    local playerPosition = player.Character.HumanoidRootPart.Position
+    local mines = game.Workspace:FindPartsInRegion3(Region3.new(playerPosition - Vector3.new(radius, radius, radius), playerPosition + Vector3.new(radius, radius, radius)), nil, math.huge)
     
-    if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        local distance = (targetPlayer.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).magnitude
-        if distance <= 20 then
-            local args = {
+    if #mines > 0 then
+     local args = {
                 [1] = "DropMoney",
                 [2] = "10000"
             }
             
             game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
-        else
-            local args = {
-                [1] = "The bot stops dropping when not in radius, you can't get it, just stop.",
+    else
+       local args = {
+                [1] = "nine for u boo hoo ",
                 [2] = "All"
             }
 
             game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-        end
-    else
-        local args = {
-            [1] = "The bot stops dropping when not in radius, you can't get it, just stop.",
-            [2] = "All"
-        }
-
-        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
     end
 end
+end
+
