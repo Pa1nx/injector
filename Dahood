@@ -42,7 +42,15 @@ local function ClickLoop()
                         }
                         game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
                     else
-                        myPlayer.Character.HumanoidRootPart.Anchored = false -- Unanchor if out of range
+                        local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local myPlayer = Players.LocalPlayer
+local targetPlayer = Players:FindFirstChild(UserNameHere)
+
+    local character = myPlayer.Character or myPlayer.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+ humanoidRootPart.Anchored = false
                         TweenToTarget(targetHumanoidRootPart)
                     end
                 else
