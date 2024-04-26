@@ -1,35 +1,12 @@
 local UserNameHere = "Kevin83589HZ"
-local function ClickLoop()
-    while true do
-        wait(0.1) -- Wait for a short period before checking again
-        local player = game.Players.LocalPlayer
-        local hrp = player.Character and player.Character:WaitForChild("HumanoidRootPart")
-        local targetPlayer = game.Players:WaitForChild(UserNameHere)
 
-        if hrp and targetPlayer then
-            local targetHrp = targetPlayer.Character and targetPlayer.Character:WaitForChild("HumanoidRootPart")
-            if targetHrp then
-                hrp.CFrame = targetHrp.CFrame + Vector3.new(0, 5, 0)
-                
-            else
-                warn("Target player's HumanoidRootPart not found.")
-            end
-        else
-            warn("Local player or target player not found.")
-        end
-    end
-end
-
-
-coroutine.wrap(ClickLoop)()
-wait(2)
 
 local function ClickLoop()
     while true do
 wait(0.01)
 local player = game.Players.LocalPlayer
 local humanoid = player.Character.Humanoid
-local otherPlayer = game.Players:GetPlayerFromCharacter(game.Workspace.GamerPro123.Character)
+local otherPlayer = game.Players:GetPlayerFromCharacter(game.Workspace:FindFirstChild(UserNameHere).Character)
 
 local distance = 20
 local height = 5
@@ -40,6 +17,12 @@ local height = 5
     if (player.Character.HumanoidRootPart.Position - otherPlayer.Character.HumanoidRootPart.Position).magnitude <= distance then
         humanoid.Parent:SetPrimaryPartCFrame(otherPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, height, 0))
         humanoid.Parent.HumanoidRootPart.Anchored = true
+local args = {
+                [1] = "DropMoney",
+                [2] = "10000"
+            }
+            
+            game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
     else
         humanoid.Parent.HumanoidRootPart.Anchored = false
         humanoid.Parent:SetPrimaryPartCFrame(otherPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, height, 0))
@@ -131,31 +114,4 @@ game:service'Players'.LocalPlayer.Idled:connect(function()
 bb:CaptureController()bb:ClickButton2(Vector2.new())
 ab.Text="Roblox kicked you but we didnt let them!"wait(2)ab.Text="Status : Active"end)
 
-
-while true do
-wait(0.1)
-local radius = 20
-local player = game.Players:FindFirstChild(UserNameHere)
-
-if player and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-    local playerPosition = player.Character.HumanoidRootPart.Position
-    local mines = game.Workspace:FindPartsInRegion3(Region3.new(playerPosition - Vector3.new(radius, radius, radius), playerPosition + Vector3.new(radius, radius, radius)), nil, math.huge)
-    
-    if #mines > 0 then
-     local args = {
-                [1] = "DropMoney",
-                [2] = "10000"
-            }
-            
-            game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
-    else
-       local args = {
-                [1] = "nine for u boo hoo ",
-                [2] = "All"
-            }
-
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(unpack(args))
-    end
-end
-end
 
