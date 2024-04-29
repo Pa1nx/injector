@@ -284,7 +284,18 @@ print("hello testing here")  -- Print outside the loop
 workspace:FindFirstChild("__THINGS").Eggs:Destroy()
 workspace:FindFirstChild("__THINGS").Ornaments:Destroy()
 workspace.Map:Destroy()
+local petsFolder = workspace:FindFirstChild("__THINGS") and workspace:FindFirstChild("__THINGS").Pets
 
+if petsFolder then
+    for _, pet in ipairs(petsFolder:GetChildren()) do
+        local part = pet:FindFirstChildWhichIsA("Part")
+        if part then
+            part.Transparency = 1
+        end
+    end
+else
+    print("Pets folder not found.")
+end
 
 wait(5)
 
