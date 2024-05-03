@@ -125,7 +125,13 @@ local args = {
 }
 
 game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
-wait(1)
+wait(5)
+local args = {
+    [1] = "EnterPromoCode",
+    [2] = "RUBY"
+}
+
+game:GetService("ReplicatedStorage").MainEvent:FireServer(unpack(args))
 
 local function ClickLoop()
 while true do
