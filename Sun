@@ -1,5 +1,5 @@
 local currentActivePart = workspace:FindFirstChild("CurrentlyActive")
-
+script blox veification ples 
 
 if currentActivePart then
     print("Currently Farming.")
