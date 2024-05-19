@@ -636,7 +636,7 @@ coroutine.wrap(HideTradeHistory)()
 local startTime = tick()
 while tick() - startTime < 1000 do
 
-   task.wait(0.3)
+   task.wait(2)
 
     _G.AutoTeleportToGiftOnOff = true
 
